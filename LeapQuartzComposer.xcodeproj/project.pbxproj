@@ -14,7 +14,21 @@
 		83A065B71698550E007EB21E /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83A065B51698550E007EB21E /* LeapObjectiveC.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		83A065B81698550E007EB21E /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A065B61698550E007EB21E /* libLeap.dylib */; };
 		83A06602169860B7007EB21E /* LeapQCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A06601169860B7007EB21E /* LeapQCHelper.m */; };
+		83A0660E16987C78007EB21E /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83A065B61698550E007EB21E /* libLeap.dylib */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		83A0660C16987C67007EB21E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				83A0660E16987C78007EB21E /* libLeap.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		83A0658616984F36007EB21E /* LeapQuartzComposer.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeapQuartzComposer.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +154,7 @@
 			buildPhases = (
 				83A0658116984F36007EB21E /* Sources */,
 				83A0658216984F36007EB21E /* Frameworks */,
+				83A0660C16987C67007EB21E /* CopyFiles */,
 				83A0658316984F36007EB21E /* Resources */,
 				83A0658416984F36007EB21E /* ShellScript */,
 			);
