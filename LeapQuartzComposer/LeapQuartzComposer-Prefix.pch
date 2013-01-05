@@ -1,0 +1,6 @@
+//
+// Prefix header for all source files of the 'LeapQuartzComposer' target in the 'LeapQuartzComposer' project
+//
+
+#ifdef __OBJC__
+#endif
