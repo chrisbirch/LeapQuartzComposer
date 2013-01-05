@@ -13,8 +13,9 @@
 #import "LeapQCHelper.h"
 
 
-#define	kQCPlugIn_Name				@"LeapQuartzComposer"
-#define	kQCPlugIn_Description		@"A Simple plugin to expose Leap data to Quartz Composer"
+#define	kQCPlugIn_Name				@"Leap Device Interface"
+#define	kQCPlugIn_Description		@"Allows QC compositions to access data returned by Leap Motion devices"
+#define kQCPlugIn_AuthorDescription @"© 2013 by Chris Birch, all rights reserved."
 
 @interface LeapQuartzComposerPlugIn ()
 {
@@ -33,7 +34,11 @@
 + (NSDictionary *)attributes
 {
 	// Return a dictionary of attributes describing the plug-in (QCPlugInAttributeNameKey, QCPlugInAttributeDescriptionKey...).
-    return @{QCPlugInAttributeNameKey:kQCPlugIn_Name, QCPlugInAttributeDescriptionKey:kQCPlugIn_Description};
+    return @{
+                QCPlugInAttributeNameKey:kQCPlugIn_Name,
+                QCPlugInAttributeDescriptionKey:kQCPlugIn_Description,
+                QCPlugInAttributeCopyrightKey: kQCPlugIn_AuthorDescription
+            };
 }
 
 + (NSDictionary *)attributesForPropertyPortWithKey:(NSString *)key
@@ -95,7 +100,6 @@
     NSDictionary* qcCompatibleFrameDictionary = [LeapQCHelper leapFrameToDictionary:frame];
     
     self.outputFrame = qcCompatibleFrameDictionary;
-    
     
     NSLog(@"%@",qcCompatibleFrameDictionary);
     
