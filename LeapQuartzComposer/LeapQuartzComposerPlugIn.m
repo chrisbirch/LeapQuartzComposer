@@ -63,8 +63,7 @@
 	if (self)
     {
 
-        //Create the leap controller
-        leapController = [[LeapController alloc] initWithDelegate:self];
+        
         
 	}
 	
@@ -94,15 +93,7 @@
 
 - (void)onFrame:(LeapController*)aController
 {
-    // Get the most recent frame and report some basic information
-    LeapFrame* frame = [aController frame:0];
-   
-    NSDictionary* qcCompatibleFrameDictionary = [LeapQCHelper leapFrameToDictionary:frame];
-    
-    self.outputFrame = qcCompatibleFrameDictionary;
-    
-    NSLog(@"%@",qcCompatibleFrameDictionary);
-    
+      
     
 }
 
@@ -117,7 +108,11 @@
 	// Called by Quartz Composer when rendering of the composition starts: perform any required setup for the plug-in.
 	// Return NO in case of fatal failure (this will prevent rendering of the composition to start).
 	
-	return YES;
+    //Create the leap controller
+    leapController = [[LeapController alloc] initWithDelegate:self];
+    
+    
+	return leapController != nil;
 }
 
 - (void)enableExecution:(id <QCPlugInContext>)context
@@ -135,6 +130,17 @@
 	The OpenGL context for rendering can be accessed and defined for CGL macros using:
 	CGLContextObj cgl_ctx = [context CGLContextObj];
 	*/
+    
+    
+    // Get the most recent frame and report some basic information
+    LeapFrame* frame = [leapController frame:0];
+    
+    NSDictionary* qcCompatibleFrameDictionary = [LeapQCHelper leapFrameToDictionary:frame];
+    
+    self.outputFrame = qcCompatibleFrameDictionary;
+    
+    NSLog(@"%@",qcCompatibleFrameDictionary);
+
 	
 	return YES;
 }
