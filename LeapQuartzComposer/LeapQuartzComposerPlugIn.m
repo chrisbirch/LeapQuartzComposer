@@ -49,7 +49,7 @@
 
 + (QCPlugInExecutionMode)executionMode
 {
-	return kQCPlugInExecutionModeProcessor;
+	return kQCPlugInExecutionModeProvider;
 }
 
 + (QCPlugInTimeMode)timeMode
