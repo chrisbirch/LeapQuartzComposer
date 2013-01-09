@@ -190,7 +190,6 @@
 {
 	// Called by Quartz Composer when rendering of the composition stops: perform any required cleanup for the plug-in.
     
-    leapController = nil;
 }
 
 @end
