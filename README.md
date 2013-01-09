@@ -17,16 +17,3 @@ https://www.facebook.com/justaddmusic
 Andrew Pouliot
 http://darknoon.com/about/
 https://github.com/darknoon/LeapQC
-
-
-
-Changes:
-
-v0.11
-
-- Added QC "pretty" names for ports
-- Exposed input that enables full frame dictionary creation to be disabled
-- Exposed hands array
-- Exposed fingers array
-
-- Experimenting with exposing properties using assign rather than copy.
