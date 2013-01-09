@@ -48,4 +48,15 @@
 +(NSDictionary*) leapVectorToDictionary:(const LeapVector*)vector;
 
 
+/**
+ * Returns an array filled with NSDictionary representations of LeapFingers
+ */
++(NSArray*) leapFingersToQCCompatibleArray:(const NSArray*)fingers;
+
+/**
+ * Returns an array filled with NSDictionary representations of LeapHands
+ */
++(NSArray*) leapHandsToQCCompatibleArray:(const NSArray*)hands;
+
+
 @end
