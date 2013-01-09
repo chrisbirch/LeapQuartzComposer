@@ -11,6 +11,9 @@ Plugin inspired by the pre SDK 7 "LeapQC" project on GitHub (see credits).
 
 Credits:
 
+Jon Hammond for getting me involved with this cool device.
+https://www.facebook.com/justaddmusic
+
 Andrew Pouliot
 http://darknoon.com/about/
 https://github.com/darknoon/LeapQC
