@@ -12,8 +12,25 @@
 @interface LeapQuartzComposerPlugIn : QCPlugIn<LeapDelegate>
 
 /**
+ * Set to YES if entire frame data should be converted to dictionary format.
+ */
+@property(assign) BOOL inputReturnFrame;
+
+
+/**
  * QC ouput containing Leap frame dictionary.
  */
 @property (copy) NSDictionary* outputFrame;
+
+/**
+ * QC output containing the hands.
+ */
+@property(copy) NSArray* outputHands;
+
+/**
+ * QC output containing the fingers.
+ */
+@property(copy) NSDictionary* outputFingers;
+
 
 @end
