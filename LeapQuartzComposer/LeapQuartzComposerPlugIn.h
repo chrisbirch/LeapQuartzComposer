@@ -11,6 +11,13 @@
 
 @interface LeapQuartzComposerPlugIn : QCPlugIn<LeapDelegate>
 
+
+#define INPUT_RETURN_FRAME @"inputReturnFrame"
+
+#define OUTPUT_FRAME @"outputFrame"
+#define OUTPUT_HANDS @"outputHands"
+#define OUTPUT_FINGERS @"outputFingers"
+
 /**
  * Set to YES if entire frame data should be converted to dictionary format.
  */
@@ -20,17 +27,17 @@
 /**
  * QC ouput containing Leap frame dictionary.
  */
-@property (copy) NSDictionary* outputFrame;
+@property (assign) NSDictionary* outputFrame;
 
 /**
  * QC output containing the hands.
  */
-@property(copy) NSArray* outputHands;
+@property(assign) NSArray* outputHands;
 
 /**
  * QC output containing the fingers.
  */
-@property(copy) NSDictionary* outputFingers;
+@property(assign) NSArray* outputFingers;
 
 
 @end

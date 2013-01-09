@@ -14,7 +14,7 @@
 
 
 #define	kQCPlugIn_Name				@"Leap Device Interface"
-#define	kQCPlugIn_Description		@"Allows QC compositions to access data returned by Leap Motion devices"
+#define	kQCPlugIn_Description		@"0.11\nAllows QC compositions to access data returned by Leap Motion devices"
 #define kQCPlugIn_AuthorDescription @"© 2013 by Chris Birch, all rights reserved."
 
 @interface LeapQuartzComposerPlugIn ()
@@ -27,7 +27,7 @@
 @implementation LeapQuartzComposerPlugIn
 
 @dynamic outputFrame;
-
+@dynamic inputReturnFrame;
 
 
 
@@ -38,13 +38,37 @@
                 QCPlugInAttributeNameKey:kQCPlugIn_Name,
                 QCPlugInAttributeDescriptionKey:kQCPlugIn_Description,
                 QCPlugInAttributeCopyrightKey: kQCPlugIn_AuthorDescription
+    
             };
 }
 
 + (NSDictionary *)attributesForPropertyPortWithKey:(NSString *)key
 {
 	// Specify the optional attributes for property based ports (QCPortAttributeNameKey, QCPortAttributeDefaultValueKey...).
-	return nil;
+    
+    
+    //Inputs
+    if([key isEqualToString:INPUT_RETURN_FRAME])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Return full frame", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:NO], QCPortAttributeDefaultValueKey,
+                nil];
+    
+    //Outputs
+    else if([key isEqualToString:OUTPUT_FRAME])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Frame", QCPortAttributeNameKey,
+                nil];
+    else if([key isEqualToString:OUTPUT_FINGERS])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Fingers", QCPortAttributeNameKey,
+                nil];
+    else if([key isEqualToString:OUTPUT_HANDS])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Hands", QCPortAttributeNameKey,
+                nil];
+    
+    return nil;
 }
 
 + (QCPlugInExecutionMode)executionMode
@@ -69,6 +93,8 @@
 	
 	return self;
 }
+
+
 
 
 
@@ -135,11 +161,21 @@
     // Get the most recent frame and report some basic information
     LeapFrame* frame = [leapController frame:0];
     
-    NSDictionary* qcCompatibleFrameDictionary = [LeapQCHelper leapFrameToDictionary:frame];
+    NSDictionary* qcDict=nil;
     
-    self.outputFrame = qcCompatibleFrameDictionary;
+    //Only generate the full frame dictionary if we are being asked for it
+    if (self.inputReturnFrame)
+    {
+        qcDict = [LeapQCHelper leapFrameToDictionary:frame];
+
+        self.outputFrame = qcDict;
+    }
     
-    NSLog(@"%@",qcCompatibleFrameDictionary);
+    self.outputHands = [LeapQCHelper leapHandsToQCCompatibleArray:frame.hands];
+    self.outputFingers = [LeapQCHelper leapFingersToQCCompatibleArray:frame.fingers];
+    
+    
+    //NSLog(@"%@",qcCompatibleFrameDictionary);
 
 	
 	return YES;
@@ -153,6 +189,8 @@
 - (void)stopExecution:(id <QCPlugInContext>)context
 {
 	// Called by Quartz Composer when rendering of the composition stops: perform any required cleanup for the plug-in.
+    
+    leapController = nil;
 }
 
 @end
