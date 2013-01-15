@@ -26,37 +26,41 @@
 
 @interface LeapQCHelper : NSObject
 
+@property(nonatomic,assign) BOOL includePitchYawAndRoll;
+@property(nonatomic,assign) BOOL includeYaw;
+@property(nonatomic,assign) BOOL includeRoll;
+
 /**
  * Returns a dictionary representation of the specified LeapFrame
  */
-+(NSDictionary*) leapFrameToDictionary:(const LeapFrame*)frame;
+-(NSDictionary*) leapFrameToDictionary:(const LeapFrame*)frame;
 
 /**
  * Returns a dictionary representation of the specified LeapHand
  */
-+(NSDictionary*) leapHandToDictionary:(const LeapHand*)hand;
+-(NSDictionary*) leapHandToDictionary:(const LeapHand*)hand;
 
 /**
  * Returns a dictionary representation of the specified LeapPointable (i.e finger or tool)
  */
-+(NSDictionary*) leapPointableToDictionary:(const LeapPointable*)pointable;
+-(NSDictionary*) leapPointableToDictionary:(const LeapPointable*)pointable;
 
 
 /**
  * Returns a dictionary representation of the specified LeapVector
  */
-+(NSDictionary*) leapVectorToDictionary:(const LeapVector*)vector;
+-(NSDictionary*) leapVectorToDictionary:(const LeapVector*)vector;
 
 
 /**
  * Returns an array filled with NSDictionary representations of LeapFingers
  */
-+(NSArray*) leapFingersToQCCompatibleArray:(const NSArray*)fingers;
+-(NSArray*) leapFingersToQCCompatibleArray:(const NSArray*)fingers;
 
 /**
  * Returns an array filled with NSDictionary representations of LeapHands
  */
-+(NSArray*) leapHandsToQCCompatibleArray:(const NSArray*)hands;
+-(NSArray*) leapHandsToQCCompatibleArray:(const NSArray*)hands;
 
 
 @end
