@@ -25,6 +25,9 @@
     NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] init];
 
     [dictionary setObject:[self leapVectorToQCCompatibleType:screen.horizontalAxis] forKey:LEAP_SCREEN_AXIS_HORIZONTAL];
+    [dictionary setObject:[self leapVectorToQCCompatibleType:screen.verticalAxis] forKey:LEAP_SCREEN_AXIS_VERTICAL];
+    [dictionary setObject:[self leapVectorToQCCompatibleType:screen.bottomLeftCorner] forKey:LEAP_SCREEN_BOTTOM_LEFT_CORNER];
+    [dictionary setObject:[self leapVectorToQCCompatibleType:screen.normal] forKey:LEAP_SCREEN_NORMAL];
     
 
     [dictionary setObject:[[NSNumber alloc] initWithInt:screen.widthPixels] forKey:LEAP_SCREEN_WIDTH];

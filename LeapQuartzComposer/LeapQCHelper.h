@@ -43,6 +43,9 @@
  */
 @property(nonatomic,assign) BOOL outputVectorsAsDictionaries;
 
+/**
+ * If YES then pitch roll and yaw is included in every Vector Dictionary or Array (see outputVectorsAsDictionaries)
+ */
 @property(nonatomic,assign) BOOL includePitchYawAndRoll;
 
 /**
