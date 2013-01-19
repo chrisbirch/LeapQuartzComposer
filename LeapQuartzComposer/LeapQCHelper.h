@@ -73,12 +73,17 @@
 /**
  * Returns an array filled with NSDictionary representations of LeapFingers
  */
--(NSArray*) leapFingersToQCCompatibleArray:(const NSArray*)fingers;
+-(NSArray*) leapPointablesToQCCompatibleArray:(const NSArray*)pointables;
 
 /**
  * Returns an array filled with NSDictionary representations of LeapHands
  */
 -(NSArray*) leapHandsToQCCompatibleArray:(const NSArray*)hands;
+
+/**
+ * Returns an array filled with NSDictionary representations of LeapScreens
+ */
+-(NSArray*) leapScreensToQCCompatibleArray:(const NSArray*)screens;
 
 
 #pragma mark -

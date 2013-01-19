@@ -38,6 +38,18 @@
     return dictionary;
 }
 
+-(NSArray*) leapScreensToQCCompatibleArray:(const NSArray*)screens
+{
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+    
+    for (LeapScreen* screen in screens)
+    {
+        [array addObject:[self leapScreenToDictionary:screen]];
+    }
+    
+    return array;
+}
+
 -(NSArray*) leapHandsToQCCompatibleArray:(const NSArray*)hands
 {
     NSMutableArray* handsArray = [[NSMutableArray alloc] init];
@@ -52,13 +64,13 @@
 }
 
 
--(NSArray*) leapFingersToQCCompatibleArray:(const NSArray*)fingers
+-(NSArray*) leapPointablesToQCCompatibleArray:(const NSArray*)pointables
 {
     NSMutableArray* fingersArray = [[NSMutableArray alloc] init];
     
-    for(LeapFinger* finger in fingers)
+    for(LeapPointable* pointable in pointables)
     {
-        NSDictionary* fingerDictionary =  [self leapPointableToDictionary:finger];
+        NSDictionary* fingerDictionary =  [self leapPointableToDictionary:pointable];
         [fingersArray addObject:fingerDictionary];
     }
     
@@ -72,33 +84,33 @@
     [dictionary setObject:[[NSNumber alloc] initWithLongLong:frame.id] forKey:LEAP_ID];
     [dictionary setObject:[[NSNumber alloc] initWithLongLong:frame.timestamp] forKey:@"timestamp"];
     
-    if (frame.hands)
-    {
-        //get an array containing the hand dictionaries
-        NSArray* qcHands = [self leapHandsToQCCompatibleArray:frame.hands];
-        [dictionary setObject:qcHands forKey:LEAP_HANDS];
-    }
+//    if (frame.hands)
+//    {
+//        //get an array containing the hand dictionaries
+//        NSArray* qcHands = [self leapHandsToQCCompatibleArray:frame.hands];
+//        [dictionary setObject:qcHands forKey:LEAP_HANDS];
+//    }
+//    
+//    if (frame.fingers)
+//    {
+//        //get an array containing the finger dictionaries
+//        NSArray* qcFingers = [self leapFingersToQCCompatibleArray:frame.fingers];
+//        [dictionary setObject:qcFingers forKey:LEAP_FINGERS];
+//    }
     
-    if (frame.fingers)
-    {
-        //get an array containing the finger dictionaries
-        NSArray* qcFingers = [self leapFingersToQCCompatibleArray:frame.fingers];
-        [dictionary setObject:qcFingers forKey:LEAP_FINGERS];
-    }
-    
-    if (frame.pointables)
-    {
-        //get an array containing the pointables dictionaries
-        NSArray* qcPointables = [self leapFingersToQCCompatibleArray:frame.pointables];
-        [dictionary setObject:qcPointables forKey:LEAP_POINTABLES];
-    }
-
-    if (frame.tools)
-    {
-        //get an array containing the tools dictionaries
-        NSArray* qcTools = [self leapFingersToQCCompatibleArray:frame.tools];
-        [dictionary setObject:qcTools forKey:LEAP_TOOLS];
-    }
+//    if (frame.pointables)
+//    {
+//        //get an array containing the pointables dictionaries
+//        NSArray* qcPointables = [self leapPointablesToQCCompatibleArray:frame.pointables];
+//        [dictionary setObject:qcPointables forKey:LEAP_POINTABLES];
+//    }
+//
+//    if (frame.tools)
+//    {
+//        //get an array containing the tools dictionaries
+//        NSArray* qcTools = [self leapPointablesToQCCompatibleArray:frame.tools];
+//        [dictionary setObject:qcTools forKey:LEAP_TOOLS];
+//    }
     
     
     return dictionary;
@@ -114,7 +126,7 @@
     if (hand.fingers)
     {
         //get an array containing the finger dictionaries
-        NSArray* qcFingers = [self leapFingersToQCCompatibleArray:hand.fingers];
+        NSArray* qcFingers = [self leapPointablesToQCCompatibleArray:hand.fingers];
         [dictionary setObject:qcFingers forKey:LEAP_FINGERS];
     }
     

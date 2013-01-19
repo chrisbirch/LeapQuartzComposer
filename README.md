@@ -25,8 +25,10 @@ Changes:
 v0.11
 
 - Added QC "pretty" names for ports
-- Exposed input that enables full frame dictionary creation to be disabled
+- Exposed frame dictionary
+- Exposed Screens array
 - Exposed hands array
 - Exposed fingers array
-
-- Experimenting with exposing properties using assign rather than copy.
+- Exposed pointables array
+- Exposed tools array
+- user can now choose which properties are exposed by setting bool with corresponding name.

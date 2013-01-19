@@ -29,13 +29,19 @@
 
 
 //Port Synthesizes
-
+@dynamic inputRetrieveTools;
+@dynamic inputRetrievePointables;
+@dynamic inputRetrieveFingers;
+@dynamic inputRetrieveHands;
 @dynamic inputUseDictionariesToRepresentVectors;
 @dynamic inputVectorsIncludeYawPitchRoll;
-@dynamic outputFrame;
 @dynamic outputHands;
 @dynamic outputFingers;
-@dynamic inputReturnFrame;
+@dynamic outputTools;
+@dynamic outputPointables;
+@dynamic outputFrame;
+@dynamic outputScreens;
+
 
 + (NSDictionary *)attributes
 {
@@ -54,8 +60,32 @@
     
     //Port Attributes
     
+    //Yes if tools array is exposed to QC
+    if([key isEqualToString:INPUT_RETRIEVETOOLS])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Retrieve Tools", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
+    //Yes if pointables array is exposed to QC
+    else if([key isEqualToString:INPUT_RETRIEVEPOINTABLES])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Retrieve Pointables", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
+    //Yes if fingers array is exposed to QC
+    else if([key isEqualToString:INPUT_RETRIEVEFINGERS])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Retrieve Fingers", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
+    //Yes if hands array is exposed to QC
+    else if([key isEqualToString:INPUT_RETRIEVEHANDS])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Retrieve Hands", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
     //Dictates the type of QC compativle construct used to represent vectors
-    if([key isEqualToString:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
+    else if([key isEqualToString:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 @"Use dictionaries to represent vectors", QCPortAttributeNameKey,
                 [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
@@ -65,11 +95,6 @@
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 @"Vectors include Yaw Pitch Roll", QCPortAttributeNameKey,
                 [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
-                nil];
-    //Information about the frame
-    else if([key isEqualToString:OUTPUT_FRAME])
-        return [NSDictionary dictionaryWithObjectsAndKeys:
-                @"Frame", QCPortAttributeNameKey,
                 nil];
     //Array of Hand structures
     else if([key isEqualToString:OUTPUT_HANDS])
@@ -81,11 +106,25 @@
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 @"Fingers", QCPortAttributeNameKey,
                 nil];
-    //Dictates whether or not frame object is created
-    else if([key isEqualToString:INPUT_RETURNFRAME])
+    //Array of tools
+    else if([key isEqualToString:OUTPUT_TOOLS])
         return [NSDictionary dictionaryWithObjectsAndKeys:
-                @"Should Return Frame", QCPortAttributeNameKey,
-                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                @"Tools", QCPortAttributeNameKey,
+                nil];
+    //Array of pointables
+    else if([key isEqualToString:OUTPUT_POINTABLES])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Pointables", QCPortAttributeNameKey,
+                nil];
+    //Information about the frame
+    else if([key isEqualToString:OUTPUT_FRAME])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Frame", QCPortAttributeNameKey,
+                nil];
+    //Exposes the screen as a QC structure
+    else if([key isEqualToString:OUTPUT_SCREENS])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Screens", QCPortAttributeNameKey,
                 nil];
     
     return nil;
@@ -183,6 +222,11 @@
     
     //Port Value Changed code
     
+    //Skipping Value changed section for property: RetrieveTools as no values have been supplied for valueChangedTarget or valueChangedBody
+    //Skipping Value changed section for property: RetrievePointables as no values have been supplied for valueChangedTarget or valueChangedBody
+    //Skipping Value changed section for property: RetrieveFingers as no values have been supplied for valueChangedTarget or valueChangedBody
+    //Skipping Value changed section for property: RetrieveHands as no values have been supplied for valueChangedTarget or valueChangedBody
+    
     //Dictates the type of QC compativle construct used to represent vectors
     if ([self didValueForInputKeyChange:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
     {
@@ -193,26 +237,39 @@
     {
         helper.outputYawPitchRoll = self.inputVectorsIncludeYawPitchRoll;
     }
-
     
+    
+    
+    
+
     // Get the most recent frame and report some basic information
     LeapFrame* frame = [leapController frame:0];
     
-    NSDictionary* qcDict=nil;
-    
-    
-    //Only generate the full frame dictionary if we are being asked for it
-    if (self.inputReturnFrame)
-    {
-        qcDict = [helper leapFrameToDictionary:frame];
 
-        self.outputFrame = qcDict;
-    }
-    else
+    //include the frame
+    self.outputFrame = [helper leapFrameToDictionary:frame];;
+    //include the screens
+    self.outputScreens = [helper leapScreensToQCCompatibleArray:leapController.calibratedScreens];
+    
+    if (self.inputRetrieveHands)
     {
         self.outputHands = [helper leapHandsToQCCompatibleArray:frame.hands];
-        self.outputFingers = [helper leapFingersToQCCompatibleArray:frame.fingers];
     }
+    
+    if (self.inputRetrieveFingers)
+    {
+        self.outputFingers = [helper leapPointablesToQCCompatibleArray:frame.fingers];
+    }
+    
+    if(self.inputRetrievePointables)
+    {
+        self.outputPointables = [helper leapPointablesToQCCompatibleArray:frame.pointables];
+    }
+    if(self.inputRetrieveTools)
+    {
+        self.outputTools = [helper leapPointablesToQCCompatibleArray:frame.tools];
+    }
+    
     
     //NSLog(@"%@",qcCompatibleFrameDictionary);
 
