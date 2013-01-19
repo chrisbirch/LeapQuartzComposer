@@ -4,6 +4,34 @@
 <array>
 	<dict>
 		<key>Name</key>
+		<string>RetrieveHands</string>
+		<key>FriendlyName</key>
+		<string>Retrieve Hands</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Yes if hands array is exposed to QC</string>
+		<key>IsInput</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>RetrieveFingers</string>
+		<key>FriendlyName</key>
+		<string>Retrieve Fingers</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Yes if fingers array is exposed to QC</string>
+		<key>IsInput</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>Name</key>
 		<string>RetrieveTools</string>
 		<key>FriendlyName</key>
 		<string>Retrieve Tools</string>
@@ -32,32 +60,49 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>RetrieveFingers</string>
+		<string>IncludeFingersInHand</string>
 		<key>FriendlyName</key>
-		<string>Retrieve Fingers</string>
+		<string>Include Fingers In Hand</string>
 		<key>Type</key>
 		<string>bool</string>
 		<key>DefaultValue</key>
 		<string>YES</string>
 		<key>Comment</key>
-		<string>Yes if fingers array is exposed to QC</string>
+		<string>Yes if fingers array is exposed in hand structure</string>
 		<key>IsInput</key>
 		<true/>
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>RetrieveHands</string>
+		<string>IncludeToolsInHand</string>
 		<key>FriendlyName</key>
-		<string>Retrieve Hands</string>
+		<string>Include Tools In Hand</string>
 		<key>Type</key>
 		<string>bool</string>
 		<key>DefaultValue</key>
 		<string>YES</string>
 		<key>Comment</key>
-		<string>Yes if hands array is exposed to QC</string>
+		<string>Yes if tools array is exposed in hand structure</string>
 		<key>IsInput</key>
 		<true/>
 	</dict>
+	<dict>
+		<key>Name</key>
+		<string>IncludePointablesInHand</string>
+		<key>FriendlyName</key>
+		<string>Include Pointables In Hand</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Yes if pointables array is exposed in hand structure</string>
+		<key>IsInput</key>
+		<true/>
+	</dict>
+
+
+
 	<dict>
 		<key>Name</key>
 		<string>UseDictionariesToRepresentVectors</string>
