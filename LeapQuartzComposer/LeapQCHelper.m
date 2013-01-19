@@ -215,11 +215,12 @@
     [array addObject:[[NSNumber alloc] initWithFloat:vector.y]];
     [array addObject:[[NSNumber alloc] initWithFloat:vector.z]];
     
-    if (_includePitchYawAndRoll)
+    if (_outputYawPitchRoll)
     {
+        [array addObject:[[NSNumber alloc] initWithFloat:vector.yaw]];
         [array addObject:[[NSNumber alloc] initWithFloat:vector.pitch]];
         [array addObject:[[NSNumber alloc] initWithFloat:vector.roll]];
-        [array addObject:[[NSNumber alloc] initWithFloat:vector.yaw]];
+
 
     }
     
@@ -235,11 +236,12 @@
     [dictionary setObject:[[NSNumber alloc] initWithFloat:vector.y] forKey:@"y"];
     [dictionary setObject:[[NSNumber alloc] initWithFloat:vector.z] forKey:@"z"];
     
-    if (_includePitchYawAndRoll)
+    if (_outputYawPitchRoll)
     {
+        [dictionary setObject:[[NSNumber alloc] initWithFloat:vector.yaw] forKey:@"yaw"];
         [dictionary setObject:[[NSNumber alloc] initWithFloat:vector.pitch] forKey:@"pitch"];
         [dictionary setObject:[[NSNumber alloc] initWithFloat:vector.roll] forKey:@"roll"];
-        [dictionary setObject:[[NSNumber alloc] initWithFloat:vector.yaw] forKey:@"yaw"];
+
     }
     
     

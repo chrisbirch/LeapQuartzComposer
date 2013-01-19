@@ -46,7 +46,7 @@
 /**
  * If YES then pitch roll and yaw is included in every Vector Dictionary or Array (see outputVectorsAsDictionaries)
  */
-@property(nonatomic,assign) BOOL includePitchYawAndRoll;
+@property(nonatomic,assign) BOOL outputYawPitchRoll;
 
 /**
  * Returns a dictionary representation of the specified LeapScreen

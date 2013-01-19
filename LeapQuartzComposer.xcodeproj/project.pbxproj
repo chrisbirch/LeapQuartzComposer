@@ -15,6 +15,7 @@
 		83A065B81698550E007EB21E /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A065B61698550E007EB21E /* libLeap.dylib */; };
 		83A06602169860B7007EB21E /* LeapQCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A06601169860B7007EB21E /* LeapQCHelper.m */; };
 		83A0660E16987C78007EB21E /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83A065B61698550E007EB21E /* libLeap.dylib */; };
+		83B88B4916AB137600C40CD2 /* Ports.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83B88B4816AB137600C40CD2 /* Ports.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,6 +50,7 @@
 		83A065B61698550E007EB21E /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLeap.dylib; path = LeapQuartzComposer/LeapSDK/libLeap.dylib; sourceTree = "<group>"; };
 		83A06600169860B7007EB21E /* LeapQCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapQCHelper.h; sourceTree = "<group>"; };
 		83A06601169860B7007EB21E /* LeapQCHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeapQCHelper.m; sourceTree = "<group>"; };
+		83B88B4816AB137600C40CD2 /* Ports.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ports.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 		83A0659416984F36007EB21E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				83B88B4816AB137600C40CD2 /* Ports.plist */,
 				83A0659516984F36007EB21E /* LeapQuartzComposer-Info.plist */,
 				83A0659616984F36007EB21E /* InfoPlist.strings */,
 				83A0659C16984F36007EB21E /* LeapQuartzComposer-Prefix.pch */,
@@ -199,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83A0659816984F36007EB21E /* InfoPlist.strings in Resources */,
+				83B88B4916AB137600C40CD2 /* Ports.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

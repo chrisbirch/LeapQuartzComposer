@@ -20,6 +20,7 @@
 @interface LeapQuartzComposerPlugIn ()
 {
     LeapController* leapController;
+    LeapQCHelper *helper;
 }
 
 @end
@@ -87,7 +88,11 @@
 	if (self)
     {
 
+        helper = [[LeapQCHelper alloc] init];
         
+        //set up helper
+        helper.outputVectorsAsDictionaries = YES;
+        helper.outputYawPitchRoll = YES;
         
 	}
 	
@@ -163,17 +168,19 @@
     
     NSDictionary* qcDict=nil;
     
+    
     //Only generate the full frame dictionary if we are being asked for it
     if (self.inputReturnFrame)
     {
-        qcDict = [LeapQCHelper leapFrameToDictionary:frame];
+        qcDict = [helper leapFrameToDictionary:frame];
 
         self.outputFrame = qcDict;
     }
-    
-    self.outputHands = [LeapQCHelper leapHandsToQCCompatibleArray:frame.hands];
-    self.outputFingers = [LeapQCHelper leapFingersToQCCompatibleArray:frame.fingers];
-    
+    else
+    {
+        self.outputHands = [helper leapHandsToQCCompatibleArray:frame.hands];
+        self.outputFingers = [helper leapFingersToQCCompatibleArray:frame.fingers];
+    }
     
     //NSLog(@"%@",qcCompatibleFrameDictionary);
 
