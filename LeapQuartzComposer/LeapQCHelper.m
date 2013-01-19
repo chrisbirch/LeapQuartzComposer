@@ -20,6 +20,21 @@
 @implementation LeapQCHelper
 
 
+-(NSDictionary*) leapScreenToDictionary:(const LeapScreen*)screen
+{
+    NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] init];
+
+    [dictionary setObject:[self leapVectorToQCCompatibleType:screen.horizontalAxis] forKey:LEAP_SCREEN_AXIS_HORIZONTAL];
+    
+
+    [dictionary setObject:[[NSNumber alloc] initWithInt:screen.widthPixels] forKey:LEAP_SCREEN_WIDTH];
+    [dictionary setObject:[[NSNumber alloc] initWithInt:screen.heightPixels] forKey:LEAP_SCREEN_HEIGHT];
+    [dictionary setObject:[[NSNumber alloc] initWithBool:screen.isValid] forKey:LEAP_IS_VALUD];
+    
+    
+    return dictionary;
+}
+
 -(NSArray*) leapHandsToQCCompatibleArray:(const NSArray*)hands
 {
     NSMutableArray* handsArray = [[NSMutableArray alloc] init];
@@ -106,26 +121,26 @@
     //Make sure the hand has a palm ray
     if (hand.palmPosition)
     {
-        [dictionary setObject:[self leapVectorToDictionary: hand.palmPosition] forKey:@"palmPosition"];
+        [dictionary setObject:[self leapVectorToQCCompatibleType: hand.palmPosition] forKey:@"palmPosition"];
     }
     //make sure it has a velocity vector
     if(hand.palmVelocity)
     {
-        [dictionary setObject:[self leapVectorToDictionary:hand.palmVelocity] forKey:@"palmVelocity"];
+        [dictionary setObject:[self leapVectorToQCCompatibleType:hand.palmVelocity] forKey:@"palmVelocity"];
     }
     //make sure it has a normal vector
     if(hand.palmNormal)
-        [dictionary setObject:[self leapVectorToDictionary:hand.palmNormal] forKey:@"palmNormal"];
+        [dictionary setObject:[self leapVectorToQCCompatibleType:hand.palmNormal] forKey:@"palmNormal"];
     
     
     if(hand.direction)
     {
-        [dictionary setObject:[self leapVectorToDictionary:hand.direction] forKey:@"direction"];
+        [dictionary setObject:[self leapVectorToQCCompatibleType:hand.direction] forKey:@"direction"];
     }
     
     if(hand.sphereCenter)
     {
-        [dictionary setObject:[self leapVectorToDictionary:hand.sphereCenter] forKey:@"sphereCenter"];
+        [dictionary setObject:[self leapVectorToQCCompatibleType:hand.sphereCenter] forKey:@"sphereCenter"];
     }
     
 
@@ -145,17 +160,17 @@
     
     if(pointable.tipPosition)
     {
-        [dictionary setObject:[self leapVectorToDictionary:pointable.tipPosition] forKey:@"tipPosition"];
+        [dictionary setObject:[self leapVectorToQCCompatibleType:pointable.tipPosition] forKey:@"tipPosition"];
     }
     
     if(pointable.tipVelocity)
     {
-        [dictionary setObject:[self leapVectorToDictionary:pointable.tipVelocity] forKey:@"tipVelocity"];
+        [dictionary setObject:[self leapVectorToQCCompatibleType:pointable.tipVelocity] forKey:@"tipVelocity"];
     }
     
     if(pointable.direction)
     {
-        [dictionary setObject:[self leapVectorToDictionary:pointable.direction] forKey:@"direction"];
+        [dictionary setObject:[self leapVectorToQCCompatibleType:pointable.direction] forKey:@"direction"];
     }
     
     [dictionary setObject:[[NSNumber alloc] initWithFloat:pointable.width] forKey:@"width"];
@@ -167,6 +182,45 @@
     
     
     return dictionary;
+}
+
+
+
+#pragma mark -
+#pragma mark Vector stuff
+
+
+-(id)leapVectorToQCCompatibleType:(const LeapVector*)vector
+{
+    if (_outputVectorsAsDictionaries)
+    {
+        return [self leapVectorToDictionary:vector];
+    }
+    else
+    {
+        return [self leapVectorToArray:vector];
+    }
+}
+
+
+-(NSArray*) leapVectorToArray:(const LeapVector*)vector
+{
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+    
+    
+    [array addObject:[[NSNumber alloc] initWithFloat:vector.x]];
+    [array addObject:[[NSNumber alloc] initWithFloat:vector.y]];
+    [array addObject:[[NSNumber alloc] initWithFloat:vector.z]];
+    
+    if (_includePitchYawAndRoll)
+    {
+        [array addObject:[[NSNumber alloc] initWithFloat:vector.pitch]];
+        [array addObject:[[NSNumber alloc] initWithFloat:vector.roll]];
+        [array addObject:[[NSNumber alloc] initWithFloat:vector.yaw]];
+
+    }
+    
+    return array;
 }
 
 
