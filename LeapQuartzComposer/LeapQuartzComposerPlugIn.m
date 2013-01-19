@@ -27,10 +27,15 @@
 
 @implementation LeapQuartzComposerPlugIn
 
+
+//Port Synthesizes
+
+@dynamic inputUseDictionariesToRepresentVectors;
+@dynamic inputVectorsIncludeYawPitchRoll;
 @dynamic outputFrame;
+@dynamic outputHands;
+@dynamic outputFingers;
 @dynamic inputReturnFrame;
-
-
 
 + (NSDictionary *)attributes
 {
@@ -47,26 +52,40 @@
 {
 	// Specify the optional attributes for property based ports (QCPortAttributeNameKey, QCPortAttributeDefaultValueKey...).
     
+    //Port Attributes
     
-    //Inputs
-    if([key isEqualToString:INPUT_RETURN_FRAME])
+    //Dictates the type of QC compativle construct used to represent vectors
+    if([key isEqualToString:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
         return [NSDictionary dictionaryWithObjectsAndKeys:
-                @"Return full frame", QCPortAttributeNameKey,
-                [NSNumber numberWithBool:NO], QCPortAttributeDefaultValueKey,
+                @"Use dictionaries to represent vectors", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
                 nil];
-    
-    //Outputs
+    //Dictates whether or not vectors include yaw pitch and roll
+    else if([key isEqualToString:INPUT_VECTORSINCLUDEYAWPITCHROLL])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Vectors include Yaw Pitch Roll", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
+    //Information about the frame
     else if([key isEqualToString:OUTPUT_FRAME])
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 @"Frame", QCPortAttributeNameKey,
                 nil];
+    //Array of Hand structures
+    else if([key isEqualToString:OUTPUT_HANDS])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Hands", QCPortAttributeNameKey,
+                nil];
+    //Array of Finger structures
     else if([key isEqualToString:OUTPUT_FINGERS])
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 @"Fingers", QCPortAttributeNameKey,
                 nil];
-    else if([key isEqualToString:OUTPUT_HANDS])
+    //Dictates whether or not frame object is created
+    else if([key isEqualToString:INPUT_RETURNFRAME])
         return [NSDictionary dictionaryWithObjectsAndKeys:
-                @"Hands", QCPortAttributeNameKey,
+                @"Should Return Frame", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
                 nil];
     
     return nil;
@@ -162,6 +181,19 @@
 	CGLContextObj cgl_ctx = [context CGLContextObj];
 	*/
     
+    //Port Value Changed code
+    
+    //Dictates the type of QC compativle construct used to represent vectors
+    if ([self didValueForInputKeyChange:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
+    {
+        helper.outputVectorsAsDictionaries = self.inputUseDictionariesToRepresentVectors;
+    }
+    //Dictates whether or not vectors include yaw pitch and roll
+    if ([self didValueForInputKeyChange:INPUT_VECTORSINCLUDEYAWPITCHROLL])
+    {
+        helper.outputYawPitchRoll = self.inputVectorsIncludeYawPitchRoll;
+    }
+
     
     // Get the most recent frame and report some basic information
     LeapFrame* frame = [leapController frame:0];

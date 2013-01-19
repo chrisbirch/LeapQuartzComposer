@@ -12,32 +12,31 @@
 @interface LeapQuartzComposerPlugIn : QCPlugIn<LeapDelegate>
 
 
-#define INPUT_RETURN_FRAME @"inputReturnFrame"
 
+//Port Defines
+
+//Dictates the type of QC compativle construct used to represent vectors
+#define INPUT_USEDICTIONARIESTOREPRESENTVECTORS @"inputUseDictionariesToRepresentVectors"
+//Dictates whether or not vectors include yaw pitch and roll
+#define INPUT_VECTORSINCLUDEYAWPITCHROLL @"inputVectorsIncludeYawPitchRoll"
+//Information about the frame
 #define OUTPUT_FRAME @"outputFrame"
+//Array of Hand structures
 #define OUTPUT_HANDS @"outputHands"
+//Array of Finger structures
 #define OUTPUT_FINGERS @"outputFingers"
-
-/**
- * Set to YES if entire frame data should be converted to dictionary format.
- */
-@property(assign) BOOL inputReturnFrame;
+//Dictates whether or not frame object is created
+#define INPUT_RETURNFRAME @"inputReturnFrame"
 
 
-/**
- * QC ouput containing Leap frame dictionary.
- */
-@property (assign) NSDictionary* outputFrame;
+//Port Properties
 
-/**
- * QC output containing the hands.
- */
-@property(assign) NSArray* outputHands;
-
-/**
- * QC output containing the fingers.
- */
-@property(assign) NSArray* outputFingers;
+@property (assign) BOOL inputUseDictionariesToRepresentVectors;
+@property (assign) BOOL inputVectorsIncludeYawPitchRoll;
+@property (copy) NSDictionary* outputFrame;
+@property (copy) NSArray* outputHands;
+@property (copy) NSArray* outputFingers;
+@property (assign) BOOL inputReturnFrame;
 
 
 @end
