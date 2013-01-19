@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Name</key>
+		<string>RetrieveTools</string>
+		<key>FriendlyName</key>
+		<string>Retrieve Tools</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Yes if tools array is exposed to QC</string>
+		<key>IsInput</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>RetrievePointables</string>
+		<key>FriendlyName</key>
+		<string>Retrieve Pointables</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Yes if pointables array is exposed to QC</string>
+		<key>IsInput</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>RetrieveFingers</string>
+		<key>FriendlyName</key>
+		<string>Retrieve Fingers</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Yes if fingers array is exposed to QC</string>
+		<key>IsInput</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>RetrieveHands</string>
+		<key>FriendlyName</key>
+		<string>Retrieve Hands</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Yes if hands array is exposed to QC</string>
+		<key>IsInput</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>UseDictionariesToRepresentVectors</string>
+		<key>FriendlyName</key>
+		<string>Use dictionaries to represent vectors</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Dictates the type of QC compativle construct used to represent vectors</string>
+		<key>IsInput</key>
+		<true/>
+		<key>ValueChangedTarget</key>
+		<string>helper.outputVectorsAsDictionaries</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>VectorsIncludeYawPitchRoll</string>
+		<key>FriendlyName</key>
+		<string>Vectors include Yaw Pitch Roll</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Dictates whether or not vectors include yaw pitch and roll</string>
+		<key>IsInput</key>
+		<true/>
+		<key>ValueChangedTarget</key>
+		<string>helper.outputYawPitchRoll</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Hands</string>
+		<key>FriendlyName</key>
+		<string>Hands</string>
+		<key>Type</key>
+		<string>array</string>
+		<key>Comment</key>
+		<string>Array of Hand structures</string>
+		<key>IsInput</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Fingers</string>
+		<key>FriendlyName</key>
+		<string>Fingers</string>
+		<key>Type</key>
+		<string>array</string>
+		<key>Comment</key>
+		<string>Array of Finger structures</string>
+		<key>IsInput</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Tools</string>
+		<key>FriendlyName</key>
+		<string>Tools</string>
+		<key>Type</key>
+		<string>array</string>
+		<key>Comment</key>
+		<string>Array of tools</string>
+		<key>IsInput</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Pointables</string>
+		<key>FriendlyName</key>
+		<string>Pointables</string>
+		<key>Type</key>
+		<string>array</string>
+		<key>Comment</key>
+		<string>Array of pointables</string>
+		<key>IsInput</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Frame</string>
+		<key>FriendlyName</key>
+		<string>Frame</string>
+		<key>Type</key>
+		<string>dictionary</string>
+		<key>DefaultValue</key>
+		<string></string>
+		<key>Comment</key>
+		<string>Information about the frame</string>
+		<key>IsInput</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Screens</string>
+		<key>FriendlyName</key>
+		<string>Screens</string>
+		<key>Type</key>
+		<string>array</string>
+		<key>Comment</key>
+		<string>Exposes the screens as a QC array</string>
+		<key>IsInput</key>
+		<false/>
+	</dict>
+</array>
+</plist>

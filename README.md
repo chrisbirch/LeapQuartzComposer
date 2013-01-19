@@ -17,3 +17,18 @@ https://www.facebook.com/justaddmusic
 Andrew Pouliot
 http://darknoon.com/about/
 https://github.com/darknoon/LeapQC
+
+
+
+Changes:
+
+v0.11
+
+- Added QC "pretty" names for ports
+- Exposed frame dictionary
+- Exposed Screens array
+- Exposed hands array
+- Exposed fingers array
+- Exposed pointables array
+- Exposed tools array
+- user can now choose which properties are exposed by setting bool with corresponding name.
