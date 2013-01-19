@@ -22,13 +22,14 @@ https://github.com/darknoon/LeapQC
 
 Changes:
 
-v0.11
+v0.11 - Sat 19 Jan 13
 
 - Added QC "pretty" names for ports
-- Exposed frame dictionary
+- Exposed Frame dictionary
 - Exposed Screens array
-- Exposed hands array
-- Exposed fingers array
-- Exposed pointables array
-- Exposed tools array
-- user can now choose which properties are exposed by setting bool with corresponding name.
+- Exposed Hands array
+- Exposed Fingers array
+- Exposed Pointables array
+- Exposed Tools array
+- User can now choose which properties are exposed by setting an input Bool with corresponding name.
+- User can now choose which arrays (tools,fingers,pointables) are exposed inside hand structures.
