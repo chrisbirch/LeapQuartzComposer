@@ -71,6 +71,8 @@
 		<string>Yes if fingers array is exposed in hand structure</string>
 		<key>IsInput</key>
 		<true/>
+		<key>ValueChangedTarget</key>
+		<string>helper.includeFingersInHand</string>
 	</dict>
 	<dict>
 		<key>Name</key>
@@ -85,6 +87,8 @@
 		<string>Yes if tools array is exposed in hand structure</string>
 		<key>IsInput</key>
 		<true/>
+		<key>ValueChangedTarget</key>
+		<string>helper.includeToolsInHand</string>
 	</dict>
 	<dict>
 		<key>Name</key>
@@ -99,6 +103,8 @@
 		<string>Yes if pointables array is exposed in hand structure</string>
 		<key>IsInput</key>
 		<true/>
+		<key>ValueChangedTarget</key>
+		<string>helper.includePointablesInHand</string>
 	</dict>
 
 
