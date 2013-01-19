@@ -29,10 +29,14 @@
 
 
 //Port Synthesizes
+
+@dynamic inputRetrieveHands;
+@dynamic inputRetrieveFingers;
 @dynamic inputRetrieveTools;
 @dynamic inputRetrievePointables;
-@dynamic inputRetrieveFingers;
-@dynamic inputRetrieveHands;
+@dynamic inputIncludeFingersInHand;
+@dynamic inputIncludeToolsInHand;
+@dynamic inputIncludePointablesInHand;
 @dynamic inputUseDictionariesToRepresentVectors;
 @dynamic inputVectorsIncludeYawPitchRoll;
 @dynamic outputHands;
@@ -41,6 +45,7 @@
 @dynamic outputPointables;
 @dynamic outputFrame;
 @dynamic outputScreens;
+
 
 
 + (NSDictionary *)attributes
@@ -60,8 +65,20 @@
     
     //Port Attributes
     
+    //Yes if hands array is exposed to QC
+    if([key isEqualToString:INPUT_RETRIEVEHANDS])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Retrieve Hands", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
+    //Yes if fingers array is exposed to QC
+    else if([key isEqualToString:INPUT_RETRIEVEFINGERS])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Retrieve Fingers", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
     //Yes if tools array is exposed to QC
-    if([key isEqualToString:INPUT_RETRIEVETOOLS])
+    else if([key isEqualToString:INPUT_RETRIEVETOOLS])
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 @"Retrieve Tools", QCPortAttributeNameKey,
                 [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
@@ -72,16 +89,22 @@
                 @"Retrieve Pointables", QCPortAttributeNameKey,
                 [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
                 nil];
-    //Yes if fingers array is exposed to QC
-    else if([key isEqualToString:INPUT_RETRIEVEFINGERS])
+    //Yes if fingers array is exposed in hand structure
+    else if([key isEqualToString:INPUT_INCLUDEFINGERSINHAND])
         return [NSDictionary dictionaryWithObjectsAndKeys:
-                @"Retrieve Fingers", QCPortAttributeNameKey,
+                @"Include Fingers In Hand", QCPortAttributeNameKey,
                 [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
                 nil];
-    //Yes if hands array is exposed to QC
-    else if([key isEqualToString:INPUT_RETRIEVEHANDS])
+    //Yes if tools array is exposed in hand structure
+    else if([key isEqualToString:INPUT_INCLUDETOOLSINHAND])
         return [NSDictionary dictionaryWithObjectsAndKeys:
-                @"Retrieve Hands", QCPortAttributeNameKey,
+                @"Include Tools In Hand", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
+    //Yes if pointables array is exposed in hand structure
+    else if([key isEqualToString:INPUT_INCLUDEPOINTABLESINHAND])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Include Pointables In Hand", QCPortAttributeNameKey,
                 [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
                 nil];
     //Dictates the type of QC compativle construct used to represent vectors
@@ -121,7 +144,7 @@
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 @"Frame", QCPortAttributeNameKey,
                 nil];
-    //Exposes the screen as a QC structure
+    //Exposes the screens as a QC array
     else if([key isEqualToString:OUTPUT_SCREENS])
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 @"Screens", QCPortAttributeNameKey,
@@ -220,13 +243,30 @@
 	CGLContextObj cgl_ctx = [context CGLContextObj];
 	*/
     
+    //Generated code:
+    
+    
     //Port Value Changed code
     
+    //Skipping Value changed section for property: RetrieveHands as no values have been supplied for valueChangedTarget or valueChangedBody
+    //Skipping Value changed section for property: RetrieveFingers as no values have been supplied for valueChangedTarget or valueChangedBody
     //Skipping Value changed section for property: RetrieveTools as no values have been supplied for valueChangedTarget or valueChangedBody
     //Skipping Value changed section for property: RetrievePointables as no values have been supplied for valueChangedTarget or valueChangedBody
-    //Skipping Value changed section for property: RetrieveFingers as no values have been supplied for valueChangedTarget or valueChangedBody
-    //Skipping Value changed section for property: RetrieveHands as no values have been supplied for valueChangedTarget or valueChangedBody
-    
+    //Yes if fingers array is exposed in hand structure
+    if ([self didValueForInputKeyChange:INPUT_INCLUDEFINGERSINHAND])
+    {
+        helper.includeFingersInHand = self.inputIncludeFingersInHand;
+    }
+    //Yes if tools array is exposed in hand structure
+    if ([self didValueForInputKeyChange:INPUT_INCLUDETOOLSINHAND])
+    {
+        helper.includeToolsInHand = self.inputIncludeToolsInHand;
+    }
+    //Yes if pointables array is exposed in hand structure
+    if ([self didValueForInputKeyChange:INPUT_INCLUDEPOINTABLESINHAND])
+    {
+        helper.includePointablesInHand = self.inputIncludePointablesInHand;
+    }
     //Dictates the type of QC compativle construct used to represent vectors
     if ([self didValueForInputKeyChange:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
     {
@@ -237,9 +277,11 @@
     {
         helper.outputYawPitchRoll = self.inputVectorsIncludeYawPitchRoll;
     }
+
     
+
     
-    
+    //Plugin code:
     
 
     // Get the most recent frame and report some basic information

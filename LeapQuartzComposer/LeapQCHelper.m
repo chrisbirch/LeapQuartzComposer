@@ -132,14 +132,32 @@
     NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] init];
     
     [dictionary setObject:[[NSNumber alloc] initWithInteger:hand.id] forKey:LEAP_ID];
-    
-    if (hand.fingers)
+
+    if (_includeFingersInHand)
     {
-        //get an array containing the finger dictionaries
-        NSArray* qcFingers = [self leapPointablesToQCCompatibleArray:hand.fingers];
-        [dictionary setObject:qcFingers forKey:LEAP_FINGERS];
+        NSArray* items = hand.fingers;
+        //get an array
+        NSArray* dict = [self leapPointablesToQCCompatibleArray:items];
+        [dictionary setObject:dict forKey:LEAP_FINGERS];
+    }
+
+    
+    if (_includePointablesInHand)
+    {
+        NSArray* items = hand.pointables;
+        //get an array
+        NSArray* dict = [self leapPointablesToQCCompatibleArray:items];
+        [dictionary setObject:dict forKey:LEAP_POINTABLES];
     }
     
+    if (_includeToolsInHand)
+    {
+        NSArray* items = hand.fingers;
+        //get an array
+        NSArray* dict = [self leapPointablesToQCCompatibleArray:items];
+        [dictionary setObject:dict forKey:LEAP_TOOLS];
+    }
+
     //The following things may or may not exist so we need to test for each one before sending it
     //otherwise these things will be wrongly reported as being 0
     

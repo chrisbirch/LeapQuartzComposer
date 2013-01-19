@@ -49,6 +49,20 @@
 @property(nonatomic,assign) BOOL outputYawPitchRoll;
 
 /**
+ * If YES then finger arrays will in included in hand structures
+ */
+@property(nonatomic,assign) BOOL includeFingersInHand;
+
+/**
+ * If YES then pointable arrays will in included in hand structures
+ */
+@property(nonatomic,assign) BOOL includePointablesInHand;
+/**
+ * If YES then tool arrays will in included in hand structures
+ */
+@property(nonatomic,assign) BOOL includeToolsInHand;
+
+/**
  * Returns a dictionary representation of the specified LeapScreen
  */
 -(NSDictionary*) leapScreenToDictionary:(const LeapScreen*)screen;
