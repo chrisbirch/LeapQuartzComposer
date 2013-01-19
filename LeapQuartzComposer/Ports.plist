@@ -22,7 +22,7 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>useDictionariesToRepresentVectors</string>
+		<string>UseDictionariesToRepresentVectors</string>
 		<key>FriendlyName</key>
 		<string>Use dictionaries to represent vectors</string>
 		<key>Type</key>
@@ -38,7 +38,7 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>vectorsIncludeYawPitchRoll</string>
+		<string>VectorsIncludeYawPitchRoll</string>
 		<key>FriendlyName</key>
 		<string>Vectors include Yaw Pitch Roll</string>
 		<key>Type</key>
@@ -68,7 +68,7 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>hands</string>
+		<string>Hands</string>
 		<key>FriendlyName</key>
 		<string>Hands</string>
 		<key>Type</key>
