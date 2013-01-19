@@ -152,7 +152,7 @@
     
     if (_includeToolsInHand)
     {
-        NSArray* items = hand.fingers;
+        NSArray* items = hand.tools;
         //get an array
         NSArray* dict = [self leapPointablesToQCCompatibleArray:items];
         [dictionary setObject:dict forKey:LEAP_TOOLS];
