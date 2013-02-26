@@ -62,9 +62,21 @@
 #define LEAP_GESTURE_SCREEN_TAP_PROGRESS @"progress"
 #define LEAP_GESTURE_SCREEN_TAP_POINTABLE @"pointable"
 
+
+#define LEAP_GESTURE_KEY_TAP_POSITION @"position"
+#define LEAP_GESTURE_KEY_TAP_DIRECTION @"direction"
+#define LEAP_GESTURE_KEY_TAP_PROGRESS @"progress"
+#define LEAP_GESTURE_KEY_TAP_POINTABLE @"pointable"
+
+
 //#define LEAP_GESTURE_ @""
 
 @interface LeapQCHelper : NSObject
+
+/**
+ * Pointer to the leap controller
+ */
+@property(nonatomic,weak) LeapController* leapController;
 
 /**
  * If YES then vectors will be converted into dictionaries.

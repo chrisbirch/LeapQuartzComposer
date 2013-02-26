@@ -9,20 +9,19 @@
 #import "LeapQCHelper.h"
 #import "LeapObjectiveC.h"
 
+#define NSNumberFromInt(VALUE) [[NSNumber alloc] initWithInteger:VALUE]
+#define NSNumberFromDouble(VALUE) [[NSNumber alloc] initWithDouble:VALUE]
+#define NSNumberFromBOOL(VALUE) [[NSNumber alloc] initWithBOOL:VALUE]
+
+#define QCRepresentationOfVector(VALUE) [self leapVectorToQCCompatibleType:VALUE]
+#define QCRepresentationOfPointablesArray(VALUE) [self leapPointablesToQCCompatibleArray:VALUE]
+#define QCRepresentationOfPointable(VALUE) [self leapPointableToDictionary:VALUE]
 @interface LeapQCHelper ()
 {
     
 }
 
-/**
- * Returns an array filled with NSDictionary representations of LeapFingers
- */
-+(NSArray*) leapFingersToQCCompatibleArray:(const NSArray*)fingers;
 
-/**
- * Returns an array filled with NSDictionary representations of LeapHands
- */
-+(NSArray*) leapHandsToQCCompatibleArray:(const NSArray*)hands;
 
 
 @end
