@@ -11,7 +11,7 @@
 		83A0658C16984F36007EB21E /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A0658B16984F36007EB21E /* Quartz.framework */; };
 		83A0659816984F36007EB21E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83A0659616984F36007EB21E /* InfoPlist.strings */; };
 		83A0659B16984F36007EB21E /* LeapQuartzComposerPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0659A16984F36007EB21E /* LeapQuartzComposerPlugIn.m */; };
-		83A065B71698550E007EB21E /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83A065B51698550E007EB21E /* LeapObjectiveC.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		83A065B71698550E007EB21E /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83A065B51698550E007EB21E /* LeapObjectiveC.mm */; };
 		83A065B81698550E007EB21E /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A065B61698550E007EB21E /* libLeap.dylib */; };
 		83A06602169860B7007EB21E /* LeapQCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A06601169860B7007EB21E /* LeapQCHelper.m */; };
 		83A0660E16987C78007EB21E /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83A065B61698550E007EB21E /* libLeap.dylib */; };
