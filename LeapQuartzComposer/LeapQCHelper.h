@@ -17,6 +17,10 @@
 @class LeapVector;
 @class LeapFrame;
 @class LeapScreen;
+@class LeapController;
+//These define what the QC structures will be called
+
+
 
 #define LEAP_ID @"id"
 #define LEAP_HANDS @"hands"
@@ -34,15 +38,30 @@
 #define LEAP_SCREEN_WIDTH @"width"
 #define LEAP_SCREEN_HEIGHT @"height"
 
-//New as of 0.7.4
+//New as of 0.7.4. Gestures!!!
 
+//LEAP_GESTURE_TYPE_INVALID = -1
+//LEAP_GESTURE_TYPE_SWIPE = 1,
+//LEAP_GESTURE_TYPE_CIRCLE = 4,
+//LEAP_GESTURE_TYPE_SCREEN_TAP = 5,
+//LEAP_GESTURE_TYPE_KEY_TAP = 6
 #define LEAP_GESTURE_TYPE @"type"
+
+//LEAP_GESTURE_STATE_INVALID = -1
+//LEAP_GESTURE_STATE_START = 1
+//LEAP_GESTURE_STATE_UPDATE = 2
+//LEAP_GESTURE_STATE_STOP = 3,
 #define LEAP_GESTURE_STATE @"state"
+
+//float
 #define LEAP_GESTURE_DURATION_SECONDS @"durationSeconds"
+
+//qc array of hand structures
 #define LEAP_GESTURE_HANDS @"hands"
+//qc array of pointable structures
 #define LEAP_GESTURE_POINTABLES @"pointables"
 
-
+//qc structure
 #define LEAP_GESTURE_SWIPE_POSITION @"position"
 #define LEAP_GESTURE_SWIPE_START_POSITION @"startPosition"
 #define LEAP_GESTURE_SWIPE_DIRECTION @"direction"
@@ -50,11 +69,14 @@
 #define LEAP_GESTURE_SWIPE_POINTABLE @"pointable"
 
 
+
 #define LEAP_GESTURE_CIRCLE_PROGRESS @"progress"
 #define LEAP_GESTURE_CIRCLE_CENTER @"center"
 #define LEAP_GESTURE_CIRCLE_NORMAL @"normal"
 #define LEAP_GESTURE_CIRCLE_RADIUS @"radius"
 #define LEAP_GESTURE_CIRCLE_POINTABLE @"pointable"
+#define LEAP_GESTURE_CIRCLE_SWEPT_ANGLE @"sweptAngle"
+
 
 
 #define LEAP_GESTURE_SCREEN_TAP_POSITION @"position"
