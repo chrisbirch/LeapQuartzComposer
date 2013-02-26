@@ -34,6 +34,36 @@
 #define LEAP_SCREEN_WIDTH @"width"
 #define LEAP_SCREEN_HEIGHT @"height"
 
+//New as of 0.7.4
+
+#define LEAP_GESTURE_TYPE @"type"
+#define LEAP_GESTURE_STATE @"state"
+#define LEAP_GESTURE_DURATION_SECONDS @"durationSeconds"
+#define LEAP_GESTURE_HANDS @"hands"
+#define LEAP_GESTURE_POINTABLES @"pointables"
+
+
+#define LEAP_GESTURE_SWIPE_POSITION @"position"
+#define LEAP_GESTURE_SWIPE_START_POSITION @"startPosition"
+#define LEAP_GESTURE_SWIPE_DIRECTION @"direction"
+#define LEAP_GESTURE_SWIPE_SPEED @"speed"
+#define LEAP_GESTURE_SWIPE_POINTABLE @"pointable"
+
+
+#define LEAP_GESTURE_CIRCLE_PROGRESS @"progress"
+#define LEAP_GESTURE_CIRCLE_CENTER @"center"
+#define LEAP_GESTURE_CIRCLE_NORMAL @"normal"
+#define LEAP_GESTURE_CIRCLE_RADIUS @"radius"
+#define LEAP_GESTURE_CIRCLE_POINTABLE @"pointable"
+
+
+#define LEAP_GESTURE_SCREEN_TAP_POSITION @"position"
+#define LEAP_GESTURE_SCREEN_TAP_DIRECTION @"direction"
+#define LEAP_GESTURE_SCREEN_TAP_PROGRESS @"progress"
+#define LEAP_GESTURE_SCREEN_TAP_POINTABLE @"pointable"
+
+//#define LEAP_GESTURE_ @""
+
 @interface LeapQCHelper : NSObject
 
 /**
