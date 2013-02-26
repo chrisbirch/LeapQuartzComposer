@@ -29,6 +29,92 @@
 @implementation LeapQCHelper
 
 
+-(NSDictionary*) leapGestureToDictionary:(const LeapGesture*)gesture
+{
+    NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] init];
+
+    
+    [dictionary setObject:NSNumberFromInt(gesture.type) forKey:LEAP_GESTURE_TYPE];
+    [dictionary setObject:NSNumberFromInt(gesture.state) forKey:LEAP_GESTURE_STATE];
+    [dictionary setObject:NSNumberFromDouble(gesture.durationSeconds) forKey:LEAP_GESTURE_DURATION_SECONDS];
+
+    //Now add properties to the output for each of the specific types
+    //of gesture
+    switch (gesture.type)
+    {
+        case LEAP_GESTURE_TYPE_CIRCLE:
+        {
+            LeapCircleGesture *circleGesture = (LeapCircleGesture *)gesture;
+            // Calculate the angle swept since the last frame
+            float sweptAngle = 0;
+
+            if(circleGesture.state != LEAP_GESTURE_STATE_START)
+            {
+                LeapCircleGesture *previousUpdate = (LeapCircleGesture *)[[_leapController frame:1] gesture:gesture.id];
+                sweptAngle = (circleGesture.progress - previousUpdate.progress) * 2 * LEAP_PI;
+                sweptAngle *= LEAP_RAD_TO_DEG;
+            }
+            
+            [dictionary setObject:NSNumberFromDouble(sweptAngle) forKey:LEAP_GESTURE_CIRCLE_SWEPT_ANGLE];
+            
+//            NSLog(@"Circle id: %d, %@, progress: %f, radius %f, angle: %f degrees",
+//                  circleGesture.id, [Sample stringForState:gesture.state],
+//                  circleGesture.progress, circleGesture.radius, sweptAngle * LEAP_RAD_TO_DEG);
+            break;
+        }
+        case LEAP_GESTURE_TYPE_SWIPE:
+        {
+            LeapSwipeGesture *swipeGesture = (LeapSwipeGesture *)gesture;
+            
+            [dictionary setObject:QCRepresentationOfVector(swipeGesture.position) forKey:LEAP_GESTURE_SWIPE_POSITION];
+            [dictionary setObject:QCRepresentationOfVector(swipeGesture.startPosition) forKey:LEAP_GESTURE_SWIPE_START_POSITION];
+            [dictionary setObject:QCRepresentationOfVector(swipeGesture.direction) forKey:LEAP_GESTURE_SWIPE_DIRECTION];
+            [dictionary setObject:QCRepresentationOfPointable(swipeGesture.pointable) forKey:LEAP_GESTURE_SWIPE_POINTABLE];
+            
+//            NSLog(@"Swipe id: %d, %@, position: %@, direction: %@, speed: %f",
+//                  swipeGesture.id, [Sample stringForState:swipeGesture.state],
+//                  swipeGesture.position, swipeGesture.direction, swipeGesture.speed);
+            break;
+        }
+        case LEAP_GESTURE_TYPE_KEY_TAP:
+        {
+            LeapKeyTapGesture *keyTapGesture = (LeapKeyTapGesture *)gesture;
+            [dictionary setObject:QCRepresentationOfVector(keyTapGesture.position) forKey:LEAP_GESTURE_KEY_TAP_POSITION];
+            [dictionary setObject:QCRepresentationOfVector(keyTapGesture.direction) forKey:LEAP_GESTURE_KEY_TAP_DIRECTION];
+            [dictionary setObject:NSNumberFromDouble(keyTapGesture.progress) forKey:LEAP_GESTURE_KEY_TAP_PROGRESS];
+            [dictionary setObject:QCRepresentationOfPointable(keyTapGesture.pointable) forKey:LEAP_GESTURE_KEY_TAP_POINTABLE];
+            
+            //
+            
+//            NSLog(@"Key Tap id: %d, %@, position: %@, direction: %@",
+//                  keyTapGesture.id, [Sample stringForState:keyTapGesture.state],
+//                  keyTapGesture.position, keyTapGesture.direction);
+            break;
+        }
+        case LEAP_GESTURE_TYPE_SCREEN_TAP:
+        {
+            LeapScreenTapGesture *screenTapGesture = (LeapScreenTapGesture *)gesture;
+            
+            [dictionary setObject:QCRepresentationOfVector(screenTapGesture.position) forKey:LEAP_GESTURE_SCREEN_TAP_POSITION];
+            [dictionary setObject:QCRepresentationOfVector(screenTapGesture.direction) forKey:LEAP_GESTURE_SCREEN_TAP_DIRECTION];
+            [dictionary setObject:NSNumberFromDouble(screenTapGesture.progress) forKey:LEAP_GESTURE_SCREEN_TAP_PROGRESS];
+            [dictionary setObject:QCRepresentationOfPointable(screenTapGesture.pointable) forKey:LEAP_GESTURE_SCREEN_TAP_POINTABLE];
+//            
+//            NSLog(@"Screen Tap id: %d, %@, position: %@, direction: %@",
+//                  screenTapGesture.id, [Sample stringForState:screenTapGesture.state],
+//                  screenTapGesture.position, screenTapGesture.direction);
+            break;
+        }
+        default:
+            NSLog(@"Unknown gesture type");
+            break;
+    }
+
+    
+    
+    return dictionary;
+}
+
 -(NSDictionary*) leapScreenToDictionary:(const LeapScreen*)screen
 {
     NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] init];

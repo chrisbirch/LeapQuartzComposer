@@ -222,7 +222,10 @@
 	
     //Create the leap controller
     leapController = [[LeapController alloc] initWithDelegate:self];
-    
+    //pass pointer to helper class. This is implemented because leap sample obj c requires access to previous frame in order to
+    //calculate sweep angle, etc
+    helper.leapController = leapController;
+
     
 	return leapController != nil;
 }
