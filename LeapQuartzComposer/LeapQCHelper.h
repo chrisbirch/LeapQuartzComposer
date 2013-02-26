@@ -12,14 +12,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class LeapHand;
-@class LeapPointable;
-@class LeapVector;
-@class LeapFrame;
-@class LeapScreen;
-@class LeapController;
 //These define what the QC structures will be called
-
 
 
 #define LEAP_ID @"id"
@@ -90,6 +83,16 @@
 #define LEAP_GESTURE_KEY_TAP_PROGRESS @"progress"
 #define LEAP_GESTURE_KEY_TAP_POINTABLE @"pointable"
 
+//forward declarations
+
+
+@class LeapHand;
+@class LeapPointable;
+@class LeapVector;
+@class LeapFrame;
+@class LeapScreen;
+@class LeapController;
+@class LeapGesture;
 
 //#define LEAP_GESTURE_ @""
 
@@ -126,6 +129,9 @@
  */
 @property(nonatomic,assign) BOOL includeToolsInHand;
 
+#pragma mark -
+#pragma mark Entity to dictionary functions
+
 /**
  * Returns a dictionary representation of the specified LeapScreen
  */
@@ -149,6 +155,17 @@
 
 
 /**
+ * Returns a dictionary representation of the specified LeapGesture
+ */
+-(NSDictionary*) leapGestureToDictionary:(const LeapGesture*)gesture;
+
+
+
+#pragma mark -
+#pragma mark Array functions
+
+
+/**
  * Returns an array filled with NSDictionary representations of LeapFingers
  */
 -(NSArray*) leapPointablesToQCCompatibleArray:(const NSArray*)pointables;
@@ -162,6 +179,9 @@
  * Returns an array filled with NSDictionary representations of LeapScreens
  */
 -(NSArray*) leapScreensToQCCompatibleArray:(const NSArray*)screens;
+
+-(NSArray*) leapGesturesToQCCompatibleArray:(const NSArray*)gestures;
+
 
 
 #pragma mark -

@@ -133,44 +133,7 @@
     return dictionary;
 }
 
--(NSArray*) leapScreensToQCCompatibleArray:(const NSArray*)screens
-{
-    NSMutableArray* array = [[NSMutableArray alloc] init];
-    
-    for (LeapScreen* screen in screens)
-    {
-        [array addObject:[self leapScreenToDictionary:screen]];
-    }
-    
-    return array;
-}
 
--(NSArray*) leapHandsToQCCompatibleArray:(const NSArray*)hands
-{
-    NSMutableArray* handsArray = [[NSMutableArray alloc] init];
-    
-    for(LeapHand* hand in hands)
-    {
-        NSDictionary* handDictionary =  [self leapHandToDictionary:hand];
-        [handsArray addObject:handDictionary];
-    }
-    
-    return handsArray;
-}
-
-
--(NSArray*) leapPointablesToQCCompatibleArray:(const NSArray*)pointables
-{
-    NSMutableArray* fingersArray = [[NSMutableArray alloc] init];
-    
-    for(LeapPointable* pointable in pointables)
-    {
-        NSDictionary* fingerDictionary =  [self leapPointableToDictionary:pointable];
-        [fingersArray addObject:fingerDictionary];
-    }
-    
-    return fingersArray;
-}
 
 -(NSDictionary*) leapFrameToDictionary:(const LeapFrame*)frame
 {
@@ -312,6 +275,63 @@
     return dictionary;
 }
 
+#pragma mark -
+#pragma mark Array output functions
+
+-(NSArray*) leapScreensToQCCompatibleArray:(const NSArray*)screens
+{
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+    
+    for (LeapScreen* screen in screens)
+    {
+        [array addObject:[self leapScreenToDictionary:screen]];
+    }
+    
+    return array;
+}
+
+
+-(NSArray*) leapHandsToQCCompatibleArray:(const NSArray*)hands
+{
+    NSMutableArray* handsArray = [[NSMutableArray alloc] init];
+    
+    for(LeapHand* hand in hands)
+    {
+        NSDictionary* handDictionary =  [self leapHandToDictionary:hand];
+        [handsArray addObject:handDictionary];
+    }
+    
+    return handsArray;
+}
+
+
+-(NSArray*) leapPointablesToQCCompatibleArray:(const NSArray*)pointables
+{
+    NSMutableArray* fingersArray = [[NSMutableArray alloc] init];
+    
+    for(LeapPointable* pointable in pointables)
+    {
+        NSDictionary* fingerDictionary =  [self leapPointableToDictionary:pointable];
+        [fingersArray addObject:fingerDictionary];
+    }
+    
+    return fingersArray;
+}
+
+
+
+-(NSArray*) leapGesturesToQCCompatibleArray:(const NSArray*)gestures
+{
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+    
+    for(LeapGesture* gesture in gestures)
+    {
+        NSDictionary* dictionary =  [self leapGestureToDictionary:gesture];
+        [array addObject:dictionary];
+    }
+    
+    return array;
+}
 
 
 #pragma mark -
