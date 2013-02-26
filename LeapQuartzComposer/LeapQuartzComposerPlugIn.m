@@ -13,8 +13,8 @@
 #import "LeapQCHelper.h"
 
 
-#define	kQCPlugIn_Name				@"Leap Device Interface"
-#define	kQCPlugIn_Description		@"Version: 0.11\nAllows QC compositions to access data returned by Leap Motion devices"
+#define	kQCPlugIn_Name				@"Leap Device Interface SDK 0.7.4"
+#define	kQCPlugIn_Description		@"Version: 0.2\nAllows QC compositions to access data returned by Leap Motion devices"
 #define kQCPlugIn_AuthorDescription @"© 2013 by Chris Birch, all rights reserved."
 
 @interface LeapQuartzComposerPlugIn ()
