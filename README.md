@@ -22,7 +22,7 @@ https://github.com/darknoon/LeapQC
 
 Changes:
 
-v0.2
+v0.2 - Wed 27 Feb 13
 
 Updated to use Leap SDK 0.7.4
 
