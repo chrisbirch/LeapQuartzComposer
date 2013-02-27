@@ -355,7 +355,7 @@
 
 
 
--(NSDictionary*) leapGesturesArrangedByTypeDictionary:(const NSArray*)gestures
+-(void) processLeapGestures:(const NSArray*)gestures
 {
     //we need to create arrays to hold the different type of gestures
     //since we need to expose each type of gesture to the correct ouputPort
@@ -364,15 +364,11 @@
     NSMutableArray* keyTapArray = [[NSMutableArray alloc] init];
     NSMutableArray* screenTapArray = [[NSMutableArray alloc] init];
 
-    //Create a dictionary to hold these arrays
-    NSDictionary* leapGesturesArrangedByTypeDictionary =
-    @{
-        GESTURE_ARRAY_CIRCLE : circleArray,
-        GESTURE_ARRAY_KEY_TAP : keyTapArray,
-        GESTURE_ARRAY_SCREEN_TAP : screenTapArray,
-        GESTURE_ARRAY_SWIPE : swipeArray
-    };
-    
+    //Set instance properties
+    _frameGestureSwipes = swipeArray;
+    _frameGestureCircles = circleArray;
+    _frameGestureScreenTaps = screenTapArray;
+    _frameGestureKeyTaps = keyTapArray;
 
     
     for(LeapGesture* gesture in gestures)
@@ -413,7 +409,6 @@
         
     }
     
-    return leapGesturesArrangedByTypeDictionary;
 }
 
 

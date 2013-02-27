@@ -163,6 +163,31 @@
 @property(nonatomic,assign) BOOL includeGestureSwipe;
 
 
+/**
+ * Represents an array of qc compatible swipe gesture dictionaries.
+ * NB! be sure to call processLeapGestures: first!
+ */
+@property(nonatomic,readonly,strong) NSArray* frameGestureSwipes;
+
+/**
+ * Represents an array of qc compatible circle gesture dictionaries.
+ * NB! be sure to call processLeapGestures: first!
+ */
+@property(nonatomic,readonly,strong) NSArray* frameGestureCircles;
+
+/**
+ * Represents an array of qc compatible key tap gesture dictionaries.
+ * NB! be sure to call processLeapGestures: first!
+ */
+@property(nonatomic,readonly,strong) NSArray* frameGestureKeyTaps;
+
+/**
+ * Represents an array of qc compatible screen tap gesture dictionaries.
+ * NB! be sure to call processLeapGestures: first!
+ */
+@property(nonatomic,readonly,strong) NSArray* frameGestureScreenTaps;
+
+
 
 
 #pragma mark -
@@ -220,13 +245,10 @@
 
 
 /**
- * Returns a dictionary with the following keys:
- * GESTURE_ARRAY_SWIPE, GESTURE_ARRAY_CIRCLE, GESTURE_ARRAY_KEY_TAP
- * GESTURE_ARRAY_SCREEN_TAP
- *
- * Each key represents an array of a particular type of gesture dictionaries
+ * Converts an array of LeapGesture pointers into QC compatible arrays.
+ * Sets instance properties: frameGestureSwipes, frameGestureKeyTaps ,frameGestureScreenTaps,frameGestureCircles *
  */
--(NSDictionary*) leapGesturesArrangedByTypeDictionary:(const NSArray*)gestures;
+-(void) processLeapGestures:(const NSArray*)gestures;
 
 
 #pragma mark -
