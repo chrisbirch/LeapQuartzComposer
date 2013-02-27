@@ -1,0 +1,318 @@
+
+
+#######################################################################
+#
+# Auto generated code created using QC Plugin Assistant by Chris Birch
+#
+#######################################################################
+
+
+
+
+###################################
+# Place in the plugin .h file
+###################################
+
+
+//Port Defines
+
+//Yes if hands array is exposed to QC
+#define INPUT_RETRIEVEHANDS @"inputRetrieveHands"
+//Yes if fingers array is exposed to QC
+#define INPUT_RETRIEVEFINGERS @"inputRetrieveFingers"
+//Yes if tools array is exposed to QC
+#define INPUT_RETRIEVETOOLS @"inputRetrieveTools"
+//Yes if pointables array is exposed to QC
+#define INPUT_RETRIEVEPOINTABLES @"inputRetrievePointables"
+//Yes if fingers array is exposed in hand structure
+#define INPUT_INCLUDEFINGERSINHAND @"inputIncludeFingersInHand"
+//Yes if tools array is exposed in hand structure
+#define INPUT_INCLUDETOOLSINHAND @"inputIncludeToolsInHand"
+//Yes if pointables array is exposed in hand structure
+#define INPUT_INCLUDEPOINTABLESINHAND @"inputIncludePointablesInHand"
+//Dictates the type of QC compativle construct used to represent vectors
+#define INPUT_USEDICTIONARIESTOREPRESENTVECTORS @"inputUseDictionariesToRepresentVectors"
+//Dictates whether or not vectors include yaw pitch and roll
+#define INPUT_VECTORSINCLUDEYAWPITCHROLL @"inputVectorsIncludeYawPitchRoll"
+//Yes if Swipe gestures are exposed to QC
+#define INPUT_RETRIEVEGESTURESWIPE @"inputRetrieveGestureSwipe"
+//Yes if Screen Tap gestures are exposed to QC
+#define INPUT_RETRIEVEGESTURESCREENTAP @"inputRetrieveGestureScreenTap"
+//Yes if Key Tap gestures are exposed to QC
+#define INPUT_RETRIEVEGESTUREKEYTAP @"inputRetrieveGestureKeyTap"
+//Yes if circle gestures are exposed to QC
+#define INPUT_RETRIEVEGESTURECIRCLE @"inputRetrieveGestureCircle"
+//Array of Hand structures
+#define OUTPUT_HANDS @"outputHands"
+//Array of Finger structures
+#define OUTPUT_FINGERS @"outputFingers"
+//Array of tools
+#define OUTPUT_TOOLS @"outputTools"
+//Array of pointables
+#define OUTPUT_POINTABLES @"outputPointables"
+//Information about the frame
+#define OUTPUT_FRAME @"outputFrame"
+//Exposes the screens as a QC array
+#define OUTPUT_SCREENS @"outputScreens"
+//Information about the Swipe gestures
+#define OUTPUT_GESTURESWIPES @"outputGestureSwipes"
+//Information about the Screen Tap gestures
+#define OUTPUT_GESTURESCREENTAPS @"outputGestureScreenTaps"
+//Information about the Key Tap gestures
+#define OUTPUT_GESTUREKEYTAPS @"outputGestureKeyTaps"
+//Information about the Circle gestures
+#define OUTPUT_GESTURECIRCLES @"outputGestureCircles"
+
+
+//Port Properties
+
+@property (assign) BOOL inputRetrieveHands;
+@property (assign) BOOL inputRetrieveFingers;
+@property (assign) BOOL inputRetrieveTools;
+@property (assign) BOOL inputRetrievePointables;
+@property (assign) BOOL inputIncludeFingersInHand;
+@property (assign) BOOL inputIncludeToolsInHand;
+@property (assign) BOOL inputIncludePointablesInHand;
+@property (assign) BOOL inputUseDictionariesToRepresentVectors;
+@property (assign) BOOL inputVectorsIncludeYawPitchRoll;
+@property (assign) BOOL inputRetrieveGestureSwipe;
+@property (assign) BOOL inputRetrieveGestureScreenTap;
+@property (assign) BOOL inputRetrieveGestureKeyTap;
+@property (assign) BOOL inputRetrieveGestureCircle;
+@property (assign) NSArray* outputHands;
+@property (assign) NSArray* outputFingers;
+@property (assign) NSArray* outputTools;
+@property (assign) NSArray* outputPointables;
+@property (assign) NSDictionary* outputFrame;
+@property (assign) NSArray* outputScreens;
+@property (assign) NSArray* outputGestureSwipes;
+@property (assign) NSArray* outputGestureScreenTaps;
+@property (assign) NSArray* outputGestureKeyTaps;
+@property (assign) NSArray* outputGestureCircles;
+
+
+
+###################################
+# Place in the plugin .m file
+###################################
+
+
+//Port Synthesizes
+
+@dynamic inputRetrieveHands;
+@dynamic inputRetrieveFingers;
+@dynamic inputRetrieveTools;
+@dynamic inputRetrievePointables;
+@dynamic inputIncludeFingersInHand;
+@dynamic inputIncludeToolsInHand;
+@dynamic inputIncludePointablesInHand;
+@dynamic inputUseDictionariesToRepresentVectors;
+@dynamic inputVectorsIncludeYawPitchRoll;
+@dynamic inputRetrieveGestureSwipe;
+@dynamic inputRetrieveGestureScreenTap;
+@dynamic inputRetrieveGestureKeyTap;
+@dynamic inputRetrieveGestureCircle;
+@dynamic outputHands;
+@dynamic outputFingers;
+@dynamic outputTools;
+@dynamic outputPointables;
+@dynamic outputFrame;
+@dynamic outputScreens;
+@dynamic outputGestureSwipes;
+@dynamic outputGestureScreenTaps;
+@dynamic outputGestureKeyTaps;
+@dynamic outputGestureCircles;
+
+//Port Attributes
+
+//Yes if hands array is exposed to QC
+if([key isEqualToString:INPUT_RETRIEVEHANDS])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Retrieve Hands", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Yes if fingers array is exposed to QC
+else if([key isEqualToString:INPUT_RETRIEVEFINGERS])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Retrieve Fingers", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Yes if tools array is exposed to QC
+else if([key isEqualToString:INPUT_RETRIEVETOOLS])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Retrieve Tools", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Yes if pointables array is exposed to QC
+else if([key isEqualToString:INPUT_RETRIEVEPOINTABLES])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Retrieve Pointables", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Yes if fingers array is exposed in hand structure
+else if([key isEqualToString:INPUT_INCLUDEFINGERSINHAND])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Include Fingers In Hand", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Yes if tools array is exposed in hand structure
+else if([key isEqualToString:INPUT_INCLUDETOOLSINHAND])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Include Tools In Hand", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Yes if pointables array is exposed in hand structure
+else if([key isEqualToString:INPUT_INCLUDEPOINTABLESINHAND])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Include Pointables In Hand", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Dictates the type of QC compativle construct used to represent vectors
+else if([key isEqualToString:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Use dictionaries to represent vectors", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Dictates whether or not vectors include yaw pitch and roll
+else if([key isEqualToString:INPUT_VECTORSINCLUDEYAWPITCHROLL])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Vectors include Yaw Pitch Roll", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Yes if Swipe gestures are exposed to QC
+else if([key isEqualToString:INPUT_RETRIEVEGESTURESWIPE])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Retrieve Swipe Gestures", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Yes if Screen Tap gestures are exposed to QC
+else if([key isEqualToString:INPUT_RETRIEVEGESTURESCREENTAP])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Retrieve Screen Tap Gestures", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Yes if Key Tap gestures are exposed to QC
+else if([key isEqualToString:INPUT_RETRIEVEGESTUREKEYTAP])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Retrieve Key Tap Gestures", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Yes if circle gestures are exposed to QC
+else if([key isEqualToString:INPUT_RETRIEVEGESTURECIRCLE])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Retrieve Circle Gestures", QCPortAttributeNameKey,
+            [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+            nil];
+//Array of Hand structures
+else if([key isEqualToString:OUTPUT_HANDS])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Hands", QCPortAttributeNameKey,
+            nil];
+//Array of Finger structures
+else if([key isEqualToString:OUTPUT_FINGERS])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Fingers", QCPortAttributeNameKey,
+            nil];
+//Array of tools
+else if([key isEqualToString:OUTPUT_TOOLS])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Tools", QCPortAttributeNameKey,
+            nil];
+//Array of pointables
+else if([key isEqualToString:OUTPUT_POINTABLES])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Pointables", QCPortAttributeNameKey,
+            nil];
+//Information about the frame
+else if([key isEqualToString:OUTPUT_FRAME])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Frame", QCPortAttributeNameKey,
+            nil];
+//Exposes the screens as a QC array
+else if([key isEqualToString:OUTPUT_SCREENS])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Screens", QCPortAttributeNameKey,
+            nil];
+//Information about the Swipe gestures
+else if([key isEqualToString:OUTPUT_GESTURESWIPES])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Swipe Gestures", QCPortAttributeNameKey,
+            nil];
+//Information about the Screen Tap gestures
+else if([key isEqualToString:OUTPUT_GESTURESCREENTAPS])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Screen Tap Gestures", QCPortAttributeNameKey,
+            nil];
+//Information about the Key Tap gestures
+else if([key isEqualToString:OUTPUT_GESTUREKEYTAPS])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Key Tap Gestures", QCPortAttributeNameKey,
+            nil];
+//Information about the Circle gestures
+else if([key isEqualToString:OUTPUT_GESTURECIRCLES])
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            @"Circle Gestures", QCPortAttributeNameKey,
+            nil];
+
+//Port Value Changed code
+
+//Skipping Value changed section for property: RetrieveHands as no values have been supplied for valueChangedTarget or valueChangedBody
+//Skipping Value changed section for property: RetrieveFingers as no values have been supplied for valueChangedTarget or valueChangedBody
+//Skipping Value changed section for property: RetrieveTools as no values have been supplied for valueChangedTarget or valueChangedBody
+//Skipping Value changed section for property: RetrievePointables as no values have been supplied for valueChangedTarget or valueChangedBody
+//Yes if fingers array is exposed in hand structure
+if ([self didValueForInputKeyChange:INPUT_INCLUDEFINGERSINHAND])
+{
+    helper.includeFingersInHand = self.inputIncludeFingersInHand;
+}
+//Yes if tools array is exposed in hand structure
+if ([self didValueForInputKeyChange:INPUT_INCLUDETOOLSINHAND])
+{
+    helper.includeToolsInHand = self.inputIncludeToolsInHand;
+}
+//Yes if pointables array is exposed in hand structure
+if ([self didValueForInputKeyChange:INPUT_INCLUDEPOINTABLESINHAND])
+{
+    helper.includePointablesInHand = self.inputIncludePointablesInHand;
+}
+//Dictates the type of QC compativle construct used to represent vectors
+if ([self didValueForInputKeyChange:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
+{
+    helper.outputVectorsAsDictionaries = self.inputUseDictionariesToRepresentVectors;
+}
+//Dictates whether or not vectors include yaw pitch and roll
+if ([self didValueForInputKeyChange:INPUT_VECTORSINCLUDEYAWPITCHROLL])
+{
+    helper.outputYawPitchRoll = self.inputVectorsIncludeYawPitchRoll;
+}
+//Yes if Swipe gestures are exposed to QC
+if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESWIPE])
+{
+    helper.includeGestureSwipe = self.inputRetrieveGestureSwipe;
+}
+//Yes if Screen Tap gestures are exposed to QC
+if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESCREENTAP])
+{
+    helper.includeGestureScreenTap = self.inputRetrieveGestureScreenTap;
+}
+//Yes if Key Tap gestures are exposed to QC
+if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTUREKEYTAP])
+{
+    helper.includeGestureKeyTap = self.inputRetrieveGestureKeyTap;
+}
+//Yes if circle gestures are exposed to QC
+if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURECIRCLE])
+{
+    helper.includeGestureCircle = self.inputRetrieveGestureCircle;
+}
+
+
+
+
+
+
+
+
+
+
+
