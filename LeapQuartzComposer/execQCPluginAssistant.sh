@@ -1,0 +1,1 @@
+./qcPluginAssistant Ports.plist assistantOutput.txt
