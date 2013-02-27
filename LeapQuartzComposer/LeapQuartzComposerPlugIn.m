@@ -39,12 +39,20 @@
 @dynamic inputIncludePointablesInHand;
 @dynamic inputUseDictionariesToRepresentVectors;
 @dynamic inputVectorsIncludeYawPitchRoll;
+@dynamic inputRetrieveGestureSwipe;
+@dynamic inputRetrieveGestureScreenTap;
+@dynamic inputRetrieveGestureKeyTap;
+@dynamic inputRetrieveGestureCircle;
 @dynamic outputHands;
 @dynamic outputFingers;
 @dynamic outputTools;
 @dynamic outputPointables;
 @dynamic outputFrame;
 @dynamic outputScreens;
+@dynamic outputGestureSwipes;
+@dynamic outputGestureScreenTaps;
+@dynamic outputGestureKeyTaps;
+@dynamic outputGestureCircles;
 
 
 
@@ -119,6 +127,30 @@
                 @"Vectors include Yaw Pitch Roll", QCPortAttributeNameKey,
                 [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
                 nil];
+    //Yes if Swipe gestures are exposed to QC
+    else if([key isEqualToString:INPUT_RETRIEVEGESTURESWIPE])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Retrieve Swipe Gestures", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
+    //Yes if Screen Tap gestures are exposed to QC
+    else if([key isEqualToString:INPUT_RETRIEVEGESTURESCREENTAP])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Retrieve Screen Tap Gestures", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
+    //Yes if Key Tap gestures are exposed to QC
+    else if([key isEqualToString:INPUT_RETRIEVEGESTUREKEYTAP])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Retrieve Key Tap Gestures", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
+    //Yes if circle gestures are exposed to QC
+    else if([key isEqualToString:INPUT_RETRIEVEGESTURECIRCLE])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Retrieve Circle Gestures", QCPortAttributeNameKey,
+                [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
     //Array of Hand structures
     else if([key isEqualToString:OUTPUT_HANDS])
         return [NSDictionary dictionaryWithObjectsAndKeys:
@@ -148,6 +180,26 @@
     else if([key isEqualToString:OUTPUT_SCREENS])
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 @"Screens", QCPortAttributeNameKey,
+                nil];
+    //Information about the Swipe gestures
+    else if([key isEqualToString:OUTPUT_GESTURESWIPES])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Swipe Gestures", QCPortAttributeNameKey,
+                nil];
+    //Information about the Screen Tap gestures
+    else if([key isEqualToString:OUTPUT_GESTURESCREENTAPS])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Screen Tap Gestures", QCPortAttributeNameKey,
+                nil];
+    //Information about the Key Tap gestures
+    else if([key isEqualToString:OUTPUT_GESTUREKEYTAPS])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Key Tap Gestures", QCPortAttributeNameKey,
+                nil];
+    //Information about the Circle gestures
+    else if([key isEqualToString:OUTPUT_GESTURECIRCLES])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Circle Gestures", QCPortAttributeNameKey,
                 nil];
     
     return nil;
@@ -251,6 +303,9 @@
     
     //Port Value Changed code
     
+    //the following are skipped because they have no corresponding helper class property!
+    //they are dealt with below.
+    
     //Skipping Value changed section for property: RetrieveHands as no values have been supplied for valueChangedTarget or valueChangedBody
     //Skipping Value changed section for property: RetrieveFingers as no values have been supplied for valueChangedTarget or valueChangedBody
     //Skipping Value changed section for property: RetrieveTools as no values have been supplied for valueChangedTarget or valueChangedBody
@@ -279,6 +334,26 @@
     if ([self didValueForInputKeyChange:INPUT_VECTORSINCLUDEYAWPITCHROLL])
     {
         helper.outputYawPitchRoll = self.inputVectorsIncludeYawPitchRoll;
+    }
+    //Yes if Swipe gestures are exposed to QC
+    if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESWIPE])
+    {
+        helper.includeGestureSwipe = self.inputRetrieveGestureSwipe;
+    }
+    //Yes if Screen Tap gestures are exposed to QC
+    if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESCREENTAP])
+    {
+        helper.includeGestureScreenTap = self.inputRetrieveGestureScreenTap;
+    }
+    //Yes if Key Tap gestures are exposed to QC
+    if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTUREKEYTAP])
+    {
+        helper.includeGestureKeyTap = self.inputRetrieveGestureKeyTap;
+    }
+    //Yes if circle gestures are exposed to QC
+    if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURECIRCLE])
+    {
+        helper.includeGestureCircle = self.inputRetrieveGestureCircle;
     }
 
     
@@ -313,6 +388,40 @@
     if(self.inputRetrieveTools)
     {
         self.outputTools = [helper leapPointablesToQCCompatibleArray:frame.tools];
+    }
+    
+    //Process any gestures (only if they are included)
+
+    //LEAP DEVELOPERS: REALLY?
+    NSArray* rawGestures =[frame gestures:frame];
+
+    //Important!
+    //process raw leap sdk gestures into qc compatible dictionaries and store them
+    //in helper instance properties. These properties are referenced immediately below
+    [helper processLeapGestures:rawGestures];
+    
+    //If we are retrieving any gestures, the appropriate gestures will have been processed by
+    //call to processLeapGestures above.
+    //all we need to do now is work out if we need set output properties
+    
+    if (self.inputRetrieveGestureCircle)
+    {
+        self.outputGestureCircles = helper.frameGestureCircles;
+    }
+    
+    if (self.inputRetrieveGestureKeyTap)
+    {
+        self.outputGestureKeyTaps = helper.frameGestureKeyTaps;
+    }
+    
+    if (self.inputRetrieveGestureScreenTap)
+    {
+        self.outputGestureScreenTaps = helper.frameGestureScreenTaps;
+    }
+    
+    if (self.inputRetrieveGestureSwipe)
+    {
+        self.outputGestureSwipes = helper.frameGestureSwipes;
     }
     
     
