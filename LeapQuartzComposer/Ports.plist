@@ -4,6 +4,118 @@
 <array>
 	<dict>
 		<key>Name</key>
+		<string>GestureSwipe</string>
+		<key>FriendlyName</key>
+		<string>Swipe Gesture</string>
+		<key>Type</key>
+		<string>dictionary</string>
+		<key>DefaultValue</key>
+		<string></string>
+		<key>Comment</key>
+		<string>Information about the Swipe gesture</string>
+		<key>IsInput</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>GestureScreenTap</string>
+		<key>FriendlyName</key>
+		<string>Screen Tap Gesture</string>
+		<key>Type</key>
+		<string>dictionary</string>
+		<key>DefaultValue</key>
+		<string></string>
+		<key>Comment</key>
+		<string>Information about the Screen Tap gesture</string>
+		<key>IsInput</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>GestureKeyTap</string>
+		<key>FriendlyName</key>
+		<string>Key Tap Gesture</string>
+		<key>Type</key>
+		<string>dictionary</string>
+		<key>DefaultValue</key>
+		<string></string>
+		<key>Comment</key>
+		<string>Information about the Key Tap gesture</string>
+		<key>IsInput</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>GestureCircle</string>
+		<key>FriendlyName</key>
+		<string>Circle Gesture</string>
+		<key>Type</key>
+		<string>dictionary</string>
+		<key>DefaultValue</key>
+		<string></string>
+		<key>Comment</key>
+		<string>Information about the Circle gesture</string>
+		<key>IsInput</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>RetrieveGestureSwipe</string>
+		<key>FriendlyName</key>
+		<string>Retrieve Swipe Gestures</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Yes if Swipe gestures are exposed to QC</string>
+		<key>IsInput</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>RetrieveGestureScreenTap</string>
+		<key>FriendlyName</key>
+		<string>Retrieve Screen Tap Gestures</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Yes if Screen Tap gestures are exposed to QC</string>
+		<key>IsInput</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>RetrieveGestureKeyTap</string>
+		<key>FriendlyName</key>
+		<string>Retrieve Key Tap Gestures</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Yes if Key Tap gestures are exposed to QC</string>
+		<key>IsInput</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>RetrieveGestureCircle</string>
+		<key>FriendlyName</key>
+		<string>Retrieve Circle Gestures</string>
+		<key>Type</key>
+		<string>bool</string>
+		<key>DefaultValue</key>
+		<string>YES</string>
+		<key>Comment</key>
+		<string>Yes if circle gestures are exposed to QC</string>
+		<key>IsInput</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>Name</key>
 		<string>RetrieveHands</string>
 		<key>FriendlyName</key>
 		<string>Retrieve Hands</string>
@@ -106,9 +218,6 @@
 		<key>ValueChangedTarget</key>
 		<string>helper.includePointablesInHand</string>
 	</dict>
-
-
-
 	<dict>
 		<key>Name</key>
 		<string>UseDictionariesToRepresentVectors</string>
