@@ -318,19 +318,102 @@
     return fingersArray;
 }
 
-
-
--(NSArray*) leapGesturesToQCCompatibleArray:(const NSArray*)gestures
+/**
+ * Based on the configuration of this instances properties, returns YES or NO depeding on whether
+ * user code wishes each type of gesture to be included in the ouput
+ */
+-(BOOL)shouldIncludeGestureInArray:(LeapGesture*)gesture
 {
-    NSMutableArray* array = [[NSMutableArray alloc] init];
+    switch(gesture.type)
+    {
+        case LEAP_GESTURE_TYPE_CIRCLE:
+        {
+            return _includeGestureCircle;
+        }
+        case LEAP_GESTURE_TYPE_KEY_TAP:
+        {
+            return _includeGestureKeyTap;
+        }
+        case LEAP_GESTURE_TYPE_SCREEN_TAP:
+        {
+            return _includeGestureScreenTap;
+        }
+        case LEAP_GESTURE_TYPE_SWIPE:
+        {
+            return _includeGestureSwipe;
+        }
+        case LEAP_GESTURE_TYPE_INVALID:
+        {
+            return NO;
+        }
+    }
+
+    return NO;
+
+}
+
+
+
+
+-(NSDictionary*) leapGesturesArrangedByTypeDictionary:(const NSArray*)gestures
+{
+    //we need to create arrays to hold the different type of gestures
+    //since we need to expose each type of gesture to the correct ouputPort
+    NSMutableArray* swipeArray = [[NSMutableArray alloc] init];
+    NSMutableArray* circleArray = [[NSMutableArray alloc] init];
+    NSMutableArray* keyTapArray = [[NSMutableArray alloc] init];
+    NSMutableArray* screenTapArray = [[NSMutableArray alloc] init];
+
+    //Create a dictionary to hold these arrays
+    NSDictionary* leapGesturesArrangedByTypeDictionary =
+    @{
+        GESTURE_ARRAY_CIRCLE : circleArray,
+        GESTURE_ARRAY_KEY_TAP : keyTapArray,
+        GESTURE_ARRAY_SCREEN_TAP : screenTapArray,
+        GESTURE_ARRAY_SWIPE : swipeArray
+    };
+    
+
     
     for(LeapGesture* gesture in gestures)
     {
-        NSDictionary* dictionary =  [self leapGestureToDictionary:gesture];
-        [array addObject:dictionary];
+        //Only include this gesture if user code has told us it wants it.
+        //*see inputPorts for more info about how this helper is used.
+        if ([self shouldIncludeGestureInArray:gesture])
+        {
+            //create a leap compatible dictionary to add to an array
+            NSDictionary* gestureDictionary =  [self leapGestureToDictionary:gesture];
+            
+            //Now we need to decide which array to put this gesture in
+            switch(gesture.type)
+            {
+                case LEAP_GESTURE_TYPE_CIRCLE:
+                {
+                    [circleArray addObject:gestureDictionary];
+                }
+                case LEAP_GESTURE_TYPE_KEY_TAP:
+                {
+                    [keyTapArray addObject:gestureDictionary];
+                }
+                case LEAP_GESTURE_TYPE_SCREEN_TAP:
+                {
+                    [screenTapArray addObject:gestureDictionary];
+                }
+                case LEAP_GESTURE_TYPE_SWIPE:
+                {
+                    [swipeArray addObject:gestureDictionary];
+                }
+                case LEAP_GESTURE_TYPE_INVALID:
+                {
+                    NSLog(@"Invalid type of gesture");
+                }
+            }
+            
+        }
+        
     }
     
-    return array;
+    return leapGesturesArrangedByTypeDictionary;
 }
 
 

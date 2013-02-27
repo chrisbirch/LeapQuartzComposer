@@ -83,6 +83,16 @@
 #define LEAP_GESTURE_KEY_TAP_PROGRESS @"progress"
 #define LEAP_GESTURE_KEY_TAP_POINTABLE @"pointable"
 
+
+//the following define the name of the key that references each of the types of gestures
+//returned in a dictionary by the leapGesturesArrangedByTypeDictionary method
+#define GESTURE_ARRAY_SWIPE @"swipes"
+#define GESTURE_ARRAY_CIRCLE @"circles"
+#define GESTURE_ARRAY_KEY_TAP @"keytaps"
+#define GESTURE_ARRAY_SCREEN_TAP @"screentaps"
+
+
+
 //forward declarations
 
 
@@ -128,6 +138,32 @@
  * If YES then tool arrays will in included in hand structures
  */
 @property(nonatomic,assign) BOOL includeToolsInHand;
+
+/**
+ * If YES then circle gestures will be included in ouput
+ */
+@property(nonatomic,assign) BOOL includeGestureCircle;
+
+
+/**
+ * If YES then screen tap gestures will be included in ouput
+ */
+@property(nonatomic,assign) BOOL includeGestureScreenTap;
+
+
+/**
+ * If YES then key tap gestures will be included in ouput
+ */
+@property(nonatomic,assign) BOOL includeGestureKeyTap;
+
+
+/**
+ * If YES then swipe gestures will be included in ouput
+ */
+@property(nonatomic,assign) BOOL includeGestureSwipe;
+
+
+
 
 #pragma mark -
 #pragma mark Entity to dictionary functions
@@ -180,8 +216,17 @@
  */
 -(NSArray*) leapScreensToQCCompatibleArray:(const NSArray*)screens;
 
--(NSArray*) leapGesturesToQCCompatibleArray:(const NSArray*)gestures;
+//-(NSArray*) leapGesturesToQCCompatibleArray:(const NSArray*)gestures;
 
+
+/**
+ * Returns a dictionary with the following keys:
+ * GESTURE_ARRAY_SWIPE, GESTURE_ARRAY_CIRCLE, GESTURE_ARRAY_KEY_TAP
+ * GESTURE_ARRAY_SCREEN_TAP
+ *
+ * Each key represents an array of a particular type of gesture dictionaries
+ */
+-(NSDictionary*) leapGesturesArrangedByTypeDictionary:(const NSArray*)gestures;
 
 
 #pragma mark -
