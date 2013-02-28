@@ -16,7 +16,25 @@
 		83A06602169860B7007EB21E /* LeapQCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A06601169860B7007EB21E /* LeapQCHelper.m */; };
 		83A0660E16987C78007EB21E /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83A065B61698550E007EB21E /* libLeap.dylib */; };
 		83B88B4916AB137600C40CD2 /* Ports.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83B88B4816AB137600C40CD2 /* Ports.plist */; };
+		83CE9C4216DED7A500B6FD60 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A0658916984F36007EB21E /* Cocoa.framework */; };
+		83CE9C4816DED7A500B6FD60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83CE9C4616DED7A500B6FD60 /* InfoPlist.strings */; };
+		83CE9C4A16DED7A500B6FD60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CE9C4916DED7A500B6FD60 /* main.m */; };
+		83CE9C4E16DED7A500B6FD60 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 83CE9C4C16DED7A500B6FD60 /* Credits.rtf */; };
+		83CE9C5116DED7A500B6FD60 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CE9C5016DED7A500B6FD60 /* AppDelegate.m */; };
+		83CE9C5416DED7A500B6FD60 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83CE9C5216DED7A500B6FD60 /* MainMenu.xib */; };
+		83CE9C5B16DED85E00B6FD60 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A065B61698550E007EB21E /* libLeap.dylib */; };
+		83CE9C5C16DED86700B6FD60 /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83A065B51698550E007EB21E /* LeapObjectiveC.mm */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		83CE9C5916DED7B400B6FD60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83A0657C16984F36007EB21E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 83A0658516984F36007EB21E;
+			remoteInfo = LeapQuartzComposer;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		83A0660C16987C67007EB21E /* CopyFiles */ = {
@@ -51,6 +69,15 @@
 		83A06600169860B7007EB21E /* LeapQCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapQCHelper.h; sourceTree = "<group>"; };
 		83A06601169860B7007EB21E /* LeapQCHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeapQCHelper.m; sourceTree = "<group>"; };
 		83B88B4816AB137600C40CD2 /* Ports.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ports.plist; sourceTree = "<group>"; };
+		83CE9C4016DED7A500B6FD60 /* LeapStandaloneTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeapStandaloneTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		83CE9C4516DED7A500B6FD60 /* LeapStandaloneTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LeapStandaloneTest-Info.plist"; sourceTree = "<group>"; };
+		83CE9C4716DED7A500B6FD60 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CE9C4916DED7A500B6FD60 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		83CE9C4B16DED7A500B6FD60 /* LeapStandaloneTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LeapStandaloneTest-Prefix.pch"; sourceTree = "<group>"; };
+		83CE9C4D16DED7A500B6FD60 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		83CE9C4F16DED7A500B6FD60 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		83CE9C5016DED7A500B6FD60 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		83CE9C5316DED7A500B6FD60 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +91,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83CE9C3D16DED7A500B6FD60 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83CE9C5B16DED85E00B6FD60 /* libLeap.dylib in Frameworks */,
+				83CE9C4216DED7A500B6FD60 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -71,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				83A0659316984F36007EB21E /* LeapQuartzComposer */,
+				83CE9C4316DED7A500B6FD60 /* LeapStandaloneTest */,
 				83A0658816984F36007EB21E /* Frameworks */,
 				83A0658716984F36007EB21E /* Products */,
 			);
@@ -80,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				83A0658616984F36007EB21E /* LeapQuartzComposer.plugin */,
+				83CE9C4016DED7A500B6FD60 /* LeapStandaloneTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,6 +186,29 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
+		83CE9C4316DED7A500B6FD60 /* LeapStandaloneTest */ = {
+			isa = PBXGroup;
+			children = (
+				83CE9C4F16DED7A500B6FD60 /* AppDelegate.h */,
+				83CE9C5016DED7A500B6FD60 /* AppDelegate.m */,
+				83CE9C5216DED7A500B6FD60 /* MainMenu.xib */,
+				83CE9C4416DED7A500B6FD60 /* Supporting Files */,
+			);
+			path = LeapStandaloneTest;
+			sourceTree = "<group>";
+		};
+		83CE9C4416DED7A500B6FD60 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				83CE9C4516DED7A500B6FD60 /* LeapStandaloneTest-Info.plist */,
+				83CE9C4616DED7A500B6FD60 /* InfoPlist.strings */,
+				83CE9C4916DED7A500B6FD60 /* main.m */,
+				83CE9C4B16DED7A500B6FD60 /* LeapStandaloneTest-Prefix.pch */,
+				83CE9C4C16DED7A500B6FD60 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -169,6 +230,24 @@
 			productName = LeapQuartzComposer;
 			productReference = 83A0658616984F36007EB21E /* LeapQuartzComposer.plugin */;
 			productType = "com.apple.product-type.bundle";
+		};
+		83CE9C3F16DED7A500B6FD60 /* LeapStandaloneTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83CE9C5716DED7A500B6FD60 /* Build configuration list for PBXNativeTarget "LeapStandaloneTest" */;
+			buildPhases = (
+				83CE9C3C16DED7A500B6FD60 /* Sources */,
+				83CE9C3D16DED7A500B6FD60 /* Frameworks */,
+				83CE9C3E16DED7A500B6FD60 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				83CE9C5A16DED7B400B6FD60 /* PBXTargetDependency */,
+			);
+			name = LeapStandaloneTest;
+			productName = LeapStandaloneTest;
+			productReference = 83CE9C4016DED7A500B6FD60 /* LeapStandaloneTest.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -192,6 +271,7 @@
 			projectRoot = "";
 			targets = (
 				83A0658516984F36007EB21E /* LeapQuartzComposer */,
+				83CE9C3F16DED7A500B6FD60 /* LeapStandaloneTest */,
 			);
 		};
 /* End PBXProject section */
@@ -203,6 +283,16 @@
 			files = (
 				83A0659816984F36007EB21E /* InfoPlist.strings in Resources */,
 				83B88B4916AB137600C40CD2 /* Ports.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83CE9C3E16DED7A500B6FD60 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83CE9C4816DED7A500B6FD60 /* InfoPlist.strings in Resources */,
+				83CE9C4E16DED7A500B6FD60 /* Credits.rtf in Resources */,
+				83CE9C5416DED7A500B6FD60 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,7 +325,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83CE9C3C16DED7A500B6FD60 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83CE9C4A16DED7A500B6FD60 /* main.m in Sources */,
+				83CE9C5116DED7A500B6FD60 /* AppDelegate.m in Sources */,
+				83CE9C5C16DED86700B6FD60 /* LeapObjectiveC.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		83CE9C5A16DED7B400B6FD60 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 83A0658516984F36007EB21E /* LeapQuartzComposer */;
+			targetProxy = 83CE9C5916DED7B400B6FD60 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		83A0659616984F36007EB21E /* InfoPlist.strings */ = {
@@ -244,6 +352,30 @@
 				83A0659716984F36007EB21E /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		83CE9C4616DED7A500B6FD60 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83CE9C4716DED7A500B6FD60 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		83CE9C4C16DED7A500B6FD60 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83CE9C4D16DED7A500B6FD60 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		83CE9C5216DED7A500B6FD60 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83CE9C5316DED7A500B6FD60 /* en */,
+			);
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -342,6 +474,38 @@
 			};
 			name = Release;
 		};
+		83CE9C5516DED7A500B6FD60 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LeapStandaloneTest/LeapStandaloneTest-Prefix.pch";
+				INFOPLIST_FILE = "LeapStandaloneTest/LeapStandaloneTest-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/LeapQuartzComposer/LeapSDK\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		83CE9C5616DED7A500B6FD60 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LeapStandaloneTest/LeapStandaloneTest-Prefix.pch";
+				INFOPLIST_FILE = "LeapStandaloneTest/LeapStandaloneTest-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/LeapQuartzComposer/LeapSDK\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -362,6 +526,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		83CE9C5716DED7A500B6FD60 /* Build configuration list for PBXNativeTarget "LeapStandaloneTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83CE9C5516DED7A500B6FD60 /* Debug */,
+				83CE9C5616DED7A500B6FD60 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
