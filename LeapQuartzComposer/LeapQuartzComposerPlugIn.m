@@ -390,11 +390,11 @@
         self.outputTools = [helper leapPointablesToQCCompatibleArray:frame.tools];
     }
     
+    //get frame gestures
+    NSArray* rawGestures =[frame gestures:nil];
+
     //Process any gestures (only if they are included)
-
-    //LEAP DEVELOPERS: REALLY?
-    NSArray* rawGestures =[frame gestures:frame];
-
+    
     //Important!
     //process raw leap sdk gestures into qc compatible dictionaries and store them
     //in helper instance properties. These properties are referenced immediately below
@@ -403,25 +403,27 @@
     //If we are retrieving any gestures, the appropriate gestures will have been processed by
     //call to processLeapGestures above.
     //all we need to do now is work out if we need set output properties
-    
-    if (self.inputRetrieveGestureCircle)
-    {
-        self.outputGestureCircles = helper.frameGestureCircles;
-    }
-    
-    if (self.inputRetrieveGestureKeyTap)
-    {
-        self.outputGestureKeyTaps = helper.frameGestureKeyTaps;
-    }
-    
-    if (self.inputRetrieveGestureScreenTap)
-    {
-        self.outputGestureScreenTaps = helper.frameGestureScreenTaps;
-    }
-    
-    if (self.inputRetrieveGestureSwipe)
-    {
-        self.outputGestureSwipes = helper.frameGestureSwipes;
+    if (rawGestures && rawGestures.count)
+    {   
+        if (self.inputRetrieveGestureCircle)
+        {
+            self.outputGestureCircles = helper.frameGestureCircles;
+        }
+        
+        if (self.inputRetrieveGestureKeyTap)
+        {
+            self.outputGestureKeyTaps = helper.frameGestureKeyTaps;
+        }
+        
+        if (self.inputRetrieveGestureScreenTap)
+        {
+            self.outputGestureScreenTaps = helper.frameGestureScreenTaps;
+        }
+        
+        if (self.inputRetrieveGestureSwipe)
+        {
+            self.outputGestureSwipes = helper.frameGestureSwipes;
+        }
     }
     
     

@@ -27,6 +27,45 @@
 @end
 
 @implementation LeapQCHelper
+@synthesize includeGestureSwipe=_includeGestureSwipe;
+@synthesize includeGestureKeyTap=_includeGestureKeyTap;
+@synthesize includeGestureCircle=_includeGestureCircle;
+@synthesize includeGestureScreenTap=_includeGestureScreenTap;
+
+#pragma mark -
+#pragma mark Gesture properties
+
+-(void)setIncludeGestureCircle:(BOOL)includeGestureCircle
+{
+    _includeGestureCircle = includeGestureCircle;
+    [_leapController enableGesture:LEAP_GESTURE_TYPE_CIRCLE enable:includeGestureCircle];
+
+}
+
+
+-(void)setIncludeGestureKeyTap:(BOOL)includeGestureKeyTap
+{
+    _includeGestureKeyTap = includeGestureKeyTap;
+    [_leapController enableGesture:LEAP_GESTURE_TYPE_KEY_TAP enable:includeGestureKeyTap];
+
+}
+
+
+-(void)setIncludeGestureScreenTap:(BOOL)includeGestureScreenTap
+{
+    _includeGestureScreenTap = includeGestureScreenTap;
+    [_leapController enableGesture:LEAP_GESTURE_TYPE_SCREEN_TAP enable:includeGestureScreenTap];
+
+
+}
+
+
+-(void)setIncludeGestureSwipe:(BOOL)includeGestureSwipe
+{
+    _includeGestureSwipe = includeGestureSwipe;
+    [_leapController enableGesture:LEAP_GESTURE_TYPE_SWIPE enable:includeGestureSwipe];
+}
+
 
 
 -(NSDictionary*) leapGestureToDictionary:(const LeapGesture*)gesture
@@ -274,6 +313,7 @@
     
     return dictionary;
 }
+
 
 #pragma mark -
 #pragma mark Array output functions
