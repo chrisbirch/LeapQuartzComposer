@@ -91,9 +91,13 @@
             {
                 LeapCircleGesture *previousUpdate = (LeapCircleGesture *)[[_leapController frame:1] gesture:gesture.id];
                 sweptAngle = (circleGesture.progress - previousUpdate.progress) * 2 * LEAP_PI;
-                sweptAngle *= LEAP_RAD_TO_DEG;
+                sweptAngle *= LEAP_RAD_TO_DEG;             
             }
-            
+
+            [dictionary setObject:NSNumberFromDouble(circleGesture.progress) forKey:LEAP_GESTURE_CIRCLE_PROGRESS];
+            [dictionary setObject:NSNumberFromDouble(circleGesture.radius) forKey:LEAP_GESTURE_CIRCLE_RADIUS];
+            [dictionary setObject:QCRepresentationOfVector(circleGesture.center) forKey:LEAP_GESTURE_CIRCLE_CENTER];
+            [dictionary setObject:QCRepresentationOfVector(circleGesture.normal) forKey:LEAP_GESTURE_CIRCLE_NORMAL];
             [dictionary setObject:NSNumberFromDouble(sweptAngle) forKey:LEAP_GESTURE_CIRCLE_SWEPT_ANGLE];
             
 //            NSLog(@"Circle id: %d, %@, progress: %f, radius %f, angle: %f degrees",
@@ -108,6 +112,7 @@
             [dictionary setObject:QCRepresentationOfVector(swipeGesture.position) forKey:LEAP_GESTURE_SWIPE_POSITION];
             [dictionary setObject:QCRepresentationOfVector(swipeGesture.startPosition) forKey:LEAP_GESTURE_SWIPE_START_POSITION];
             [dictionary setObject:QCRepresentationOfVector(swipeGesture.direction) forKey:LEAP_GESTURE_SWIPE_DIRECTION];
+            [dictionary setObject:NSNumberFromDouble(swipeGesture.speed) forKey:LEAP_GESTURE_SWIPE_SPEED];
             [dictionary setObject:QCRepresentationOfPointable(swipeGesture.pointable) forKey:LEAP_GESTURE_SWIPE_POINTABLE];
             
 //            NSLog(@"Swipe id: %d, %@, position: %@, direction: %@, speed: %f",
@@ -405,12 +410,13 @@
     NSMutableArray* screenTapArray = [[NSMutableArray alloc] init];
 
     //Set instance properties
-    _frameGestureSwipes = swipeArray;
-    _frameGestureCircles = circleArray;
-    _frameGestureScreenTaps = screenTapArray;
-    _frameGestureKeyTaps = keyTapArray;
-
     
+    _frameGestureSwipes = nil;
+    _frameGestureCircles = nil;
+    _frameGestureScreenTaps = nil;
+    _frameGestureKeyTaps = nil;
+
+
     for(LeapGesture* gesture in gestures)
     {
         //Only include this gesture if user code has told us it wants it.
@@ -448,6 +454,21 @@
         }
         
     }
+    
+    
+    //Now set outputs if needed
+    if(swipeArray.count)
+        _frameGestureSwipes = swipeArray;
+    
+    if (circleArray.count)
+        _frameGestureCircles = circleArray;
+    
+    if (screenTapArray.count)
+        _frameGestureScreenTaps = screenTapArray;
+    
+    if (keyTapArray.count)
+        _frameGestureKeyTaps = keyTapArray;
+
     
 }
 
