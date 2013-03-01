@@ -113,6 +113,8 @@
  */
 @property(nonatomic,weak) LeapController* leapController;
 
+@property(nonatomic,assign) BOOL useScreenCoords;
+
 /**
  * If YES then vectors will be converted into dictionaries.
  * If NO then vectors will be converted into arrays. index 0: x, index 1: y, index 2: z, 
@@ -253,6 +255,8 @@
 
 #pragma mark -
 #pragma mark Vector stuff
+
+-(LeapVector*)screenVectorForPointable:(const LeapPointable*)pointable;
 
 /**
  * depending on the setting of the outputVectorsAsDictionaries property

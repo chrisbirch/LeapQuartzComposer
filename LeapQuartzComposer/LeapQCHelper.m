@@ -159,6 +159,10 @@
     return dictionary;
 }
 
+
+#pragma mark -
+#pragma mark Leap Entities to Dictionaries
+
 -(NSDictionary*) leapScreenToDictionary:(const LeapScreen*)screen
 {
     NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] init];
@@ -286,16 +290,40 @@
     return dictionary;
 }
 
+-(LeapVector*)screenVectorForPointable:(const LeapPointable*)pointable
+{
+    //  float x=vector.x,y=vector.y,z=vector.z;
+    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
+    LeapVector* tipPosition=pointable.tipPosition;
+    float x=tipPosition.x,y=tipPosition.y;
+    
+    tipPosition = [screen intersect:pointable normalize:YES clampRatio:1 ];
+    
+    x = tipPosition.x * screen.widthPixels;
+    y = tipPosition.y * screen.heightPixels;
+    
+    NSLog(@"X: %.0f Y: %.0f Z: %.0f",x,y,tipPosition.z);
+    tipPosition = [[LeapVector alloc] initWithX:x y:y z:tipPosition.z];
+    
+    return tipPosition;
+}
+
 -(NSDictionary*) leapPointableToDictionary:(const LeapPointable*)pointable
 {
     NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] init];
     
     [dictionary setObject:[[NSNumber alloc] initWithInteger:pointable.id] forKey:LEAP_ID];
     
+    const LeapVector* tipPosition = pointable.tipPosition;
+    
+    if(_useScreenCoords)
+    {
+        tipPosition = [self screenVectorForPointable:pointable];
+    }
     
     if(pointable.tipPosition)
     {
-        [dictionary setObject:[self leapVectorToQCCompatibleType:pointable.tipPosition] forKey:@"tipPosition"];
+        [dictionary setObject:[self leapVectorToQCCompatibleType:tipPosition] forKey:@"tipPosition"];
     }
     
     if(pointable.tipVelocity)
