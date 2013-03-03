@@ -103,6 +103,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8395FF9216E0D571000188A6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		83A0657A16984F36007EB21E = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +153,7 @@
 		83A0659316984F36007EB21E /* LeapQuartzComposer */ = {
 			isa = PBXGroup;
 			children = (
+				8395FF9216E0D571000188A6 /* Settings */,
 				83A065FF1698606C007EB21E /* Helpers */,
 				83A0659916984F36007EB21E /* LeapQuartzComposerPlugIn.h */,
 				83A0659A16984F36007EB21E /* LeapQuartzComposerPlugIn.m */,
@@ -534,6 +542,7 @@
 				83CE9C5616DED7A500B6FD60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

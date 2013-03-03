@@ -205,6 +205,7 @@
     return nil;
 }
 
+
 + (QCPlugInExecutionMode)executionMode
 {
 	return kQCPlugInExecutionModeProvider;
@@ -226,7 +227,7 @@
         //set up helper
         helper.outputVectorsAsDictionaries = YES;
         helper.outputYawPitchRoll = YES;
-        
+        helper.useScreenCoords = YES;
 	}
 	
 	return self;
@@ -235,6 +236,21 @@
 
 
 
+
+#pragma mark -
+#pragma mark Settings view
+//
+//
+//+ (NSArray*) plugInKeys
+//{
+//    return [NSArray arrayWithObjects: @"useScreenCoords", nil];
+//}
+//
+//- (QCPlugInViewController*) createViewController
+//{
+//    return [[QCPlugInViewController alloc] initWithPlugIn:self
+//                                              viewNibName:@"SettingsView"];
+//}
 
 
 
