@@ -222,6 +222,81 @@
     return dictionary;
     
 }
+//
+//-(LeapVector*)topRightCornerFromBottomLeftCorner:(const LeapVector*)bottomLeft
+//{
+//    float x=0,y=0,z=0;
+//    
+//    x=bottomLeft.x*-1;
+//    y=bottomLeft.y*-1;
+//    z=bottomLeft.z*-1;
+//    
+//    return [[LeapVector alloc] initWithX:x y:y z:z];
+//}
+
+-(void)logVector:(LeapVector*) vector withTitle:(NSString*)title
+{
+    NSLog(@"%@ x = %.2f, y = %.2f, z = %.2f",title,vector.x,vector.y,vector.z);
+}
+
+/**
+ * Given a leap vector will return a vector that is scaled and clamped at -1 to 1
+ */
+-(LeapVector*)scaleCoordinateToScreen:(const LeapVector*)deviceCoordinates
+{
+    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
+    
+    LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
+//    LeapVector* topRightCorner = [self topRightCornerFromBottomLeftCorner:bottomLeftCorner];
+    
+    
+    float x = fabs(deviceCoordinates.x) / fabs(bottomLeftCorner.x);
+    float y = fabs(deviceCoordinates.y) / fabs(bottomLeftCorner.y);
+    float z = fabs(deviceCoordinates.z) / fabs(bottomLeftCorner.z);
+    
+    if (deviceCoordinates.x < 0)
+        x*=-1;
+    
+    if (deviceCoordinates.y < 0)
+        y*=-1;
+    if (deviceCoordinates.z < 0)
+        z*=-1;
+    
+    
+    //Clamp values!
+    //probably got something wrong if needing to do this.
+    //seems as though the min max values being supplied are wrong?
+    
+    if (x<-1)
+        x =-1;
+    else if (x>1)
+        x =1;
+    
+    if(y<-1)
+        y =-1;
+    else if(y>1)
+        y =1;
+
+    if (z<-1)
+        z = -1;
+    else    if (z>1)
+        z = 1;
+
+        
+    
+    
+    
+    LeapVector* sV = [[LeapVector alloc] initWithX:x y:y z:z];
+    
+    //[self logVector:bottomLeftCorner withTitle:@"Bottom Left Corner"];
+    //[self logVector:topRightCorner withTitle:@"Top Right Corner"];
+
+    //[self logVector:deviceCoordinates withTitle:@"Coordinate Device"];
+//    [self logVector:sV withTitle:@"Coordinate scaled"];
+
+    
+    return sV;
+}
 
 -(NSDictionary*) leapHandToDictionary:(const LeapHand*)hand
 {
@@ -260,6 +335,8 @@
     //Make sure the hand has a palm ray
     if (hand.palmPosition)
     {
+        LeapVector* palmPos = [self scaleCoordinateToScreen:hand.palmPosition];
+        
         [dictionary setObject:[self leapVectorToQCCompatibleType: hand.palmPosition] forKey:@"palmPosition"];
     }
     //make sure it has a velocity vector
@@ -295,15 +372,23 @@
     //  float x=vector.x,y=vector.y,z=vector.z;
     LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
     LeapVector* tipPosition=pointable.tipPosition;
-    float x=tipPosition.x,y=tipPosition.y;
+    float x=tipPosition.x,y=tipPosition.y,z=0;
+    LeapVector* screenCoordForZ = [self scaleCoordinateToScreen:tipPosition];
+    
+    //[self logVector:deviceCoordinates withTitle:@"Coordinate Device"];
+    //[self logVector:screenCoordForZ withTitle:@"Coordinate scaled"];
+
     
     tipPosition = [screen intersect:pointable normalize:YES clampRatio:1 ];
     
-    x = tipPosition.x * screen.widthPixels;
-    y = tipPosition.y * screen.heightPixels;
+    x = tipPosition.x * 2 -1 ;//* screen.widthPixels;
+    y = tipPosition.y * 2 - 1; //* screen.heightPixels;
+    z = screenCoordForZ.z;
     
-    NSLog(@"X: %.0f Y: %.0f Z: %.0f",x,y,tipPosition.z);
-    tipPosition = [[LeapVector alloc] initWithX:x y:y z:tipPosition.z];
+   // x /=
+    
+    NSLog(@"X: %.2f Y: %.2f Z: %.2f",x,y,z);
+    tipPosition = [[LeapVector alloc] initWithX:x y:y z:z];
     
     return tipPosition;
 }
@@ -507,6 +592,8 @@
 
 -(id)leapVectorToQCCompatibleType:(const LeapVector*)vector
 {
+
+    
     if (_outputVectorsAsDictionaries)
     {
         return [self leapVectorToDictionary:vector];
@@ -516,6 +603,7 @@
         return [self leapVectorToArray:vector];
     }
 }
+
 
 
 -(NSArray*) leapVectorToArray:(const LeapVector*)vector
@@ -532,8 +620,6 @@
         [array addObject:[[NSNumber alloc] initWithFloat:vector.yaw]];
         [array addObject:[[NSNumber alloc] initWithFloat:vector.pitch]];
         [array addObject:[[NSNumber alloc] initWithFloat:vector.roll]];
-
-
     }
     
     return array;

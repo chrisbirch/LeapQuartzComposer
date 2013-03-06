@@ -305,6 +305,7 @@
 
 - (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary *)arguments
 {
+    
 	/*
 	Called by Quartz Composer whenever the plug-in instance needs to execute.
 	Only read from the plug-in inputs and produce a result (by writing to the plug-in outputs or rendering to the destination OpenGL context) within that method and nowhere else.
@@ -371,8 +372,6 @@
     {
         helper.includeGestureCircle = self.inputRetrieveGestureCircle;
     }
-
-    
 
     
     //Plugin code:
