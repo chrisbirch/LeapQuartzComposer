@@ -66,7 +66,10 @@
     [_leapController enableGesture:LEAP_GESTURE_TYPE_SWIPE enable:includeGestureSwipe];
 }
 
-
+//-(LeapVector*)leapVectorToScreen:(LeapVector*)deviceCoordinate
+//{
+//    LeapPointable* pointable = [[LeapPointable alloc] init];
+//}
 
 -(NSDictionary*) leapGestureToDictionary:(const LeapGesture*)gesture
 {
@@ -93,11 +96,22 @@
                 sweptAngle = (circleGesture.progress - previousUpdate.progress) * 2 * LEAP_PI;
                 sweptAngle *= LEAP_RAD_TO_DEG;             
             }
+            
+            const LeapVector* center=circleGesture.center;
+            const LeapVector* normal=circleGesture.normal;
+            float radius = circleGesture.radius;
+            
+            if (_useScreenCoords)
+            {
+                center = [self scaleCoordinateToScreen:center];
+                normal = [self scaleCoordinateToScreen:normal];
+                radius = [self scaleRadiusToScreen:radius];
+            }
 
             [dictionary setObject:NSNumberFromDouble(circleGesture.progress) forKey:LEAP_GESTURE_CIRCLE_PROGRESS];
-            [dictionary setObject:NSNumberFromDouble(circleGesture.radius) forKey:LEAP_GESTURE_CIRCLE_RADIUS];
-            [dictionary setObject:QCRepresentationOfVector(circleGesture.center) forKey:LEAP_GESTURE_CIRCLE_CENTER];
-            [dictionary setObject:QCRepresentationOfVector(circleGesture.normal) forKey:LEAP_GESTURE_CIRCLE_NORMAL];
+            [dictionary setObject:NSNumberFromDouble(radius) forKey:LEAP_GESTURE_CIRCLE_RADIUS];
+            [dictionary setObject:QCRepresentationOfVector(center) forKey:LEAP_GESTURE_CIRCLE_CENTER];
+            [dictionary setObject:QCRepresentationOfVector(normal) forKey:LEAP_GESTURE_CIRCLE_NORMAL];
             [dictionary setObject:NSNumberFromDouble(sweptAngle) forKey:LEAP_GESTURE_CIRCLE_SWEPT_ANGLE];
             
 //            NSLog(@"Circle id: %d, %@, progress: %f, radius %f, angle: %f degrees",
@@ -108,6 +122,7 @@
         case LEAP_GESTURE_TYPE_SWIPE:
         {
             LeapSwipeGesture *swipeGesture = (LeapSwipeGesture *)gesture;
+        
             
             [dictionary setObject:QCRepresentationOfVector(swipeGesture.position) forKey:LEAP_GESTURE_SWIPE_POSITION];
             [dictionary setObject:QCRepresentationOfVector(swipeGesture.startPosition) forKey:LEAP_GESTURE_SWIPE_START_POSITION];
@@ -240,6 +255,56 @@
 }
 
 /**
+ * Given a width represented in float form, will return a float that is scaled and clamped at -1 to 1
+ */
+-(float)scaleWidthToScreen:(float)value
+{
+    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
+    
+    LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
+
+    float screenTotalWidth = fabs(bottomLeftCorner.x) * 2;
+    
+    float x = value / screenTotalWidth;
+    
+    return x;
+}
+
+/**
+ * Given a length represented in float form, will return a float that is scaled and clamped at 0 to 1
+ */
+-(float)scaleLengthToScreen:(float)value
+{
+    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
+    
+    LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
+    
+    float screenTotalDepth = fabs(bottomLeftCorner.z) * 2;
+    
+    float z = value / screenTotalDepth;
+    
+    return z;
+}
+
+/**
+ * Given a radius represented in float form, will return a float that is scaled and clamped at 0 to 1
+ */
+-(float)scaleRadiusToScreen:(float)value
+{
+    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
+    
+    LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
+    
+    float aspect = (float)screen.widthPixels / (float)screen.heightPixels;
+    
+    float screenTotalDepth = fabs(bottomLeftCorner.z) * 2;
+    
+    float z = value / screenTotalDepth;
+    
+    return z * aspect;
+}
+
+/**
  * Given a leap vector will return a vector that is scaled and clamped at -1 to 1
  */
 -(LeapVector*)scaleCoordinateToScreen:(const LeapVector*)deviceCoordinates
@@ -328,6 +393,7 @@
         NSArray* dict = [self leapPointablesToQCCompatibleArray:items];
         [dictionary setObject:dict forKey:LEAP_TOOLS];
     }
+   
 
     //The following things may or may not exist so we need to test for each one before sending it
     //otherwise these things will be wrongly reported as being 0
@@ -335,9 +401,15 @@
     //Make sure the hand has a palm ray
     if (hand.palmPosition)
     {
-        LeapVector* palmPos = [self scaleCoordinateToScreen:hand.palmPosition];
+        const LeapVector* palmPos = hand.palmPosition;
         
-        [dictionary setObject:[self leapVectorToQCCompatibleType: hand.palmPosition] forKey:@"palmPosition"];
+        if (_useScreenCoords)
+        {
+            palmPos = [self scaleCoordinateToScreen:hand.palmPosition];
+        }
+        
+        
+        [dictionary setObject:[self leapVectorToQCCompatibleType: palmPos] forKey:@"palmPosition"];
     }
     //make sure it has a velocity vector
     if(hand.palmVelocity)
@@ -346,8 +418,9 @@
     }
     //make sure it has a normal vector
     if(hand.palmNormal)
+    {
         [dictionary setObject:[self leapVectorToQCCompatibleType:hand.palmNormal] forKey:@"palmNormal"];
-    
+    }
     
     if(hand.direction)
     {
@@ -356,16 +429,30 @@
     
     if(hand.sphereCenter)
     {
-        [dictionary setObject:[self leapVectorToQCCompatibleType:hand.sphereCenter] forKey:@"sphereCenter"];
+        const LeapVector* sphereCenter = hand.sphereCenter;
+        
+        if (_useScreenCoords)
+        {
+            sphereCenter = [self scaleCoordinateToScreen:sphereCenter];
+        }
+        
+        [dictionary setObject:[self leapVectorToQCCompatibleType:sphereCenter] forKey:@"sphereCenter"];
     }
     
+    float sphereRadius = hand.sphereRadius;
+    
+    if (_useScreenCoords)
+    {
+        sphereRadius = [self scaleRadiusToScreen:sphereRadius];
+    }
 
-    [dictionary setObject:[NSNumber numberWithFloat:hand.sphereRadius] forKey:@"sphereRadius"];
+    [dictionary setObject:[NSNumber numberWithFloat:sphereRadius] forKey:@"sphereRadius"];
     [dictionary setObject:[NSNumber numberWithBool:hand.isValid] forKey:@"isValid"];
     
     
     return dictionary;
 }
+
 
 -(LeapVector*)screenVectorForPointable:(const LeapPointable*)pointable
 {
@@ -400,10 +487,15 @@
     [dictionary setObject:[[NSNumber alloc] initWithInteger:pointable.id] forKey:LEAP_ID];
     
     const LeapVector* tipPosition = pointable.tipPosition;
+    float pointableWidth = pointable.width;
+    float pointableLength = pointable.length;
     
     if(_useScreenCoords)
     {
         tipPosition = [self screenVectorForPointable:pointable];
+        pointableWidth = [self scaleWidthToScreen: pointable.width];
+        pointableLength =  [self scaleLengthToScreen:pointable.length];
+        
     }
     
     if(pointable.tipPosition)
@@ -421,8 +513,8 @@
         [dictionary setObject:[self leapVectorToQCCompatibleType:pointable.direction] forKey:@"direction"];
     }
     
-    [dictionary setObject:[[NSNumber alloc] initWithFloat:pointable.width] forKey:@"width"];
-    [dictionary setObject:[[NSNumber alloc] initWithFloat:pointable.length] forKey:@"length"];
+    [dictionary setObject:[[NSNumber alloc] initWithFloat:pointableWidth] forKey:@"width"];
+    [dictionary setObject:[[NSNumber alloc] initWithFloat:pointableLength] forKey:@"length"];
     
     [dictionary setObject:[[NSNumber alloc] initWithBool:pointable.isFinger] forKey:@"isFinger"];
     [dictionary setObject:[[NSNumber alloc] initWithBool:pointable.isTool] forKey:@"isTool"];
