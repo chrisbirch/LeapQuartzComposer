@@ -304,6 +304,96 @@
     return z * aspect;
 }
 
+float magnitude(LeapVector* vector)
+{
+    
+    return sqrtf(vector.x*vector.x + vector.y*vector.y + vector.z*vector.z);
+}
+
+
+/**
+ * Given a leap vector will return a vector that is scaled and clamped at -1 to 1
+ */
+-(LeapVector*)scaleCoordinateToScreen2:(const LeapVector*)deviceCoordinates
+{
+    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
+    
+    LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
+    
+    float screenHeight = fabs(screen.bottomLeftCorner.y) * 2;
+    float screenTopY = screen.bottomLeftCorner.y + screenHeight;
+    float screenBottomY = screen.bottomLeftCorner.y;
+    
+
+    
+//
+    float x = deviceCoordinates.x;// fabs(deviceCoordinates.x) / fabs(bottomLeftCorner.x);
+    //remove the "dead zone" at the bottom from the Y
+    float y = deviceCoordinates.y - screenBottomY;//0;//y verticalAxis * 8;// fabs(bottomLeftCorner.y * 2);
+    float z = deviceCoordinates.z;//fabs(deviceCoordinates.z) / fabs(bottomLeftCorner.z);
+
+    //clamp Y to the screen
+    if (y > screenTopY)
+    {
+        y = screenTopY;
+    }
+    else if(y<screenBottomY)
+    {
+        y= screenBottomY;
+    }
+
+
+    x = fabsf(x) / fabsf(bottomLeftCorner.x);
+    y =  (screenHeight - y) / screenHeight * -1;// + bottomLeftCorner.y;
+    z = fabsf(z) / fabsf(bottomLeftCorner.z);
+    
+  //  y -= verticalAxis;
+//    
+//    if (deviceCoordinates.x < 0)
+//        x*=-1;
+//    if (deviceCoordinates.y < 0)
+//        y*=-1;
+//    if (deviceCoordinates.z < 0)
+//        z*=-1;
+    
+ //   y = 0;
+    
+    //Clamp values!
+    //probably got something wrong if needing to do this.
+    //seems as though the min max values being supplied are wrong?
+    
+    //    if (x<-1)
+    //        x =-1;
+    //    else if (x>1)
+    //        x =1;
+    //
+    //    if(y<-1)
+    //        y =-1;
+    //    else if(y>1)
+    //        y =1;
+    //
+    //    if (z<-1)
+    //        z = -1;
+    //    else if (z>1)
+    //        z = 1;
+    
+    
+    
+    
+    
+    LeapVector* sV = [[LeapVector alloc] initWithX:x y:y z:z];
+    
+    //[self logVector:bottomLeftCorner withTitle:@"Bottom Left Corner"];
+    //[self logVector:topRightCorner withTitle:@"Top Right Corner"];
+    
+    //[self logVector:deviceCoordinates withTitle:@"Coordinate Device"];
+    [self logVector:sV withTitle:@"Coordinate scaled"];
+    
+    
+    return sV;
+}
+
+
 /**
  * Given a leap vector will return a vector that is scaled and clamped at -1 to 1
  */
@@ -312,11 +402,14 @@
     LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
     
     LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
-//    LeapVector* topRightCorner = [self topRightCornerFromBottomLeftCorner:bottomLeftCorner];
+    //    LeapVector* topRightCorner = [self topRightCornerFromBottomLeftCorner:bottomLeftCorner];
     
+    float verticalAxis = screen.verticalAxis.y;
+    //    NSLog(@"Vertical Axis: %.2f",verticalAxis);
+    //  NSLog(@"BottomLeftCorner Y: %.2f Device Y: %.2f",bottomLeftCorner.y,deviceCoordinates.y);
     
     float x = fabs(deviceCoordinates.x) / fabs(bottomLeftCorner.x);
-    float y = fabs(deviceCoordinates.y) / fabs(bottomLeftCorner.y);
+    float y = fabs(deviceCoordinates.y) / verticalAxis*2;// fabs(bottomLeftCorner.y * 2);
     float z = fabs(deviceCoordinates.z) / fabs(bottomLeftCorner.z);
     
     if (deviceCoordinates.x < 0)
@@ -332,22 +425,22 @@
     //probably got something wrong if needing to do this.
     //seems as though the min max values being supplied are wrong?
     
-    if (x<-1)
-        x =-1;
-    else if (x>1)
-        x =1;
+    //    if (x<-1)
+    //        x =-1;
+    //    else if (x>1)
+    //        x =1;
+    //
+    //    if(y<-1)
+    //        y =-1;
+    //    else if(y>1)
+    //        y =1;
+    //
+    //    if (z<-1)
+    //        z = -1;
+    //    else if (z>1)
+    //        z = 1;
     
-    if(y<-1)
-        y =-1;
-    else if(y>1)
-        y =1;
-
-    if (z<-1)
-        z = -1;
-    else    if (z>1)
-        z = 1;
-
-        
+    
     
     
     
@@ -355,10 +448,10 @@
     
     //[self logVector:bottomLeftCorner withTitle:@"Bottom Left Corner"];
     //[self logVector:topRightCorner withTitle:@"Top Right Corner"];
-
+    
     //[self logVector:deviceCoordinates withTitle:@"Coordinate Device"];
 //    [self logVector:sV withTitle:@"Coordinate scaled"];
-
+    
     
     return sV;
 }
@@ -405,7 +498,26 @@
         
         if (_useScreenCoords)
         {
-            palmPos = [self scaleCoordinateToScreen:hand.palmPosition];
+  
+            //TODO: sort this out
+//            palmPos = [self scaleCoordinateToScreen2:hand.palmPosition];
+     
+
+            if (hand && hand.pointables && hand.pointables.count > 0)
+            {
+                LeapPointable* pointable = [hand.pointables objectAtIndex:0];
+            
+                LeapVector* vec = [self screenVectorForPointable:pointable];
+                NSLog(@"\n\n");
+                
+//                NSLog(@"Palm Y: %.2f Finger Y: %.2f Difference: %.2f",palmPos.y,vec.y,palmPos.y - vec.y);
+                
+//                [self logVector:vec withTitle:@"Fing Pos"];
+//                [self logVector:palmPos withTitle:@"Palm Pos"];
+                
+            }
+
+            
         }
         
         
@@ -433,7 +545,7 @@
         
         if (_useScreenCoords)
         {
-            sphereCenter = [self scaleCoordinateToScreen:sphereCenter];
+            sphereCenter = [self scaleCoordinateToScreen2:sphereCenter];
         }
         
         [dictionary setObject:[self leapVectorToQCCompatibleType:sphereCenter] forKey:@"sphereCenter"];
@@ -474,7 +586,7 @@
     
    // x /=
     
-    NSLog(@"X: %.2f Y: %.2f Z: %.2f",x,y,z);
+    //NSLog(@"X: %.2f Y: %.2f Z: %.2f",x,y,z);
     tipPosition = [[LeapVector alloc] initWithX:x y:y z:z];
     
     return tipPosition;
