@@ -267,7 +267,7 @@
 {
     if([key isEqualToString:@"useScreenCoordinates"])
     {
-        helper.useScreenCoords = _useScreenCoordinates;
+//        helper.useScreenCoords = _useScreenCoordinates;
         return [NSNumber numberWithBool:_useScreenCoordinates];
     }
     // Ensure this has a data method
@@ -280,7 +280,7 @@
     if([key isEqualToString:@"useScreenCoordinates"])
     {
         _useScreenCoordinates = ((NSNumber*)serializedValue).boolValue;
-        helper.useScreenCoords = _useScreenCoordinates;
+//        helper.useScreenCoords = _useScreenCoordinates;
     }
     else
         [super setSerializedValue:serializedValue forKey:key];
@@ -340,149 +340,151 @@
 
 - (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary *)arguments
 {
-    
-	/*
-	Called by Quartz Composer whenever the plug-in instance needs to execute.
-	Only read from the plug-in inputs and produce a result (by writing to the plug-in outputs or rendering to the destination OpenGL context) within that method and nowhere else.
-	Return NO in case of failure during the execution (this will prevent rendering of the current frame to complete).
-	
-	The OpenGL context for rendering can be accessed and defined for CGL macros using:
-	CGLContextObj cgl_ctx = [context CGLContextObj];
-	*/
-    
-    //Generated code:
-    
-    
-    //Port Value Changed code
-    
-    //the following are skipped because they have no corresponding helper class property!
-    //they are dealt with below.
-    //Port Value Changed code
-    
-    //Skipping Value changed section for property: RetrieveHands as no values have been supplied for valueChangedTarget or valueChangedBody
-    //Skipping Value changed section for property: RetrieveFingers as no values have been supplied for valueChangedTarget or valueChangedBody
-    //Skipping Value changed section for property: RetrieveTools as no values have been supplied for valueChangedTarget or valueChangedBody
-    //Skipping Value changed section for property: RetrievePointables as no values have been supplied for valueChangedTarget or valueChangedBody
-    //Yes if fingers array is exposed in hand structure
-    if ([self didValueForInputKeyChange:INPUT_INCLUDEFINGERSINHAND])
+    if (leapController.isConnected)
     {
-        helper.includeFingersInHand = self.inputIncludeFingersInHand;
-    }
-    //Yes if tools array is exposed in hand structure
-    if ([self didValueForInputKeyChange:INPUT_INCLUDETOOLSINHAND])
-    {
-        helper.includeToolsInHand = self.inputIncludeToolsInHand;
-    }
-    //Yes if pointables array is exposed in hand structure
-    if ([self didValueForInputKeyChange:INPUT_INCLUDEPOINTABLESINHAND])
-    {
-        helper.includePointablesInHand = self.inputIncludePointablesInHand;
-    }
-    //Dictates the type of QC compativle construct used to represent vectors
-    if ([self didValueForInputKeyChange:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
-    {
-        helper.outputVectorsAsDictionaries = self.inputUseDictionariesToRepresentVectors;
-    }
-    //Dictates whether or not vectors include yaw pitch and roll
-    if ([self didValueForInputKeyChange:INPUT_VECTORSINCLUDEYAWPITCHROLL])
-    {
-        helper.outputYawPitchRoll = self.inputVectorsIncludeYawPitchRoll;
-    }
-    //Yes if Swipe gestures are exposed to QC
-    if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESWIPE])
-    {
-        helper.includeGestureSwipe = self.inputRetrieveGestureSwipe;
-    }
-    //Yes if Screen Tap gestures are exposed to QC
-    if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESCREENTAP])
-    {
-        helper.includeGestureScreenTap = self.inputRetrieveGestureScreenTap;
-    }
-    //Yes if Key Tap gestures are exposed to QC
-    if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTUREKEYTAP])
-    {
-        helper.includeGestureKeyTap = self.inputRetrieveGestureKeyTap;
-    }
-    //Yes if circle gestures are exposed to QC
-    if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURECIRCLE])
-    {
-        helper.includeGestureCircle = self.inputRetrieveGestureCircle;
-    }
-    //The number of the calibrated screen to use
-    if ([self didValueForInputKeyChange:INPUT_LEAPSCREEN])
-    {
-        helper.calibratedScreenIndex = self.inputLeapScreen;
-    }
-    
-    //Plugin code:
-    
-
-    // Get the most recent frame and report some basic information
-    LeapFrame* frame = [leapController frame:0];
-    
-
-    //include the frame
-    self.outputFrame = [helper leapFrameToDictionary:frame];;
-    //include the screens
-    self.outputScreens = [helper leapScreensToQCCompatibleArray:leapController.calibratedScreens];
-    
-    if (self.inputRetrieveHands)
-    {
-        self.outputHands = [helper leapHandsToQCCompatibleArray:frame.hands];
-    }
-    
-    if (self.inputRetrieveFingers)
-    {
-        self.outputFingers = [helper leapPointablesToQCCompatibleArray:frame.fingers];
-    }
-    
-    if(self.inputRetrievePointables)
-    {
-        self.outputPointables = [helper leapPointablesToQCCompatibleArray:frame.pointables];
-    }
-    if(self.inputRetrieveTools)
-    {
-        self.outputTools = [helper leapPointablesToQCCompatibleArray:frame.tools];
-    }
-    
-    //get frame gestures
-    NSArray* rawGestures =[frame gestures:nil];
-
-    //Process any gestures (only if they are included)
-    
-    //Important!
-    //process raw leap sdk gestures into qc compatible dictionaries and store them
-    //in helper instance properties. These properties are referenced immediately below
-    [helper processLeapGestures:rawGestures];
-    
-    //If we are retrieving any gestures, the appropriate gestures will have been processed by
-    //call to processLeapGestures above.
-    //all we need to do now is work out if we need set output properties
-    {   
-        if (self.inputRetrieveGestureCircle)
+        /*
+        Called by Quartz Composer whenever the plug-in instance needs to execute.
+        Only read from the plug-in inputs and produce a result (by writing to the plug-in outputs or rendering to the destination OpenGL context) within that method and nowhere else.
+        Return NO in case of failure during the execution (this will prevent rendering of the current frame to complete).
+        
+        The OpenGL context for rendering can be accessed and defined for CGL macros using:
+        CGLContextObj cgl_ctx = [context CGLContextObj];
+        */
+        
+        //Generated code:
+        
+        
+        //Port Value Changed code
+        
+        //the following are skipped because they have no corresponding helper class property!
+        //they are dealt with below.
+        //Port Value Changed code
+        
+        //Skipping Value changed section for property: RetrieveHands as no values have been supplied for valueChangedTarget or valueChangedBody
+        //Skipping Value changed section for property: RetrieveFingers as no values have been supplied for valueChangedTarget or valueChangedBody
+        //Skipping Value changed section for property: RetrieveTools as no values have been supplied for valueChangedTarget or valueChangedBody
+        //Skipping Value changed section for property: RetrievePointables as no values have been supplied for valueChangedTarget or valueChangedBody
+        //Yes if fingers array is exposed in hand structure
+        if ([self didValueForInputKeyChange:INPUT_INCLUDEFINGERSINHAND])
         {
-            self.outputGestureCircles = helper.frameGestureCircles;
+            helper.includeFingersInHand = self.inputIncludeFingersInHand;
+        }
+        //Yes if tools array is exposed in hand structure
+        if ([self didValueForInputKeyChange:INPUT_INCLUDETOOLSINHAND])
+        {
+            helper.includeToolsInHand = self.inputIncludeToolsInHand;
+        }
+        //Yes if pointables array is exposed in hand structure
+        if ([self didValueForInputKeyChange:INPUT_INCLUDEPOINTABLESINHAND])
+        {
+            helper.includePointablesInHand = self.inputIncludePointablesInHand;
+        }
+        //Dictates the type of QC compativle construct used to represent vectors
+        if ([self didValueForInputKeyChange:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
+        {
+            helper.outputVectorsAsDictionaries = self.inputUseDictionariesToRepresentVectors;
+        }
+        //Dictates whether or not vectors include yaw pitch and roll
+        if ([self didValueForInputKeyChange:INPUT_VECTORSINCLUDEYAWPITCHROLL])
+        {
+            helper.outputYawPitchRoll = self.inputVectorsIncludeYawPitchRoll;
+        }
+        //Yes if Swipe gestures are exposed to QC
+        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESWIPE])
+        {
+            helper.includeGestureSwipe = self.inputRetrieveGestureSwipe;
+        }
+        //Yes if Screen Tap gestures are exposed to QC
+        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESCREENTAP])
+        {
+            helper.includeGestureScreenTap = self.inputRetrieveGestureScreenTap;
+        }
+        //Yes if Key Tap gestures are exposed to QC
+        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTUREKEYTAP])
+        {
+            helper.includeGestureKeyTap = self.inputRetrieveGestureKeyTap;
+        }
+        //Yes if circle gestures are exposed to QC
+        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURECIRCLE])
+        {
+            helper.includeGestureCircle = self.inputRetrieveGestureCircle;
+        }
+        //The number of the calibrated screen to use
+        if ([self didValueForInputKeyChange:INPUT_LEAPSCREEN])
+        {
+            helper.calibratedScreenIndex = self.inputLeapScreen;
         }
         
-        if (self.inputRetrieveGestureKeyTap)
-        {
-            self.outputGestureKeyTaps = helper.frameGestureKeyTaps;
-        }
+        //Plugin code:
         
-        if (self.inputRetrieveGestureScreenTap)
-        {
-            self.outputGestureScreenTaps = helper.frameGestureScreenTaps;
-        }
-        
-        if (self.inputRetrieveGestureSwipe)
-        {
-            self.outputGestureSwipes = helper.frameGestureSwipes;
-        }
-    }
-    
-    
-    //NSLog(@"%@",qcCompatibleFrameDictionary);
 
+        // Get the most recent frame and report some basic information
+        LeapFrame* frame = [leapController frame:0];
+        
+
+        //include the frame
+        self.outputFrame = [helper leapFrameToDictionary:frame];;
+        //include the screens
+        self.outputScreens = [helper leapScreensToQCCompatibleArray:leapController.calibratedScreens];
+
+        if (self.inputRetrieveHands)
+        {
+            self.outputHands = [helper leapHandsToQCCompatibleArray:frame.hands];
+        }
+        
+        if (self.inputRetrieveFingers)
+        {
+            self.outputFingers = [helper leapPointablesToQCCompatibleArray:frame.fingers];
+        }
+        
+        if(self.inputRetrievePointables)
+        {
+            self.outputPointables = [helper leapPointablesToQCCompatibleArray:frame.pointables];
+        }
+        if(self.inputRetrieveTools)
+        {
+            self.outputTools = [helper leapPointablesToQCCompatibleArray:frame.tools];
+        }
+        
+        //get frame gestures
+        NSArray* rawGestures =[frame gestures:nil];
+
+        //Process any gestures (only if they are included)
+        
+        //Important!
+        //process raw leap sdk gestures into qc compatible dictionaries and store them
+        //in helper instance properties. These properties are referenced immediately below
+        [helper processLeapGestures:rawGestures];
+        
+        //If we are retrieving any gestures, the appropriate gestures will have been processed by
+        //call to processLeapGestures above.
+        //all we need to do now is work out if we need set output properties
+        {   
+            if (self.inputRetrieveGestureCircle)
+            {
+                self.outputGestureCircles = helper.frameGestureCircles;
+            }
+            
+            if (self.inputRetrieveGestureKeyTap)
+            {
+                self.outputGestureKeyTaps = helper.frameGestureKeyTaps;
+            }
+            
+            if (self.inputRetrieveGestureScreenTap)
+            {
+                self.outputGestureScreenTaps = helper.frameGestureScreenTaps;
+            }
+            
+            if (self.inputRetrieveGestureSwipe)
+            {
+                self.outputGestureSwipes = helper.frameGestureSwipes;
+            }
+        }
+        
+        
+        //NSLog(@"%@",qcCompatibleFrameDictionary);
+
+    }
 	
 	return YES;
 }
