@@ -227,7 +227,7 @@
         //set up helper
         helper.outputVectorsAsDictionaries = YES;
         helper.outputYawPitchRoll = YES;
-        helper.useScreenCoords = NO;
+        helper.useScreenCoords = YES;
 	}
 	
 	return self;

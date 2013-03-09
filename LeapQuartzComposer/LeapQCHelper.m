@@ -320,18 +320,27 @@ float magnitude(LeapVector* vector)
     
     float x =deviceCoordinates.x ,y=deviceCoordinates.y ,z=deviceCoordinates.z;
     
+    LeapVector* bLC = screen.bottomLeftCorner;
+    
     float width =  magnitude(screen.horizontalAxis);
     float screenWidthMM = magnitude(screen.horizontalAxis);
     float screenHeightMM = magnitude(screen.verticalAxis);
     float screenDepthMM = fabs(screen.bottomLeftCorner.z) *2;
     
+  //  float a = screen.bottomLeftCorner.
+    y-= bLC.y;
+    x -= bLC.x;
+    z -= bLC.z;
+    
+
+//    x-=
     x /= screenWidthMM;
     y /= screenHeightMM;
     z /= screenDepthMM;
     
     
-//    x = x * 2 -1;
-  //  y = y * 2 -1;
+    x = x * 2 -1;
+    y = y * 2 -1;
     
     
     LeapVector* sV = [[LeapVector alloc] initWithX:x y:y z:z];
