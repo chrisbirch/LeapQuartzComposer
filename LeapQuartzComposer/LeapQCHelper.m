@@ -259,7 +259,7 @@
  */
 -(float)scaleWidthToScreen:(float)value
 {
-    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
+    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
     
     LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
 
@@ -275,7 +275,7 @@
  */
 -(float)scaleLengthToScreen:(float)value
 {
-    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
+    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
     
     LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
     
@@ -291,7 +291,7 @@
  */
 -(float)scaleRadiusToScreen:(float)value
 {
-    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
+    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
     
     LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
     
@@ -312,28 +312,27 @@ float magnitude(LeapVector* vector)
 
 
 /**
- * Given a leap vector will return a vector that is scaled and clamped at -1 to 1
+ * Given a leap vector in device coordinates will return a vector that is scaled to screen coords
  */
--(LeapVector*)scaleCoordinateToScreen2:(const LeapVector*)deviceCoordinates
+-(LeapVector*)scaleCoordinateToScreen:(const LeapVector*)deviceCoordinates
 {
-    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
+    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
     
     float x =deviceCoordinates.x ,y=deviceCoordinates.y ,z=deviceCoordinates.z;
     
     LeapVector* bLC = screen.bottomLeftCorner;
     
-//    float width =  magnitude(screen.horizontalAxis);
-    float screenWidthMM = fabs(bLC.x) * 2;//  magnitude(screen.horizontalAxis);
+    float screenWidthMM = fabs(bLC.x) * 2;
     float screenHeightMM =  magnitude(screen.verticalAxis);
     float screenDepthMM = fabs(screen.bottomLeftCorner.z) *2;
     
-  //  float a = screen.bottomLeftCorner.
+    //take into account screen location
     y-= bLC.y;
     x -= bLC.x;
     z -= bLC.z;
     
 
-//    x-=
+    //Scale to screen coordinates
     x /= screenWidthMM;
     y /= screenHeightMM;
     z /= screenDepthMM;
@@ -345,78 +344,9 @@ float magnitude(LeapVector* vector)
     
     LeapVector* sV = [[LeapVector alloc] initWithX:x y:y z:z];
     
-    //[self logVector:bottomLeftCorner withTitle:@"Bottom Left Corner"];
-    //[self logVector:topRightCorner withTitle:@"Top Right Corner"];
-    
-    //[self logVector:deviceCoordinates withTitle:@"Coordinate Device"];
-    [self logVector:sV withTitle:@"Coordinate scaled"];
-    
-    
     return sV;
 }
 
-
-/**
- * Given a leap vector will return a vector that is scaled and clamped at -1 to 1
- */
--(LeapVector*)scaleCoordinateToScreen:(const LeapVector*)deviceCoordinates
-{
-    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
-    
-    LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
-    //    LeapVector* topRightCorner = [self topRightCornerFromBottomLeftCorner:bottomLeftCorner];
-    
-    float verticalAxis = screen.verticalAxis.y;
-    //    NSLog(@"Vertical Axis: %.2f",verticalAxis);
-    //  NSLog(@"BottomLeftCorner Y: %.2f Device Y: %.2f",bottomLeftCorner.y,deviceCoordinates.y);
-    
-    float x = fabs(deviceCoordinates.x) / fabs(bottomLeftCorner.x);
-    float y = fabs(deviceCoordinates.y) / verticalAxis*2;// fabs(bottomLeftCorner.y * 2);
-    float z = fabs(deviceCoordinates.z) / fabs(bottomLeftCorner.z);
-    
-    if (deviceCoordinates.x < 0)
-        x*=-1;
-    
-    if (deviceCoordinates.y < 0)
-        y*=-1;
-    if (deviceCoordinates.z < 0)
-        z*=-1;
-    
-    
-    //Clamp values!
-    //probably got something wrong if needing to do this.
-    //seems as though the min max values being supplied are wrong?
-    
-    //    if (x<-1)
-    //        x =-1;
-    //    else if (x>1)
-    //        x =1;
-    //
-    //    if(y<-1)
-    //        y =-1;
-    //    else if(y>1)
-    //        y =1;
-    //
-    //    if (z<-1)
-    //        z = -1;
-    //    else if (z>1)
-    //        z = 1;
-    
-    
-    
-    
-    
-    LeapVector* sV = [[LeapVector alloc] initWithX:x y:y z:z];
-    
-    //[self logVector:bottomLeftCorner withTitle:@"Bottom Left Corner"];
-    //[self logVector:topRightCorner withTitle:@"Top Right Corner"];
-    
-    //[self logVector:deviceCoordinates withTitle:@"Coordinate Device"];
-//    [self logVector:sV withTitle:@"Coordinate scaled"];
-    
-    
-    return sV;
-}
 
 -(NSDictionary*) leapHandToDictionary:(const LeapHand*)hand
 {
@@ -503,13 +433,12 @@ float magnitude(LeapVector* vector)
     
     if(hand.sphereCenter)
     {
-                    //TODO: fix this at once!
         const LeapVector* sphereCenter = hand.sphereCenter;
         
         if (_useScreenCoords)
         {
 
-            sphereCenter = [self scaleCoordinateToScreen2:sphereCenter];
+            sphereCenter = [self scaleCoordinateToScreen:sphereCenter];
         }
         
         [dictionary setObject:[self leapVectorToQCCompatibleType:sphereCenter] forKey:@"sphereCenter"];
@@ -533,7 +462,7 @@ float magnitude(LeapVector* vector)
 -(LeapVector*)screenVectorForPointable:(const LeapPointable*)pointable
 {
     //  float x=vector.x,y=vector.y,z=vector.z;
-    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
+    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
     LeapVector* tipPosition=pointable.tipPosition;
     float x=tipPosition.x,y=tipPosition.y,z=0;
     LeapVector* screenCoordForZ = [self scaleCoordinateToScreen:tipPosition];

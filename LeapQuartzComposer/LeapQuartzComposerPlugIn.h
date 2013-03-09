@@ -13,6 +13,7 @@
 
 
 //Port Defines
+//Port Defines
 
 //Yes if hands array is exposed to QC
 #define INPUT_RETRIEVEHANDS @"inputRetrieveHands"
@@ -60,6 +61,10 @@
 #define OUTPUT_GESTUREKEYTAPS @"outputGestureKeyTaps"
 //Information about the Circle gestures
 #define OUTPUT_GESTURECIRCLES @"outputGestureCircles"
+//The number of the calibrated screen to use
+#define INPUT_LEAPSCREEN @"inputLeapScreen"
+
+
 
 
 
@@ -90,7 +95,7 @@
 @property (assign) NSArray* outputGestureScreenTaps;
 @property (assign) NSArray* outputGestureKeyTaps;
 @property (assign) NSArray* outputGestureCircles;
-
+@property (assign) NSUInteger inputLeapScreen;
 
 
 

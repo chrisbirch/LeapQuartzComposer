@@ -138,7 +138,7 @@
 		<key>ValueChangedTarget</key>
 		<string>helper.outputYawPitchRoll</string>
 	</dict>
-    <dict>
+	<dict>
 		<key>Name</key>
 		<string>RetrieveGestureSwipe</string>
 		<key>FriendlyName</key>
@@ -276,7 +276,7 @@
 		<key>IsInput</key>
 		<false/>
 	</dict>
-    <dict>
+	<dict>
 		<key>Name</key>
 		<string>GestureSwipes</string>
 		<key>FriendlyName</key>
@@ -332,6 +332,21 @@
 		<key>IsInput</key>
 		<false/>
 	</dict>
-	
+	<dict>
+		<key>Name</key>
+		<string>LeapScreen</string>
+		<key>FriendlyName</key>
+		<string>Leap Screen Number</string>
+		<key>Type</key>
+		<string>int</string>
+		<key>DefaultValue</key>
+		<string>0</string>
+		<key>Comment</key>
+		<string>The number of the calibrated screen to use</string>
+		<key>IsInput</key>
+		<true/>
+		<key>ValueChangedTarget</key>
+		<string>helper.calibratedScreenIndex</string>
+	</dict>
 </array>
 </plist>

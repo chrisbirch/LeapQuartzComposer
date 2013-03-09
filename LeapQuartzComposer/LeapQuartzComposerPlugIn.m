@@ -14,7 +14,7 @@
 
 
 #define	kQCPlugIn_Name				@"Leap Device Interface SDK 0.7.4"
-#define	kQCPlugIn_Description		@"Version: 0.31\nAllows QC compositions to access data returned by Leap Motion devices"
+#define	kQCPlugIn_Description		@"Version: 0.32\nAllows QC compositions to access data returned by Leap Motion devices"
 #define kQCPlugIn_AuthorDescription @"© 2013 by Chris Birch, all rights reserved."
 
 @interface LeapQuartzComposerPlugIn ()
@@ -29,6 +29,7 @@
 
 
 //Port Synthesizes
+
 
 @dynamic inputRetrieveHands;
 @dynamic inputRetrieveFingers;
@@ -53,6 +54,8 @@
 @dynamic outputGestureScreenTaps;
 @dynamic outputGestureKeyTaps;
 @dynamic outputGestureCircles;
+@dynamic inputLeapScreen;
+
 
 
 
@@ -201,6 +204,13 @@
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 @"Circle Gestures", QCPortAttributeNameKey,
                 nil];
+    //The number of the calibrated screen to use
+    else if([key isEqualToString:INPUT_LEAPSCREEN])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Leap Screen Number", QCPortAttributeNameKey,
+                @"0", QCPortAttributeDefaultValueKey,
+                nil];
+    
     
     return nil;
 }
@@ -322,6 +332,7 @@
     
     //the following are skipped because they have no corresponding helper class property!
     //they are dealt with below.
+    //Port Value Changed code
     
     //Skipping Value changed section for property: RetrieveHands as no values have been supplied for valueChangedTarget or valueChangedBody
     //Skipping Value changed section for property: RetrieveFingers as no values have been supplied for valueChangedTarget or valueChangedBody
@@ -372,7 +383,11 @@
     {
         helper.includeGestureCircle = self.inputRetrieveGestureCircle;
     }
-
+    //The number of the calibrated screen to use
+    if ([self didValueForInputKeyChange:INPUT_LEAPSCREEN])
+    {
+        helper.calibratedScreenIndex = self.inputLeapScreen;
+    }
     
     //Plugin code:
     
@@ -418,7 +433,6 @@
     //If we are retrieving any gestures, the appropriate gestures will have been processed by
     //call to processLeapGestures above.
     //all we need to do now is work out if we need set output properties
-    if (rawGestures && rawGestures.count)
     {   
         if (self.inputRetrieveGestureCircle)
         {

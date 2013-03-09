@@ -164,6 +164,10 @@
  */
 @property(nonatomic,assign) BOOL includeGestureSwipe;
 
+/**
+ * The index of the screen to use
+ */
+@property(nonatomic,assign) BOOL calibratedScreenIndex;
 
 /**
  * Represents an array of qc compatible swipe gesture dictionaries.
