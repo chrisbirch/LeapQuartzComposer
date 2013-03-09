@@ -250,18 +250,41 @@
 #pragma mark -
 #pragma mark Settings view
 //
-//
-//+ (NSArray*) plugInKeys
-//{
-//    return [NSArray arrayWithObjects: @"useScreenCoords", nil];
-//}
-//
-//- (QCPlugInViewController*) createViewController
-//{
-//    return [[QCPlugInViewController alloc] initWithPlugIn:self
-//                                              viewNibName:@"SettingsView"];
-//}
 
++ (NSArray*) plugInKeys
+{
+    return [NSArray arrayWithObjects: @"useScreenCoordinates", nil];
+}
+
+- (QCPlugInViewController*) createViewController
+{
+    return [[QCPlugInViewController alloc] initWithPlugIn:self
+                                              viewNibName:@"SettingsViewController"];
+}
+
+
+- (id) serializedValueForKey:(NSString*)key
+{
+    if([key isEqualToString:@"useScreenCoordinates"])
+    {
+        helper.useScreenCoords = _useScreenCoordinates;
+        return [NSNumber numberWithBool:_useScreenCoordinates];
+    }
+    // Ensure this has a data method
+    return [super serializedValueForKey:key];
+}
+
+- (void) setSerializedValue:(id)serializedValue forKey:(NSString*)key
+{
+
+    if([key isEqualToString:@"useScreenCoordinates"])
+    {
+        _useScreenCoordinates = ((NSNumber*)serializedValue).boolValue;
+        helper.useScreenCoords = _useScreenCoordinates;
+    }
+    else
+        [super setSerializedValue:serializedValue forKey:key];
+}
 
 
 #pragma mark - SampleDelegate Callbacks
@@ -292,6 +315,8 @@
 @end
 
 @implementation LeapQuartzComposerPlugIn (Execution)
+
+
 
 - (BOOL)startExecution:(id <QCPlugInContext>)context
 {

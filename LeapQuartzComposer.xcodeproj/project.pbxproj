@@ -15,6 +15,7 @@
 		83A065B81698550E007EB21E /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A065B61698550E007EB21E /* libLeap.dylib */; };
 		83A06602169860B7007EB21E /* LeapQCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A06601169860B7007EB21E /* LeapQCHelper.m */; };
 		83A0660E16987C78007EB21E /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83A065B61698550E007EB21E /* libLeap.dylib */; };
+		83A44B0116EB708A00A8172B /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A44AFF16EB708A00A8172B /* SettingsViewController.xib */; };
 		83B88B4916AB137600C40CD2 /* Ports.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83B88B4816AB137600C40CD2 /* Ports.plist */; };
 		83CE9C4216DED7A500B6FD60 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A0658916984F36007EB21E /* Cocoa.framework */; };
 		83CE9C4816DED7A500B6FD60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83CE9C4616DED7A500B6FD60 /* InfoPlist.strings */; };
@@ -68,6 +69,7 @@
 		83A065B61698550E007EB21E /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLeap.dylib; path = LeapQuartzComposer/LeapSDK/libLeap.dylib; sourceTree = "<group>"; };
 		83A06600169860B7007EB21E /* LeapQCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapQCHelper.h; sourceTree = "<group>"; };
 		83A06601169860B7007EB21E /* LeapQCHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeapQCHelper.m; sourceTree = "<group>"; };
+		83A44AFF16EB708A00A8172B /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		83B88B4816AB137600C40CD2 /* Ports.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ports.plist; sourceTree = "<group>"; };
 		83CE9C4016DED7A500B6FD60 /* LeapStandaloneTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeapStandaloneTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83CE9C4516DED7A500B6FD60 /* LeapStandaloneTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LeapStandaloneTest-Info.plist"; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 		8395FF9216E0D571000188A6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				83A44AFF16EB708A00A8172B /* SettingsViewController.xib */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 			files = (
 				83A0659816984F36007EB21E /* InfoPlist.strings in Resources */,
 				83B88B4916AB137600C40CD2 /* Ports.plist in Resources */,
+				83A44B0116EB708A00A8172B /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

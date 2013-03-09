@@ -100,4 +100,8 @@
 
 
 
+//Settings view
+
+@property(assign) BOOL useScreenCoordinates;
+
 @end
