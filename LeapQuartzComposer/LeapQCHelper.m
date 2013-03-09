@@ -322,9 +322,9 @@ float magnitude(LeapVector* vector)
     
     LeapVector* bLC = screen.bottomLeftCorner;
     
-    float width =  magnitude(screen.horizontalAxis);
-    float screenWidthMM = magnitude(screen.horizontalAxis);
-    float screenHeightMM = magnitude(screen.verticalAxis);
+//    float width =  magnitude(screen.horizontalAxis);
+    float screenWidthMM = fabs(bLC.x) * 2;//  magnitude(screen.horizontalAxis);
+    float screenHeightMM =  magnitude(screen.verticalAxis);
     float screenDepthMM = fabs(screen.bottomLeftCorner.z) *2;
     
   //  float a = screen.bottomLeftCorner.
@@ -340,7 +340,7 @@ float magnitude(LeapVector* vector)
     
     
     x = x * 2 -1;
-    y = y * 2 -1;
+    y = y  -1;
     
     
     LeapVector* sV = [[LeapVector alloc] initWithX:x y:y z:z];
@@ -503,10 +503,12 @@ float magnitude(LeapVector* vector)
     
     if(hand.sphereCenter)
     {
+                    //TODO: fix this at once!
         const LeapVector* sphereCenter = hand.sphereCenter;
         
         if (_useScreenCoords)
         {
+
             sphereCenter = [self scaleCoordinateToScreen2:sphereCenter];
         }
         
@@ -534,14 +536,15 @@ float magnitude(LeapVector* vector)
     LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
     LeapVector* tipPosition=pointable.tipPosition;
     float x=tipPosition.x,y=tipPosition.y,z=0;
-    //LeapVector* screenCoordForZ = [self scaleCoordinateToScreen:tipPosition];
+    LeapVector* screenCoordForZ = [self scaleCoordinateToScreen:tipPosition];
     
     //[self logVector:deviceCoordinates withTitle:@"Coordinate Device"];
     //[self logVector:screenCoordForZ withTitle:@"Coordinate scaled"];
 
-    tipPosition = [self scaleCoordinateToScreen2:tipPosition];
+    //tipPosition = [self scaleCoordinateToScreen2:tipPosition];
     
-//    tipPosition = [screen intersect:pointable normalize:YES clampRatio:1 ];
+
+    tipPosition = [screen intersect:pointable normalize:YES clampRatio:1 ];
     
     x = tipPosition.x;
     y = tipPosition.y;
