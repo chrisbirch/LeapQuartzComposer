@@ -14,7 +14,7 @@
 
 
 #define	kQCPlugIn_Name				@"Leap Device Interface SDK 0.7.4"
-#define	kQCPlugIn_Description		@"Version: 0.2\nAllows QC compositions to access data returned by Leap Motion devices"
+#define	kQCPlugIn_Description		@"Version: 0.31\nAllows QC compositions to access data returned by Leap Motion devices"
 #define kQCPlugIn_AuthorDescription @"© 2013 by Chris Birch, all rights reserved."
 
 @interface LeapQuartzComposerPlugIn ()
@@ -227,7 +227,7 @@
         //set up helper
         helper.outputVectorsAsDictionaries = YES;
         helper.outputYawPitchRoll = YES;
-        helper.useScreenCoords = YES;
+        helper.useScreenCoords = NO;
 	}
 	
 	return self;

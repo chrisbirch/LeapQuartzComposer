@@ -318,67 +318,20 @@ float magnitude(LeapVector* vector)
 {
     LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
     
-    LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
+    float x =deviceCoordinates.x ,y=deviceCoordinates.y ,z=deviceCoordinates.z;
     
-    float screenHeight = fabs(screen.bottomLeftCorner.y) * 2;
-    float screenTopY = screen.bottomLeftCorner.y + screenHeight;
-    float screenBottomY = screen.bottomLeftCorner.y;
+    float width =  magnitude(screen.horizontalAxis);
+    float screenWidthMM = magnitude(screen.horizontalAxis);
+    float screenHeightMM = magnitude(screen.verticalAxis);
+    float screenDepthMM = fabs(screen.bottomLeftCorner.z) *2;
     
-
-    
-//
-    float x = deviceCoordinates.x;// fabs(deviceCoordinates.x) / fabs(bottomLeftCorner.x);
-    //remove the "dead zone" at the bottom from the Y
-    float y = deviceCoordinates.y - screenBottomY;//0;//y verticalAxis * 8;// fabs(bottomLeftCorner.y * 2);
-    float z = deviceCoordinates.z;//fabs(deviceCoordinates.z) / fabs(bottomLeftCorner.z);
-
-    //clamp Y to the screen
-    if (y > screenTopY)
-    {
-        y = screenTopY;
-    }
-    else if(y<screenBottomY)
-    {
-        y= screenBottomY;
-    }
-
-
-    x = fabsf(x) / fabsf(bottomLeftCorner.x);
-    y =  (screenHeight - y) / screenHeight * -1;// + bottomLeftCorner.y;
-    z = fabsf(z) / fabsf(bottomLeftCorner.z);
-    
-  //  y -= verticalAxis;
-//    
-//    if (deviceCoordinates.x < 0)
-//        x*=-1;
-//    if (deviceCoordinates.y < 0)
-//        y*=-1;
-//    if (deviceCoordinates.z < 0)
-//        z*=-1;
-    
- //   y = 0;
-    
-    //Clamp values!
-    //probably got something wrong if needing to do this.
-    //seems as though the min max values being supplied are wrong?
-    
-    //    if (x<-1)
-    //        x =-1;
-    //    else if (x>1)
-    //        x =1;
-    //
-    //    if(y<-1)
-    //        y =-1;
-    //    else if(y>1)
-    //        y =1;
-    //
-    //    if (z<-1)
-    //        z = -1;
-    //    else if (z>1)
-    //        z = 1;
+    x /= screenWidthMM;
+    y /= screenHeightMM;
+    z /= screenDepthMM;
     
     
-    
+//    x = x * 2 -1;
+  //  y = y * 2 -1;
     
     
     LeapVector* sV = [[LeapVector alloc] initWithX:x y:y z:z];
@@ -572,18 +525,23 @@ float magnitude(LeapVector* vector)
     LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:0];
     LeapVector* tipPosition=pointable.tipPosition;
     float x=tipPosition.x,y=tipPosition.y,z=0;
-    LeapVector* screenCoordForZ = [self scaleCoordinateToScreen:tipPosition];
+    //LeapVector* screenCoordForZ = [self scaleCoordinateToScreen:tipPosition];
     
     //[self logVector:deviceCoordinates withTitle:@"Coordinate Device"];
     //[self logVector:screenCoordForZ withTitle:@"Coordinate scaled"];
 
+    tipPosition = [self scaleCoordinateToScreen2:tipPosition];
     
-    tipPosition = [screen intersect:pointable normalize:YES clampRatio:1 ];
+//    tipPosition = [screen intersect:pointable normalize:YES clampRatio:1 ];
     
-    x = tipPosition.x * 2 -1 ;//* screen.widthPixels;
-    y = tipPosition.y * 2 - 1; //* screen.heightPixels;
-    z = screenCoordForZ.z;
+    x = tipPosition.x;
+    y = tipPosition.y;
+    z = tipPosition.z;
     
+//    x = tipPosition.x * 2 -1 ;//* screen.widthPixels;
+//    y = tipPosition.y * 2 - 1; //* screen.heightPixels;
+//    z = screenCoordForZ.z;
+//    
    // x /=
     
     //NSLog(@"X: %.2f Y: %.2f Z: %.2f",x,y,z);
