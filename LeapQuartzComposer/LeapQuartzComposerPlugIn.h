@@ -102,6 +102,6 @@
 
 //Settings view
 
-@property(assign) BOOL useScreenCoordinates;
+@property(copy) NSNumber* useScreenCoordinates;
 
 @end

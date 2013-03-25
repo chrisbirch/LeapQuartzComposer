@@ -14,7 +14,7 @@
 
 
 #define	kQCPlugIn_Name				@"Leap Device Interface SDK 0.7.4"
-#define	kQCPlugIn_Description		@"Version: 0.32\nAllows QC compositions to access data returned by Leap Motion devices"
+#define	kQCPlugIn_Description		@"Version: 0.33\nAllows QC compositions to access data returned by Leap Motion devices"
 #define kQCPlugIn_AuthorDescription @"© 2013 by Chris Birch, all rights reserved."
 
 @interface LeapQuartzComposerPlugIn ()
@@ -237,7 +237,11 @@
         //set up helper
         helper.outputVectorsAsDictionaries = YES;
         helper.outputYawPitchRoll = YES;
-        helper.useScreenCoords = YES;
+        // [[NSRunLoop currentRunLoop] run];
+               
+        
+
+        
 	}
 	
 	return self;
@@ -262,28 +266,28 @@
                                               viewNibName:@"SettingsViewController"];
 }
 
-
 - (id) serializedValueForKey:(NSString*)key
 {
     if([key isEqualToString:@"useScreenCoordinates"])
     {
 //        helper.useScreenCoords = _useScreenCoordinates;
-        return [NSNumber numberWithBool:_useScreenCoordinates];
+      //  return [super serializedValueForKey:key];
     }
     // Ensure this has a data method
-    return [super serializedValueForKey:key];
+    id value =[super serializedValueForKey:key];
+    return value;
 }
 
 - (void) setSerializedValue:(id)serializedValue forKey:(NSString*)key
 {
 
-    if([key isEqualToString:@"useScreenCoordinates"])
-    {
-        _useScreenCoordinates = ((NSNumber*)serializedValue).boolValue;
-//        helper.useScreenCoords = _useScreenCoordinates;
-    }
-    else
-        [super setSerializedValue:serializedValue forKey:key];
+//    if([key isEqualToString:@"useScreenCoordinates"])
+//    {
+//        _useScreenCoordinates = (NSNumber*)serializedValue;
+//        //helper.useScreenCoords = [_useScreenCoordinates boolValue];
+//    }
+
+    [super setSerializedValue:serializedValue forKey:key];
 }
 
 
@@ -292,6 +296,10 @@
 - (void)onInit:(LeapController*)aController
 {
     NSLog(@"Initialized");
+    
+    BOOL useScreenCoords = [[self serializedValueForKey:@"useScreenCoordinates"] boolValue];
+    helper.useScreenCoords = useScreenCoords;
+
 }
 
 - (void)onConnect:(LeapController*)aController
@@ -306,9 +314,8 @@
 
 - (void)onFrame:(LeapController*)aController
 {
-      
-    
-}
+    return;
+ }
 
 
 
@@ -324,7 +331,10 @@
 	// Return NO in case of fatal failure (this will prevent rendering of the composition to start).
 	
     //Create the leap controller
-    leapController = [[LeapController alloc] initWithDelegate:self];
+    leapController = [[LeapController alloc] init];
+//    leapController = [[LeapController alloc] initWithListener:self];
+    [leapController addListener:self];
+   
     //pass pointer to helper class. This is implemented because leap sample obj c requires access to previous frame in order to
     //calculate sweep angle, etc
     helper.leapController = leapController;
@@ -336,10 +346,17 @@
 - (void)enableExecution:(id <QCPlugInContext>)context
 {
 	// Called by Quartz Composer when the plug-in instance starts being used by Quartz Composer.
+    
+
+        
+   
 }
 
 - (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary *)arguments
 {
+    static int count=0;
+    static LeapFrame* lastFrame=nil;
+    
     if (leapController.isConnected)
     {
         /*
@@ -420,8 +437,8 @@
 
         // Get the most recent frame and report some basic information
         LeapFrame* frame = [leapController frame:0];
-        
 
+      
         //include the frame
         self.outputFrame = [helper leapFrameToDictionary:frame];;
         //include the screens
@@ -447,8 +464,9 @@
         }
         
         //get frame gestures
-        NSArray* rawGestures =[frame gestures:nil];
+        NSArray* rawGestures =[frame gestures:lastFrame];
 
+//        NSLog(@"Raw Gesture count %ld",[rawGestures count]);
         //Process any gestures (only if they are included)
         
         //Important!
@@ -472,18 +490,33 @@
             
             if (self.inputRetrieveGestureScreenTap)
             {
-                self.outputGestureScreenTaps = helper.frameGestureScreenTaps;
+
+                
+                NSArray* taps =helper.frameGestureScreenTaps;
+                self.outputGestureScreenTaps =taps;
+                
+                if (taps)
+                    count++;
             }
+//            NSLog(@"Screentap %d",count);
             
             if (self.inputRetrieveGestureSwipe)
             {
                 self.outputGestureSwipes = helper.frameGestureSwipes;
             }
+//            
+//            helper.includeGestureSwipe = self.inputRetrieveGestureSwipe;
+//            
+//            helper.includeGestureScreenTap = self.inputRetrieveGestureScreenTap;
+//            helper.includeGestureKeyTap = self.inputRetrieveGestureKeyTap;
+//            helper.includeGestureCircle = self.inputRetrieveGestureCircle;
         }
         
         
         //NSLog(@"%@",qcCompatibleFrameDictionary);
 
+        //NSLog(@"Screentap %d",count);
+        lastFrame = frame;
     }
 	
 	return YES;

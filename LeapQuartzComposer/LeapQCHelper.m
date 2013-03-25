@@ -78,6 +78,9 @@
     
     [dictionary setObject:NSNumberFromInt(gesture.type) forKey:LEAP_GESTURE_TYPE];
     [dictionary setObject:NSNumberFromInt(gesture.state) forKey:LEAP_GESTURE_STATE];
+    
+    NSLog(@"State is %d",gesture.state);
+    
     [dictionary setObject:NSNumberFromDouble(gesture.durationSeconds) forKey:LEAP_GESTURE_DURATION_SECONDS];
 
     //Now add properties to the output for each of the specific types
@@ -392,22 +395,22 @@ float magnitude(LeapVector* vector)
         {
   
             //TODO: sort this out
-//            palmPos = [self scaleCoordinateToScreen2:hand.palmPosition];
+            palmPos = [self scaleCoordinateToScreen:hand.palmPosition];
      
 
-            if (hand && hand.pointables && hand.pointables.count > 0)
-            {
-                LeapPointable* pointable = [hand.pointables objectAtIndex:0];
-            
-                LeapVector* vec = [self screenVectorForPointable:pointable];
-                NSLog(@"\n\n");
-                
-//                NSLog(@"Palm Y: %.2f Finger Y: %.2f Difference: %.2f",palmPos.y,vec.y,palmPos.y - vec.y);
-                
-//                [self logVector:vec withTitle:@"Fing Pos"];
-//                [self logVector:palmPos withTitle:@"Palm Pos"];
-                
-            }
+//            if (hand && hand.pointables && hand.pointables.count > 0)
+//            {
+//                LeapPointable* pointable = [hand.pointables objectAtIndex:0];
+//            
+//                LeapVector* vec = [self screenVectorForPointable:pointable];
+//                NSLog(@"\n\n");
+//                
+////                NSLog(@"Palm Y: %.2f Finger Y: %.2f Difference: %.2f",palmPos.y,vec.y,palmPos.y - vec.y);
+//                
+////                [self logVector:vec withTitle:@"Fing Pos"];
+////                [self logVector:palmPos withTitle:@"Palm Pos"];
+//                
+//            }
 
             
         }

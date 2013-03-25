@@ -27,7 +27,7 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">SettingsViewController</string>
+				<string key="NSClassName">LeapQuartzComposerPlugIn</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -96,20 +96,36 @@
 					<int key="connectionID">2</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">checkboxUseScreenCoords</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="442022823"/>
+					</object>
+					<int key="connectionID">27</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cliked:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="442022823"/>
+					</object>
+					<int key="connectionID">28</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.plugIn.useScreenCoordinates</string>
+						<string key="label">value: plugIn.useScreenCoordinates</string>
 						<reference key="source" ref="442022823"/>
-						<reference key="destination" ref="141834091"/>
+						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="442022823"/>
-							<reference key="NSDestination" ref="141834091"/>
-							<string key="NSLabel">value: values.plugIn.useScreenCoordinates</string>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: plugIn.useScreenCoordinates</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.plugIn.useScreenCoordinates</string>
+							<string key="NSKeyPath">plugIn.useScreenCoordinates</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">19</int>
+					<int key="connectionID">40</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -253,10 +269,18 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">19</int>
+			<int key="maxID">40</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">LeapQuartzComposerPlugIn</string>
+					<string key="superclassName">QCPlugIn</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/LeapQuartzComposerPlugIn.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSLayoutConstraint</string>
 					<string key="superclassName">NSObject</string>
@@ -266,19 +290,11 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">QCPlugInViewController</string>
-					<string key="superclassName">NSViewController</string>
+					<string key="className">QCPlugIn</string>
+					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/QCPlugInViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">SettingsViewController</string>
-					<string key="superclassName">QCPlugInViewController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/SettingsViewController.h</string>
+						<string key="minorKey">./Classes/QCPlugIn.h</string>
 					</object>
 				</object>
 			</array>
