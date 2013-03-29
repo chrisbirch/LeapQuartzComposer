@@ -490,26 +490,14 @@
             
             if (self.inputRetrieveGestureScreenTap)
             {
-
-                
                 NSArray* taps =helper.frameGestureScreenTaps;
                 self.outputGestureScreenTaps =taps;
-                
-                if (taps)
-                    count++;
             }
-//            NSLog(@"Screentap %d",count);
             
             if (self.inputRetrieveGestureSwipe)
             {
                 self.outputGestureSwipes = helper.frameGestureSwipes;
             }
-//            
-//            helper.includeGestureSwipe = self.inputRetrieveGestureSwipe;
-//            
-//            helper.includeGestureScreenTap = self.inputRetrieveGestureScreenTap;
-//            helper.includeGestureKeyTap = self.inputRetrieveGestureKeyTap;
-//            helper.includeGestureCircle = self.inputRetrieveGestureCircle;
         }
         
         
