@@ -69,6 +69,7 @@
 #define LEAP_GESTURE_CIRCLE_RADIUS @"radius"
 #define LEAP_GESTURE_CIRCLE_POINTABLE @"pointable"
 #define LEAP_GESTURE_CIRCLE_SWEPT_ANGLE @"sweptAngle"
+#define LEAP_GESTURE_CIRCLE_CLOCKWISE @"clockwise"
 
 
 

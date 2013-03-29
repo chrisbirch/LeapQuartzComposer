@@ -11,7 +11,7 @@
 
 #define NSNumberFromInt(VALUE) [[NSNumber alloc] initWithInteger:VALUE]
 #define NSNumberFromDouble(VALUE) [[NSNumber alloc] initWithDouble:VALUE]
-#define NSNumberFromBOOL(VALUE) [[NSNumber alloc] initWithBOOL:VALUE]
+#define NSNumberFromBOOL(VALUE) [[NSNumber alloc] initWithBool:VALUE]
 
 #define QCRepresentationOfVector(VALUE) [self leapVectorToQCCompatibleType:VALUE]
 #define QCRepresentationOfPointablesArray(VALUE) [self leapPointablesToQCCompatibleArray:VALUE]
@@ -89,16 +89,29 @@
     {
         case LEAP_GESTURE_TYPE_CIRCLE:
         {
+            
             LeapCircleGesture *circleGesture = (LeapCircleGesture *)gesture;
             // Calculate the angle swept since the last frame
             float sweptAngle = 0;
-
-            if(circleGesture.state != LEAP_GESTURE_STATE_START)
+            BOOL clockwise;
+            
+            NSString *clockwiseness;
+            if ([[[circleGesture pointable] direction] angleTo:[circleGesture normal]] <= LEAP_PI/4)
             {
-                LeapCircleGesture *previousUpdate = (LeapCircleGesture *)[[_leapController frame:1] gesture:gesture.id];
-                sweptAngle = (circleGesture.progress - previousUpdate.progress) * 2 * LEAP_PI;
-                sweptAngle *= LEAP_RAD_TO_DEG;             
+                clockwise = YES;
+            } else
+            {
+                clockwise = NO;
             }
+
+
+//            if(circleGesture.state != LEAP_GESTURE_STATE_START)
+//            {
+//                LeapCircleGesture *previousUpdate = (LeapCircleGesture *)[[_leapController frame:1] gesture:gesture.id];
+//                sweptAngle = (circleGesture.progress - previousUpdate.progress) * 2 * LEAP_PI;
+//                sweptAngle *= LEAP_RAD_TO_DEG;             
+//            }
+            
             
             const LeapVector* center=circleGesture.center;
             const LeapVector* normal=circleGesture.normal;
@@ -116,6 +129,7 @@
             [dictionary setObject:QCRepresentationOfVector(center) forKey:LEAP_GESTURE_CIRCLE_CENTER];
             [dictionary setObject:QCRepresentationOfVector(normal) forKey:LEAP_GESTURE_CIRCLE_NORMAL];
             [dictionary setObject:NSNumberFromDouble(sweptAngle) forKey:LEAP_GESTURE_CIRCLE_SWEPT_ANGLE];
+            [dictionary setObject:NSNumberFromBOOL(clockwise) forKey:LEAP_GESTURE_CIRCLE_CLOCKWISE];
             
 //            NSLog(@"Circle id: %d, %@, progress: %f, radius %f, angle: %f degrees",
 //                  circleGesture.id, [Sample stringForState:gesture.state],
@@ -131,7 +145,7 @@
             [dictionary setObject:QCRepresentationOfVector(swipeGesture.startPosition) forKey:LEAP_GESTURE_SWIPE_START_POSITION];
             [dictionary setObject:QCRepresentationOfVector(swipeGesture.direction) forKey:LEAP_GESTURE_SWIPE_DIRECTION];
             [dictionary setObject:NSNumberFromDouble(swipeGesture.speed) forKey:LEAP_GESTURE_SWIPE_SPEED];
-            [dictionary setObject:QCRepresentationOfPointable(swipeGesture.pointable) forKey:LEAP_GESTURE_SWIPE_POINTABLE];
+//            [dictionary setObject:QCRepresentationOfPointable(swipeGesture.pointable) forKey:LEAP_GESTURE_SWIPE_POINTABLE];
             
 //            NSLog(@"Swipe id: %d, %@, position: %@, direction: %@, speed: %f",
 //                  swipeGesture.id, [Sample stringForState:swipeGesture.state],
@@ -144,7 +158,7 @@
             [dictionary setObject:QCRepresentationOfVector(keyTapGesture.position) forKey:LEAP_GESTURE_KEY_TAP_POSITION];
             [dictionary setObject:QCRepresentationOfVector(keyTapGesture.direction) forKey:LEAP_GESTURE_KEY_TAP_DIRECTION];
             [dictionary setObject:NSNumberFromDouble(keyTapGesture.progress) forKey:LEAP_GESTURE_KEY_TAP_PROGRESS];
-            [dictionary setObject:QCRepresentationOfPointable(keyTapGesture.pointable) forKey:LEAP_GESTURE_KEY_TAP_POINTABLE];
+//            [dictionary setObject:QCRepresentationOfPointable(keyTapGesture.pointable) forKey:LEAP_GESTURE_KEY_TAP_POINTABLE];
             
             //
             
@@ -160,8 +174,8 @@
             [dictionary setObject:QCRepresentationOfVector(screenTapGesture.position) forKey:LEAP_GESTURE_SCREEN_TAP_POSITION];
             [dictionary setObject:QCRepresentationOfVector(screenTapGesture.direction) forKey:LEAP_GESTURE_SCREEN_TAP_DIRECTION];
             [dictionary setObject:NSNumberFromDouble(screenTapGesture.progress) forKey:LEAP_GESTURE_SCREEN_TAP_PROGRESS];
-            [dictionary setObject:QCRepresentationOfPointable(screenTapGesture.pointable) forKey:LEAP_GESTURE_SCREEN_TAP_POINTABLE];
-//            
+//            [dictionary setObject:QCRepresentationOfPointable(screenTapGesture.pointable) forKey:LEAP_GESTURE_SCREEN_TAP_POINTABLE];
+//
 //            NSLog(@"Screen Tap id: %d, %@, position: %@, direction: %@",
 //                  screenTapGesture.id, [Sample stringForState:screenTapGesture.state],
 //                  screenTapGesture.position, screenTapGesture.direction);
@@ -320,34 +334,36 @@ float magnitude(LeapVector* vector)
 -(LeapVector*)scaleCoordinateToScreen:(const LeapVector*)deviceCoordinates
 {
     LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
-    
-    float x =deviceCoordinates.x ,y=deviceCoordinates.y ,z=deviceCoordinates.z;
-    
-    LeapVector* bLC = screen.bottomLeftCorner;
-    
-    float screenWidthMM = fabs(bLC.x) * 2;
-    float screenHeightMM =  magnitude(screen.verticalAxis);
-    float screenDepthMM = fabs(screen.bottomLeftCorner.z) *2;
-    
-    //take into account screen location
-    y-= bLC.y;
-    x -= bLC.x;
-    z -= bLC.z;
-    
 
-    //Scale to screen coordinates
-    x /= screenWidthMM;
-    y /= screenHeightMM;
-    z /= screenDepthMM;
-    
-    
-    x = x * 2 -1;
-    y = y  -1;
-    
-    
-    LeapVector* sV = [[LeapVector alloc] initWithX:x y:y z:z];
-    
-    return sV;
+    return [screen project:deviceCoordinates normalize:YES clampRatio:1];
+//    
+//    float x =deviceCoordinates.x ,y=deviceCoordinates.y ,z=deviceCoordinates.z;
+//    
+//    LeapVector* bLC = screen.bottomLeftCorner;
+//    
+//    float screenWidthMM = fabs(bLC.x) * 2;
+//    float screenHeightMM =  magnitude(screen.verticalAxis);
+//    float screenDepthMM = fabs(screen.bottomLeftCorner.z) *2;
+//    
+//    //take into account screen location
+//    y-= bLC.y;
+//    x -= bLC.x;
+//    z -= bLC.z;
+//    
+//
+//    //Scale to screen coordinates
+//    x /= screenWidthMM;
+//    y /= screenHeightMM;
+//    z /= screenDepthMM;
+//    
+//    
+//    x = x * 2 -1;
+//    y = y  -1;
+//    
+//    
+//    LeapVector* sV = [[LeapVector alloc] initWithX:x y:y z:z];
+//    
+//    return sV;
 }
 
 
