@@ -95,7 +95,6 @@
             float sweptAngle = 0;
             BOOL clockwise;
             
-            NSString *clockwiseness;
             if ([[[circleGesture pointable] direction] angleTo:[circleGesture normal]] <= LEAP_PI/4)
             {
                 clockwise = YES;
@@ -335,7 +334,28 @@ float magnitude(LeapVector* vector)
 {
     LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
 
-    return [screen project:deviceCoordinates normalize:YES clampRatio:1];
+    LeapVector* vector = [screen project:deviceCoordinates normalize:YES clampRatio:1];
+    
+    LeapVector* bLC = screen.bottomLeftCorner;
+
+    float screenDepthMM = fabs(screen.bottomLeftCorner.z) *2;
+
+    float x=vector.x,y=vector.y,z=deviceCoordinates.z;
+    
+    //get a value scaled from 0 to 1
+    z  /= screenDepthMM;
+    
+    //x /= screen.widthPixels;
+    //y /= screen.heightPixels;
+    
+    x = x * _qcWidth - (_qcWidth /2);
+    y = y * _qcHeight - (_qcHeight /2);
+    //z = z * 2 - 1;
+    
+    NSLog(@"x: %.2f y: %.2f z: %.2f",x,y,z);
+
+    
+    return [[LeapVector alloc] initWithX:x y:y z:z];
 //    
 //    float x =deviceCoordinates.x ,y=deviceCoordinates.y ,z=deviceCoordinates.z;
 //    

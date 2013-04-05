@@ -14,7 +14,7 @@
 
 
 #define	kQCPlugIn_Name				@"Leap Device Interface SDK 0.7.6"
-#define	kQCPlugIn_Description		@"Version: 0.34\nAllows QC compositions to access data returned by Leap Motion devices"
+#define	kQCPlugIn_Description		@"Version: 0.35\nAllows QC compositions to access data returned by Leap Motion devices"
 #define kQCPlugIn_AuthorDescription @"© 2013 by Chris Birch, all rights reserved."
 
 @interface LeapQuartzComposerPlugIn ()
@@ -357,8 +357,11 @@
     static int count=0;
     static LeapFrame* lastFrame=nil;
     
+
     if (leapController.isConnected)
     {
+        
+        
         /*
         Called by Quartz Composer whenever the plug-in instance needs to execute.
         Only read from the plug-in inputs and produce a result (by writing to the plug-in outputs or rendering to the destination OpenGL context) within that method and nowhere else.
@@ -437,6 +440,12 @@
 
         // Get the most recent frame and report some basic information
         LeapFrame* frame = [leapController frame:0];
+        
+        //tell the helper about the qc window
+        NSRect bounds = context.bounds;
+        helper.qcWidth = bounds.size.width;
+        helper.qcHeight = bounds.size.height;
+        
 
       
         //include the frame

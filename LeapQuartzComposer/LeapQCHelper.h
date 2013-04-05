@@ -117,6 +117,16 @@
 @property(nonatomic,assign) BOOL useScreenCoords;
 
 /**
+ * The width of the QC screen
+ */
+@property(nonatomic,assign) CGFloat qcWidth;
+
+/**
+ * The height of the QC screen
+ */
+@property(nonatomic,assign) CGFloat qcHeight;
+
+/**
  * If YES then vectors will be converted into dictionaries.
  * If NO then vectors will be converted into arrays. index 0: x, index 1: y, index 2: z, 
  *    then pitch roll and yaw in that order if pitch roll and yaw are being included
