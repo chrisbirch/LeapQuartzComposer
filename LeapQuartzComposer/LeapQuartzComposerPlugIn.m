@@ -57,8 +57,6 @@
 @dynamic inputLeapScreen;
 
 
-
-
 + (NSDictionary *)attributes
 {
 	// Return a dictionary of attributes describing the plug-in (QCPlugInAttributeNameKey, QCPlugInAttributeDescriptionKey...).
@@ -346,9 +344,6 @@
 - (void)enableExecution:(id <QCPlugInContext>)context
 {
 	// Called by Quartz Composer when the plug-in instance starts being used by Quartz Composer.
-    
-
-        
    
 }
 
@@ -357,7 +352,6 @@
     static int count=0;
     static LeapFrame* lastFrame=nil;
     
-
     if (leapController.isConnected)
     {
         
