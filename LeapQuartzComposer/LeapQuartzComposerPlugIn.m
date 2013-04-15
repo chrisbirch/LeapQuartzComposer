@@ -338,6 +338,8 @@
     helper.leapController = leapController;
 
     
+
+    
 	return leapController != nil;
 }
 
@@ -403,31 +405,38 @@
         {
             helper.outputYawPitchRoll = self.inputVectorsIncludeYawPitchRoll;
         }
-        //Yes if Swipe gestures are exposed to QC
-        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESWIPE])
-        {
-            helper.includeGestureSwipe = self.inputRetrieveGestureSwipe;
-        }
-        //Yes if Screen Tap gestures are exposed to QC
-        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESCREENTAP])
-        {
-            helper.includeGestureScreenTap = self.inputRetrieveGestureScreenTap;
-        }
-        //Yes if Key Tap gestures are exposed to QC
-        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTUREKEYTAP])
-        {
-            helper.includeGestureKeyTap = self.inputRetrieveGestureKeyTap;
-        }
-        //Yes if circle gestures are exposed to QC
-        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURECIRCLE])
-        {
-            helper.includeGestureCircle = self.inputRetrieveGestureCircle;
-        }
+//        //Yes if Swipe gestures are exposed to QC
+//        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESWIPE])
+//        {
+//            helper.includeGestureSwipe = self.inputRetrieveGestureSwipe;
+//        }
+//        //Yes if Screen Tap gestures are exposed to QC
+//        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURESCREENTAP])
+//        {
+//            helper.includeGestureScreenTap = self.inputRetrieveGestureScreenTap;
+//        }
+//        //Yes if Key Tap gestures are exposed to QC
+//        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTUREKEYTAP])
+//        {
+//            helper.includeGestureKeyTap = self.inputRetrieveGestureKeyTap;
+//        }
+//        //Yes if circle gestures are exposed to QC
+//        if ([self didValueForInputKeyChange:INPUT_RETRIEVEGESTURECIRCLE])
+//        {
+//            helper.includeGestureCircle = self.inputRetrieveGestureCircle;
+//        }
         //The number of the calibrated screen to use
         if ([self didValueForInputKeyChange:INPUT_LEAPSCREEN])
         {
             helper.calibratedScreenIndex = self.inputLeapScreen;
         }
+        
+        
+        helper.includeGestureSwipe = self.inputRetrieveGestureSwipe;
+        helper.includeGestureScreenTap = self.inputRetrieveGestureScreenTap;
+        helper.includeGestureKeyTap = self.inputRetrieveGestureKeyTap;
+        helper.includeGestureCircle = self.inputRetrieveGestureCircle;
+
         
         //Plugin code:
         
@@ -445,7 +454,7 @@
         //include the frame
         self.outputFrame = [helper leapFrameToDictionary:frame];;
         //include the screens
-        self.outputScreens = [helper leapScreensToQCCompatibleArray:leapController.calibratedScreens];
+        self.outputScreens = [helper leapScreensToQCCompatibleArray:leapController.locatedScreens];
 
         if (self.inputRetrieveHands)
         {
@@ -467,15 +476,18 @@
         }
         
         //get frame gestures
-        NSArray* rawGestures =[frame gestures:lastFrame];
+        NSArray* rawGesturesSinceLastFrame =[frame gestures:lastFrame];
+        NSArray* rawGestures =[frame gestures:nil];
+        
 
-//        NSLog(@"Raw Gesture count %ld",[rawGestures count]);
+        NSLog(@"Raw Gesture count %ld",[rawGesturesSinceLastFrame count]);
         //Process any gestures (only if they are included)
         
         //Important!
         //process raw leap sdk gestures into qc compatible dictionaries and store them
         //in helper instance properties. These properties are referenced immediately below
-        [helper processLeapGestures:rawGestures];
+//        [helper processLeapGestures:rawGesturesSinceLastFrame ];
+        [helper processLeapGesturesSinceLastFrame:rawGesturesSinceLastFrame andOnlyOneFrame:rawGestures];
         
         //If we are retrieving any gestures, the appropriate gestures will have been processed by
         //call to processLeapGestures above.
