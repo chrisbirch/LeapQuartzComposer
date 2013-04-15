@@ -75,7 +75,7 @@
     [dictionary setObject:NSNumberFromInt(gesture.type) forKey:LEAP_GESTURE_TYPE];
     [dictionary setObject:NSNumberFromInt(gesture.state) forKey:LEAP_GESTURE_STATE];
     
-    NSLog(@"State is %d",gesture.state);
+//    NSLog(@"State is %d",gesture.state);
     
     [dictionary setObject:NSNumberFromDouble(gesture.durationSeconds) forKey:LEAP_GESTURE_DURATION_SECONDS];
 
@@ -85,6 +85,7 @@
     {
         case LEAP_GESTURE_TYPE_CIRCLE:
         {
+//            NSLog(@"Circle");
             LeapCircleGesture *circleGesture = (LeapCircleGesture *)gesture;
             // Calculate the angle swept since the last frame
             float sweptAngle = 0;
@@ -129,6 +130,7 @@
         {
             LeapSwipeGesture *swipeGesture = (LeapSwipeGesture *)gesture;
         
+//            NSLog(@"Swipe");
             
             [dictionary setObject:QCRepresentationOfVector(swipeGesture.position) forKey:LEAP_GESTURE_SWIPE_POSITION];
             [dictionary setObject:QCRepresentationOfVector(swipeGesture.startPosition) forKey:LEAP_GESTURE_SWIPE_START_POSITION];
@@ -139,6 +141,7 @@
         }
         case LEAP_GESTURE_TYPE_KEY_TAP:
         {
+//            NSLog(@"Key tap");
             LeapKeyTapGesture *keyTapGesture = (LeapKeyTapGesture *)gesture;
             [dictionary setObject:QCRepresentationOfVector(keyTapGesture.position) forKey:LEAP_GESTURE_KEY_TAP_POSITION];
             [dictionary setObject:QCRepresentationOfVector(keyTapGesture.direction) forKey:LEAP_GESTURE_KEY_TAP_DIRECTION];
@@ -150,7 +153,7 @@
         case LEAP_GESTURE_TYPE_SCREEN_TAP:
         {
             LeapScreenTapGesture *screenTapGesture = (LeapScreenTapGesture *)gesture;
-            
+//            NSLog(@"Screen tap");
             [dictionary setObject:QCRepresentationOfVector(screenTapGesture.position) forKey:LEAP_GESTURE_SCREEN_TAP_POSITION];
             [dictionary setObject:QCRepresentationOfVector(screenTapGesture.direction) forKey:LEAP_GESTURE_SCREEN_TAP_DIRECTION];
             [dictionary setObject:NSNumberFromDouble(screenTapGesture.progress) forKey:LEAP_GESTURE_SCREEN_TAP_PROGRESS];
@@ -158,9 +161,11 @@
             break;
         }
         default:
-            NSLog(@"Unknown gesture type");
-            break;
+            return nil;
     }
+    
+    
+    //NSLog(@"%@",dictionary);
 
     
     
@@ -252,7 +257,7 @@
  */
 -(float)scaleWidthToScreen:(float)value
 {
-    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
+    LeapScreen* screen = [_leapController.locatedScreens objectAtIndex:_calibratedScreenIndex];
     
     LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
 
@@ -268,7 +273,7 @@
  */
 -(float)scaleLengthToScreen:(float)value
 {
-    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
+    LeapScreen* screen = [_leapController.locatedScreens objectAtIndex:_calibratedScreenIndex];
     
     LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
     
@@ -284,7 +289,7 @@
  */
 -(float)scaleRadiusToScreen:(float)value
 {
-    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
+    LeapScreen* screen = [_leapController.locatedScreens objectAtIndex:_calibratedScreenIndex];
     
     LeapVector* bottomLeftCorner = screen.bottomLeftCorner;
     
@@ -309,7 +314,7 @@ float magnitude(LeapVector* vector)
  */
 -(LeapVector*)scaleCoordinateToScreen:(const LeapVector*)deviceCoordinates
 {
-    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
+    LeapScreen* screen = [_leapController.locatedScreens objectAtIndex:_calibratedScreenIndex];
 
     LeapVector* vector = [screen project:deviceCoordinates normalize:YES clampRatio:1];
     
@@ -329,7 +334,7 @@ float magnitude(LeapVector* vector)
     y = y * _qcHeight - (_qcHeight /2);
     //z = z * 2 - 1;
     
-    NSLog(@"x: %.2f y: %.2f z: %.2f",x,y,z);
+    //NSLog(@"x: %.2f y: %.2f z: %.2f",x,y,z);
 
     
     return [[LeapVector alloc] initWithX:x y:y z:z];
@@ -447,7 +452,7 @@ float magnitude(LeapVector* vector)
 -(LeapVector*)screenVectorForPointable:(const LeapPointable*)pointable
 {
     //  float x=vector.x,y=vector.y,z=vector.z;
-    LeapScreen* screen = [_leapController.calibratedScreens objectAtIndex:_calibratedScreenIndex];
+    LeapScreen* screen = [_leapController.locatedScreens objectAtIndex:_calibratedScreenIndex];
     LeapVector* tipPosition=pointable.tipPosition;
     float x=tipPosition.x,y=tipPosition.y,z=0;
     LeapVector* screenCoordForZ = [self scaleCoordinateToScreen:tipPosition];
@@ -600,7 +605,7 @@ float magnitude(LeapVector* vector)
 
 
 
--(void) processLeapGestures:(const NSArray*)gestures
+-(void) processLeapGesturesSinceLastFrame:(const NSArray*)gestures andOnlyOneFrame:(const NSArray*)gesturesSingleFrame
 {
     //we need to create arrays to hold the different type of gestures
     //since we need to expose each type of gesture to the correct ouputPort
@@ -628,44 +633,85 @@ float magnitude(LeapVector* vector)
             //Now we need to decide which array to put this gesture in
             switch(gesture.type)
             {
-                case LEAP_GESTURE_TYPE_CIRCLE:
-                {
-                    [circleArray addObject:gestureDictionary];
-                }
+                
                 case LEAP_GESTURE_TYPE_KEY_TAP:
                 {
                     [keyTapArray addObject:gestureDictionary];
+                    break;
                 }
                 case LEAP_GESTURE_TYPE_SCREEN_TAP:
                 {
                     [screenTapArray addObject:gestureDictionary];
+                    break;
                 }
-                case LEAP_GESTURE_TYPE_SWIPE:
-                {
-                    [swipeArray addObject:gestureDictionary];
-                }
+                
                 case LEAP_GESTURE_TYPE_INVALID:
                 {
                     NSLog(@"Invalid type of gesture");
+                    break;
                 }
             }
         }
         
     }
-    
+
+    for(LeapGesture* gesture in gesturesSingleFrame)
+    {
+        //Only include this gesture if user code has told us it wants it.
+        //*see inputPorts for more info about how this helper is used.
+        if ([self shouldIncludeGestureInArray:gesture])
+        {
+            //create a leap compatible dictionary to add to an array
+            NSDictionary* gestureDictionary =  [self leapGestureToDictionary:gesture];
+            
+            //Now we need to decide which array to put this gesture in
+            switch(gesture.type)
+            {
+                case LEAP_GESTURE_TYPE_CIRCLE:
+                {
+                    [circleArray addObject:gestureDictionary];
+                    break;
+                }
+                case LEAP_GESTURE_TYPE_SWIPE:
+                {
+                    [swipeArray addObject:gestureDictionary];
+                    break;
+                }
+                case LEAP_GESTURE_TYPE_INVALID:
+                {
+                    NSLog(@"Invalid type of gesture");
+                    break;
+                }
+            }
+        }
+        
+    }
+
+    static int swipe=0,circle=0,tap=0,keyTap=0;
     
     //Now set outputs if needed
     if(swipeArray.count)
+    {
         _frameGestureSwipes = swipeArray;
+    }
     
     if (circleArray.count)
+    {
         _frameGestureCircles = circleArray;
+    }
     
     if (screenTapArray.count)
+    {
         _frameGestureScreenTaps = screenTapArray;
+    }
     
     if (keyTapArray.count)
+    {
         _frameGestureKeyTaps = keyTapArray;
+    }
+    
+    
+    NSLog(@"circle %i - swipe %i - screenTap %i - keyTap %i",circle,swipe,tap,keyTap);
 
     
 }

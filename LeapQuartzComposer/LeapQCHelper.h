@@ -265,7 +265,7 @@
  * Converts an array of LeapGesture pointers into QC compatible arrays.
  * Sets instance properties: frameGestureSwipes, frameGestureKeyTaps ,frameGestureScreenTaps,frameGestureCircles *
  */
--(void) processLeapGestures:(const NSArray*)gestures;
+-(void) processLeapGesturesSinceLastFrame:(const NSArray*)gestures andOnlyOneFrame:(const NSArray*)gesturesSingleFrame;
 
 
 #pragma mark -
