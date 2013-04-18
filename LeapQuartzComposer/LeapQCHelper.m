@@ -312,6 +312,68 @@ float magnitude(LeapVector* vector)
 /**
  * Given a leap vector in device coordinates will return a vector that is scaled to screen coords
  */
+-(LeapVector*)scalePointableToScreen:(const LeapPointable*)pointable
+{
+    LeapScreen* screen = [_leapController.locatedScreens objectAtIndex:_calibratedScreenIndex];
+    
+    LeapVector* vector = [screen intersect:pointable normalize:YES clampRatio:1];
+    
+    LeapVector* bLC = screen.bottomLeftCorner;
+    
+    float screenDepthMM = fabs(screen.bottomLeftCorner.z) *2;
+    
+    float x=vector.x,y=vector.y,z=0;//deviceCoordinates.z;
+    
+    //get a value scaled from 0 to 1
+    z  /= screenDepthMM;
+    
+    z *= 3;
+    
+    //x /= screen.widthPixels;
+    //y /= screen.heightPixels;
+    
+    x = x * 2 - 1;//_qcWidth - (_qcWidth /2);
+    y = y * _qcHeight - (_qcHeight /2);
+    //z = z * 2 - 1;
+    
+    //NSLog(@"x: %.2f y: %.2f z: %.2f",x,y,z);
+    
+    
+    return [[LeapVector alloc] initWithX:x y:y z:z];
+    //
+    //    float x =deviceCoordinates.x ,y=deviceCoordinates.y ,z=deviceCoordinates.z;
+    //
+    //    LeapVector* bLC = screen.bottomLeftCorner;
+    //
+    //    float screenWidthMM = fabs(bLC.x) * 2;
+    //    float screenHeightMM =  magnitude(screen.verticalAxis);
+    //    float screenDepthMM = fabs(screen.bottomLeftCorner.z) *2;
+    //
+    //    //take into account screen location
+    //    y-= bLC.y;
+    //    x -= bLC.x;
+    //    z -= bLC.z;
+    //
+    //
+    //    //Scale to screen coordinates
+    //    x /= screenWidthMM;
+    //    y /= screenHeightMM;
+    //    z /= screenDepthMM;
+    //
+    //
+    //    x = x * 2 -1;
+    //    y = y  -1;
+    //    
+    //    
+    //    LeapVector* sV = [[LeapVector alloc] initWithX:x y:y z:z];
+    //    
+    //    return sV;
+}
+
+
+/**
+ * Given a leap vector in device coordinates will return a vector that is scaled to screen coords
+ */
 -(LeapVector*)scaleCoordinateToScreen:(const LeapVector*)deviceCoordinates
 {
     LeapScreen* screen = [_leapController.locatedScreens objectAtIndex:_calibratedScreenIndex];
@@ -327,11 +389,13 @@ float magnitude(LeapVector* vector)
     //get a value scaled from 0 to 1
     z  /= screenDepthMM;
     
+    z *= 3;
+    
     //x /= screen.widthPixels;
     //y /= screen.heightPixels;
     
-    x = x * _qcWidth - (_qcWidth /2);
-    y = y * _qcHeight - (_qcHeight /2);
+    x = x * 2 - 1;//_qcWidth - (_qcWidth /2);
+    y = y * 2-1;//_qcHeight - (_qcHeight /2);
     //z = z * 2 - 1;
     
     //NSLog(@"x: %.2f y: %.2f z: %.2f",x,y,z);
