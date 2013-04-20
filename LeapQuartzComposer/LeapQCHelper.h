@@ -144,6 +144,11 @@
 @property(nonatomic,assign) BOOL includeFingersInHand;
 
 /**
+ * If YES then finger arrays will in included in hand structures
+ */
+@property(nonatomic,assign) double zScale;
+
+/**
  * If YES then pointable arrays will in included in hand structures
  */
 @property(nonatomic,assign) BOOL includePointablesInHand;

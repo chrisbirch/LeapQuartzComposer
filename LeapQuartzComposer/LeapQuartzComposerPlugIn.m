@@ -30,7 +30,7 @@
 
 //Port Synthesizes
 
-
+@dynamic inputZScale;
 @dynamic inputRetrieveHands;
 @dynamic inputRetrieveFingers;
 @dynamic inputRetrieveTools;
@@ -79,6 +79,12 @@
         return [NSDictionary dictionaryWithObjectsAndKeys:
                 @"Retrieve Hands", QCPortAttributeNameKey,
                 [NSNumber numberWithBool:YES], QCPortAttributeDefaultValueKey,
+                nil];
+    //The amount we scale z when using screen api
+    else if([key isEqualToString:INPUT_ZSCALE])
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"Z Scale", QCPortAttributeNameKey,
+                @"1", QCPortAttributeDefaultValueKey,
                 nil];
     //Yes if fingers array is exposed to QC
     else if([key isEqualToString:INPUT_RETRIEVEFINGERS])
@@ -331,7 +337,6 @@
     //Create the leap controller
     leapController = [[LeapController alloc] init];
 //    leapController = [[LeapController alloc] initWithListener:self];
-    [leapController addListener:self];
    
     //pass pointer to helper class. This is implemented because leap sample obj c requires access to previous frame in order to
     //calculate sweep angle, etc
@@ -346,7 +351,8 @@
 - (void)enableExecution:(id <QCPlugInContext>)context
 {
 	// Called by Quartz Composer when the plug-in instance starts being used by Quartz Composer.
-   
+    [leapController addListener:self];
+
 }
 
 - (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary *)arguments
@@ -381,27 +387,33 @@
         //Skipping Value changed section for property: RetrieveTools as no values have been supplied for valueChangedTarget or valueChangedBody
         //Skipping Value changed section for property: RetrievePointables as no values have been supplied for valueChangedTarget or valueChangedBody
         //Yes if fingers array is exposed in hand structure
-        if ([self didValueForInputKeyChange:INPUT_INCLUDEFINGERSINHAND])
+        //Skipping Value changed section for property: RetrieveHands as no values have been supplied for valueChangedTarget or valueChangedBody
+        //The amount we scale z when using screen api
+        //if ([self didValueForInputKeyChange:INPUT_ZSCALE])
+        {
+            helper.zScale = self.inputZScale;
+        }
+        //if ([self didValueForInputKeyChange:INPUT_INCLUDEFINGERSINHAND])
         {
             helper.includeFingersInHand = self.inputIncludeFingersInHand;
         }
         //Yes if tools array is exposed in hand structure
-        if ([self didValueForInputKeyChange:INPUT_INCLUDETOOLSINHAND])
+        //if ([self didValueForInputKeyChange:INPUT_INCLUDETOOLSINHAND])
         {
             helper.includeToolsInHand = self.inputIncludeToolsInHand;
         }
         //Yes if pointables array is exposed in hand structure
-        if ([self didValueForInputKeyChange:INPUT_INCLUDEPOINTABLESINHAND])
+        //if ([self didValueForInputKeyChange:INPUT_INCLUDEPOINTABLESINHAND])
         {
             helper.includePointablesInHand = self.inputIncludePointablesInHand;
         }
         //Dictates the type of QC compativle construct used to represent vectors
-        if ([self didValueForInputKeyChange:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
+        //if ([self didValueForInputKeyChange:INPUT_USEDICTIONARIESTOREPRESENTVECTORS])
         {
             helper.outputVectorsAsDictionaries = self.inputUseDictionariesToRepresentVectors;
         }
         //Dictates whether or not vectors include yaw pitch and roll
-        if ([self didValueForInputKeyChange:INPUT_VECTORSINCLUDEYAWPITCHROLL])
+        //if ([self didValueForInputKeyChange:INPUT_VECTORSINCLUDEYAWPITCHROLL])
         {
             helper.outputYawPitchRoll = self.inputVectorsIncludeYawPitchRoll;
         }
@@ -426,7 +438,7 @@
 //            helper.includeGestureCircle = self.inputRetrieveGestureCircle;
 //        }
         //The number of the calibrated screen to use
-        if ([self didValueForInputKeyChange:INPUT_LEAPSCREEN])
+        //if ([self didValueForInputKeyChange:INPUT_LEAPSCREEN])
         {
             helper.calibratedScreenIndex = self.inputLeapScreen;
         }
@@ -533,6 +545,7 @@
 - (void)stopExecution:(id <QCPlugInContext>)context
 {
 	// Called by Quartz Composer when rendering of the composition stops: perform any required cleanup for the plug-in.
+    [leapController removeListener:self];
     
 }
 

@@ -64,6 +64,8 @@
 //The number of the calibrated screen to use
 #define INPUT_LEAPSCREEN @"inputLeapScreen"
 
+//The amount we scale z when using screen api
+#define INPUT_ZSCALE @"inputZScale"
 
 
 
@@ -72,6 +74,7 @@
 
 //Port Properties
 
+@property (assign) double inputZScale;
 @property (assign) BOOL inputRetrieveHands;
 @property (assign) BOOL inputRetrieveFingers;
 @property (assign) BOOL inputRetrieveTools;

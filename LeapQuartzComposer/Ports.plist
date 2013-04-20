@@ -16,6 +16,22 @@
 		<key>IsInput</key>
 		<true/>
 	</dict>
+    <dict>
+		<key>Name</key>
+		<string>ZScale</string>
+		<key>FriendlyName</key>
+		<string>Z Scale</string>
+		<key>Type</key>
+		<string>double</string>
+		<key>DefaultValue</key>
+		<string>1</string>
+		<key>Comment</key>
+		<string>The amount we scale z when using screen api</string>
+		<key>IsInput</key>
+		<true/>
+        <key>ValueChangedTarget</key>
+		<string>helper.zScale</string>
+	</dict>
 	<dict>
 		<key>Name</key>
 		<string>RetrieveFingers</string>

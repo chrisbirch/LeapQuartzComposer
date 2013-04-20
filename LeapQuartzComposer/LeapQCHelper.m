@@ -322,12 +322,12 @@ float magnitude(LeapVector* vector)
     
     float screenDepthMM = fabs(screen.bottomLeftCorner.z) *2;
     
-    float x=vector.x,y=vector.y,z=0;//deviceCoordinates.z;
+    float x=vector.x,y=vector.y,z=pointable.tipPosition.z;
     
     //get a value scaled from 0 to 1
     z  /= screenDepthMM;
     
-    z *= 3;
+    z *=  _zScale;
     
     //x /= screen.widthPixels;
     //y /= screen.heightPixels;
@@ -389,7 +389,7 @@ float magnitude(LeapVector* vector)
     //get a value scaled from 0 to 1
     z  /= screenDepthMM;
     
-    z *= 3;
+    z *= _zScale;
     
     //x /= screen.widthPixels;
     //y /= screen.heightPixels;
@@ -564,7 +564,9 @@ float magnitude(LeapVector* vector)
     
     if(pointable.tipPosition)
     {
-        [dictionary setObject:[self leapVectorToQCCompatibleType:tipPosition] forKey:@"tipPosition"];
+        LeapVector* vec = nil;//[self scalePointableToScreen:pointable];
+        vec = [self scaleCoordinateToScreen:tipPosition];
+        [dictionary setObject:[self leapVectorToDictionary:vec] forKey:@"tipPosition"];
     }
     
     if(pointable.tipVelocity)
